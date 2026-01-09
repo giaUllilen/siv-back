@@ -95,6 +95,12 @@
 	<!-- ........................................................................................ -->
 
 	<build>
+		<testSourceDirectory>src/tests/java</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<directory>src/tests/resources</directory>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

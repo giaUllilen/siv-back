@@ -29,6 +29,12 @@
 	<!-- ........................................................................................ -->
 
 	<build>
+		<testSourceDirectory>src/tests/java</testSourceDirectory>
+		<testResources>
+			<testResource>
+				<directory>src/tests/resources</directory>
+			</testResource>
+		</testResources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
