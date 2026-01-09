@@ -1,0 +1,1 @@
+select estado , s.* from solicitud s where numero_propuesta = '500517457';

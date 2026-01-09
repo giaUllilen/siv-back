@@ -1,0 +1,623 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API Reportes - Línea de Negocio Rentas",
+    "version": "0.0.1",
+    "description": "Microservicio de generación de reportes para la línea de Negocio Rentas",
+    "contact": {
+      "name": "SquadRentas",
+      "email": "squad.rentas@interseguro.pe"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Servidor de desarrollo local"
+    },
+    {
+      "url": "https://api-rentas-dev.interseguro.pe",
+      "description": "Servidor de desarrollo"
+    },
+    {
+      "url": "https://api-rentas-qa.interseguro.pe",
+      "description": "Servidor de QA"
+    },
+    {
+      "url": "https://api-rentas.interseguro.pe",
+      "description": "Servidor de producción"
+    }
+  ],
+  "tags": [
+    {
+      "name": "health",
+      "description": "Endpoints de salud del servicio"
+    },
+    {
+      "name": "reportes",
+      "description": "Endpoints para generación de reportes"
+    },
+    {
+      "name": "solicitudes",
+      "description": "Endpoints para solicitudes de rentas"
+    }
+  ],
+  "paths": {
+    "/liveness": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Verifica si el servicio está vivo",
+        "description": "Endpoint de Kubernetes para verificar que el servicio está en ejecución",
+        "operationId": "getLiveness",
+        "responses": {
+          "200": {
+            "description": "Servicio vivo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/readiness": {
+      "get": {
+        "tags": ["health"],
+        "summary": "Verifica si el servicio está listo",
+        "description": "Endpoint de Kubernetes para verificar que el servicio está listo para recibir tráfico",
+        "operationId": "getReadiness",
+        "responses": {
+          "200": {
+            "description": "Servicio listo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reporte/test": {
+      "post": {
+        "tags": ["reportes"],
+        "summary": "Reporte de prueba",
+        "description": "Permite generar un reporte de prueba para validar la funcionalidad del servicio",
+        "operationId": "reporteTest",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["nombre"],
+                "properties": {
+                  "nombre": {
+                    "type": "string",
+                    "maxLength": 200,
+                    "description": "Nombre para el reporte",
+                    "example": "Juan Perez"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reporte de prueba generado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "nombre": {
+                      "type": "string",
+                      "description": "Nombre procesado del reporte",
+                      "example": "Juan Perez"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/solicitud/generar-pdf-adelanto": {
+      "post": {
+        "tags": ["solicitudes"],
+        "summary": "Generar PDF de Solicitud de Adelanto de Comisión",
+        "description": "Genera un PDF con la solicitud de adelanto de comisión para un agente",
+        "operationId": "generarPdfSolicitudAdelanto",
+        "parameters": [
+          {
+            "name": "x-username",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 100
+            },
+            "description": "Nombre de usuario que realiza la petición"
+          },
+          {
+            "name": "x-rol",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 50
+            },
+            "description": "Rol del usuario en el sistema"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["solicitud"],
+                "properties": {
+                  "solicitud": {
+                    "type": "string",
+                    "pattern": "^IFP_\\d+$",
+                    "maxLength": 50,
+                    "description": "Número de solicitud para generar el PDF de adelanto",
+                    "example": "IFP_416391"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "PDF generado exitosamente",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/solicitudes/{id}/reportes/edn": {
+      "get": {
+        "tags": ["reportes"],
+        "summary": "Generar Reporte EDN (Estudio de Necesidades)",
+        "description": "Genera el reporte de Estudio de Necesidades para una solicitud IFP específica. Puede descargar el PDF localmente o generarlo y subirlo al Cloud Storage.",
+        "operationId": "generarReporteEdn",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^IFP_\\d+$"
+            },
+            "description": "ID de la solicitud IFP",
+            "example": "IFP_416391"
+          },
+          {
+            "name": "usuario",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Usuario que genera el reporte. Si no se especifica, se toma de x-username o default 'SISTEMA'",
+            "example": "JPEREZ"
+          },
+          {
+            "name": "generarYSubir",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false
+            },
+            "description": "Si es true, genera y sube al Cloud Storage. Si es false, solo descarga el PDF localmente",
+            "example": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reporte EDN generado exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "estado": {
+                      "type": "string",
+                      "description": "Estado de la operación",
+                      "example": "OK"
+                    },
+                    "mensaje": {
+                      "type": "string",
+                      "description": "Mensaje descriptivo del resultado",
+                      "example": "Estudio de Necesidades descargado exitosamente"
+                    },
+                    "archivoSerializado": {
+                      "type": "string",
+                      "description": "PDF en formato base64 (solo cuando generarYSubir=false)",
+                      "example": "JVBERi0xLjQKJeLjz9MK..."
+                    },
+                    "nombreArchivo": {
+                      "type": "string",
+                      "description": "Nombre sugerido para el archivo PDF",
+                      "example": "EN_IFP_416391_12345678.pdf"
+                    },
+                    "url": {
+                      "type": "string",
+                      "description": "URL del documento en Cloud Storage (solo cuando generarYSubir=true)",
+                      "example": "https://storage.example.com/rentas/EN_IFP_416391_12345678.pdf"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/solicitudes/{id}/reportes/detalle-solicitud": {
+      "get": {
+        "tags": ["reportes"],
+        "summary": "Generar PDFs del detalle de solicitud",
+        "description": "Genera el PDF de detalle de cotización (siempre) y el PDF de tabla de rescate (solo si la solicitud tiene rescate disponible)",
+        "operationId": "detalleSolicitud",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^IFP_\\d+$"
+            },
+            "description": "ID de la solicitud a consultar",
+            "example": "IFP_416391"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDFs generados exitosamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indica si la operación fue exitosa",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Mensaje descriptivo de la operación",
+                      "example": "PDFs de Detalle de Cotización y Tabla de Rescate generados correctamente"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "pdfDetalleCotizacion": {
+                          "type": "object",
+                          "properties": {
+                            "base64": {
+                              "type": "string",
+                              "description": "PDF del detalle de cotización codificado en base64"
+                            },
+                            "filename": {
+                              "type": "string",
+                              "description": "Nombre del archivo PDF",
+                              "example": "DetalleCotizacion_IFP_416391.pdf"
+                            },
+                            "size": {
+                              "type": "number",
+                              "description": "Tamaño del PDF en bytes",
+                              "example": 45678
+                            }
+                          }
+                        },
+                        "pdfTablaRescate": {
+                          "type": "object",
+                          "nullable": true,
+                          "properties": {
+                            "base64": {
+                              "type": "string",
+                              "description": "PDF de la tabla de rescate codificado en base64"
+                            },
+                            "filename": {
+                              "type": "string",
+                              "description": "Nombre del archivo PDF",
+                              "example": "TablaRescate_IFP_416391.pdf"
+                            },
+                            "size": {
+                              "type": "number",
+                              "description": "Tamaño del PDF en bytes",
+                              "example": 38456
+                            }
+                          },
+                          "description": "Solo presente si la solicitud tiene rescate disponible"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/solicitudes/{id}/reportes/detalle-cotizacion": {
+      "get": {
+        "tags": ["reportes"],
+        "summary": "Generar y descargar PDF de Detalle de Cotización",
+        "description": "Genera el PDF de detalle de cotización para una solicitud IFP y lo retorna directamente como archivo binario (Content-Type: application/pdf). Usa el stored procedure usp_cwrv_reporte_ifp para obtener los datos.",
+        "operationId": "generarPdfDetalleCotizacion",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^IFP_\\d+$"
+            },
+            "description": "ID de la solicitud a consultar (formato: IFP_XXXXXX)",
+            "example": "IFP_416391"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF de Detalle de Cotización generado exitosamente",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "PDF descargado directamente"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Solicitud no encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "SOLICITUD_NOT_FOUND",
+                    "message": "No se encontró la solicitud con ID: IFP_416391",
+                    "details": ["La solicitud IFP_416391 no existe en la base de datos o no tiene cotizaciones"]
+                  },
+                  "transactionId": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/solicitudes/{id}/reportes/tabla-rescate": {
+      "get": {
+        "tags": ["reportes"],
+        "summary": "Generar y descargar PDF de Tabla de Rescate",
+        "description": "Genera el PDF de tabla de rescate para una solicitud IFP y lo retorna directamente como archivo binario (Content-Type: application/pdf). Retorna 404 si la solicitud no tiene rescate disponible (basado en usp_cwrv_indicador_rescate). Usa los stored procedures usp_cwrv_reporte_ifp y usp_cwrv_listar_rescate_ifp.",
+        "operationId": "generarPdfTablaRescate",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^IFP_\\d+$"
+            },
+            "description": "ID de la solicitud a consultar (formato: IFP_XXXXXX)",
+            "example": "IFP_416391"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "PDF de Tabla de Rescate generado exitosamente",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary",
+                  "description": "PDF descargado directamente"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Solicitud no encontrada o no tiene tabla de rescate disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "error": {
+                    "code": "Not Found",
+                    "message": "La solicitud IFP_416391 no tiene tabla de rescate disponible",
+                    "details": []
+                  },
+                  "transactionId": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Código de error",
+            "example": "VALIDATION_ERROR"
+          },
+          "message": {
+            "type": "string",
+            "description": "Mensaje descriptivo del error",
+            "example": "Error de validación en los datos enviados"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Detalles adicionales del error",
+            "example": ["El campo 'nombre' es requerido"]
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/Error"
+          },
+          "transactionId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID de transacción para trazabilidad",
+            "example": "550e8400-e29b-41d4-a716-446655440000"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Solicitud inválida",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "VALIDATION_ERROR",
+                "message": "Error de validación en los datos enviados",
+                "details": ["El campo 'nombre' es requerido"]
+              },
+              "transactionId": "550e8400-e29b-41d4-a716-446655440000"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Recurso no encontrado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "SOLICITUD_NOT_FOUND",
+                "message": "No se encontró la solicitud con ID: IFP_416391",
+                "details": ["La solicitud IFP_416391 no existe en la base de datos"]
+              },
+              "transactionId": "550e8400-e29b-41d4-a716-446655440000"
+            }
+          }
+        }
+      },
+      "InternalServerError": {
+        "description": "Error interno del servidor",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            },
+            "example": {
+              "error": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "Error interno del servidor",
+                "details": []
+              },
+              "transactionId": "550e8400-e29b-41d4-a716-446655440000"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "API Key para autenticación"
+      }
+    }
+  }
+}
+

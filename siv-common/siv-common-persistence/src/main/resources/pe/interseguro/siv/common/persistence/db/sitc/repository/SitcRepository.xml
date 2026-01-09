@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.interseguro.siv.common.persistence.db.sitc.repository.SitcRepository">
+	<resultMap type="pe.interseguro.siv.common.persistence.db.sitc.bean.PolizaCobro" id="resultCursorPolizas">
+	<id column="numero_poliza" property="numeroPoliza" />
+	<result column="cliente" property="cliente" />
+	<result column="emailenviopoliza" property="emailEnvioPoliza" />
+	<result column="perioricidad_pago" property="frecuenciaPago" />
+	<result column="estado_afiliacion" property="estadoAfiliacion" ></result>
+	<result column="monto_pago_moneda" property="monedaPago" />
+	<result column="monto_pago_cantidad" property="montoPago" />
+	<result column="via_cobro" property="viaCobro" />
+	<result column="numero_tarjeta" property="numeroTarjeta" />
+	<result column="fecha_pago" property="fechaPago" /><result column="plan"
+		property="producto" /></resultMap>
+</mapper>

@@ -1,0 +1,284 @@
+# =============================================================================
+# VARIABLES DE ENTORNO - EJEMPLO
+# =============================================================================
+# INSTRUCCIONES:
+# 1. Copiar estos valores a tu archivo .env o configurarlos en tu sistema
+# 2. Reemplazar todos los valores con credenciales reales
+# 3. NO subir archivos con credenciales reales al repositorio
+# =============================================================================
+
+# -------------------------------------------------------------------------------
+# Server Configuration
+# -------------------------------------------------------------------------------
+SERVER_PORT=8001
+ENVIRONMENT=local
+
+# -------------------------------------------------------------------------------
+# Security - Spring Boot Admin
+# -------------------------------------------------------------------------------
+SECURITY_USERNAME=admin
+SECURITY_PASSWORD=CAMBIAR_PASSWORD_SEGURO
+ADMIN_CLIENT_URL=http://localhost:3143
+ADMIN_CLIENT_USERNAME=user
+ADMIN_CLIENT_PASSWORD=CAMBIAR_PASSWORD
+
+# -------------------------------------------------------------------------------
+# SSL Configuration
+# -------------------------------------------------------------------------------
+SSL_ENABLED=false
+SSL_KEYSTORE=classpath:ssl-server.jks
+SSL_KEYSTORE_PASSWORD=CAMBIAR_PASSWORD
+
+# -------------------------------------------------------------------------------
+# CORS & API Keys
+# -------------------------------------------------------------------------------
+CORS_ORIGINS=*
+API_KEY_VALUE=GENERAR_API_KEY_UNICA
+API_KEY_VISAPI_VALUE=GENERAR_API_KEY_VISAPI
+
+# -------------------------------------------------------------------------------
+# Database - MySQL
+# -------------------------------------------------------------------------------
+DB_MYSQL_URL=jdbc:mysql://localhost:3306/siv_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Lima
+DB_MYSQL_USERNAME=usuario_mysql
+DB_MYSQL_PASSWORD=CAMBIAR_PASSWORD_MYSQL
+DB_SHOW_SQL=true
+
+# -------------------------------------------------------------------------------
+# Database - PostgreSQL ACSELE
+# -------------------------------------------------------------------------------
+DB_ACSELE_URL=jdbc:postgresql://localhost:5432/cotizador-db?sslmode=disable
+DB_ACSELE_USERNAME=usuario_acsele
+DB_ACSELE_PASSWORD=CAMBIAR_PASSWORD_ACSELE
+
+# -------------------------------------------------------------------------------
+# Database - SQL Server CRM
+# -------------------------------------------------------------------------------
+DB_CRM_URL=jdbc:sqlserver://localhost:1433;databaseName=ISCRM_MSCRM
+DB_CRM_USERNAME=usuario_crm
+DB_CRM_PASSWORD=CAMBIAR_PASSWORD_CRM
+
+# -------------------------------------------------------------------------------
+# Database - PostgreSQL SITC
+# -------------------------------------------------------------------------------
+DB_SITC_URL=jdbc:postgresql://localhost:5432/dbiopuat?sslmode=disable
+DB_SITC_USERNAME=usuario_sitc
+DB_SITC_PASSWORD=CAMBIAR_PASSWORD_SITC
+
+# -------------------------------------------------------------------------------
+# Database - PostgreSQL General
+# -------------------------------------------------------------------------------
+DB_POSTGRES_URL=jdbc:postgresql://localhost:5432/cotizador-db?sslmode=disable
+DB_POSTGRES_USERNAME=postgres
+DB_POSTGRES_PASSWORD=CAMBIAR_PASSWORD_POSTGRES
+
+# -------------------------------------------------------------------------------
+# Email Services
+# -------------------------------------------------------------------------------
+EMAIL_SERVER_DIGITAL=https://api-email-digital.ejemplo.com
+EMAIL_SERVER2=https://api-email2.ejemplo.com
+EMAIL_SERVER=http://localhost:8025
+EMAIL_REMITENTE=noreply@ejemplo.com
+EMAIL_DESTINATARIOS=admin@ejemplo.com,qa@ejemplo.com
+EMAIL_PRUEBAS=qa@ejemplo.com
+EMAIL_SOLICITUD_REMITENTE=noreply@ejemplo.com
+EMAIL_SUPERVISOR_ALERTA=supervisor@ejemplo.com
+
+# -------------------------------------------------------------------------------
+# SMS Services
+# -------------------------------------------------------------------------------
+SMS_SERVER2=https://api-sms.ejemplo.com
+SMS_SERVER=http://localhost:8026
+SMS_VERSION=2
+SMS_MAIL_VERSION=2
+SMS_CELULAR_PRUEBAS=123456789
+
+# -------------------------------------------------------------------------------
+# Azman Authentication
+# -------------------------------------------------------------------------------
+AZMAN_SERVER=http://localhost/WSAzmanRest
+AZMAN_USERNAME=usuario_azman
+AZMAN_PASSWORD=CAMBIAR_PASSWORD_AZMAN
+AZMAN_CLIENT_ID=GENERAR_CLIENT_ID
+AZMAN_CLIENT_SECRET=GENERAR_CLIENT_SECRET
+
+# -------------------------------------------------------------------------------
+# Digital Services
+# -------------------------------------------------------------------------------
+DIGITAL_SERVER=http://localhost/api/v1
+DIGITAL_CLIENT_ID=GENERAR_CLIENT_ID_DIGITAL
+DIGITAL_CLIENT_SECRET=GENERAR_CLIENT_SECRET_DIGITAL
+
+# -------------------------------------------------------------------------------
+# BUPO Services
+# -------------------------------------------------------------------------------
+BUPO_PROSPECTO_SERVER=http://localhost:8100/api/v1/prospecto
+BUPO_AGENTE_SERVER=http://localhost:8101/api/v1/agente
+
+# -------------------------------------------------------------------------------
+# Global Services
+# -------------------------------------------------------------------------------
+GLOBAL_POLIZA_SERVER=http://localhost:8108/api/v1/poliza
+GLOBAL_PLAFT_SERVER=http://localhost:8104/api/v1/plaft
+GLOBAL_ESTRUCTURA_COMERCIAL_SERVER=http://localhost:8091/api/v1/estructura_comercial
+GLOBAL_DOCUMENTO_SERVER=http://localhost:8078/api/v1/documento
+GLOBAL_VTIGER_SERVER=http://localhost:3130
+GLOBAL_SOLICITUD_SERVER=http://localhost:8065/api/v1/solicitud
+GLOBAL_TRANSMISION_SERVER=http://localhost:3167/api/v1/transmision
+GLOBAL_VTIGER_SERVER_V2=http://localhost:3130
+GLOBAL_PLAN_GARANTIZADO_SERVER=http://localhost:8035/api/v1/plan-garantizado/cotizador
+GLOBAL_PAYMENT_SERVER=https://payment-api.ejemplo.com/api/v2
+GLOBAL_ASL_ENDOSO_SERVER=http://localhost:8090/is-asl-endosovida/api/v1
+GLOBAL_PAGOS_SERVER=http://localhost:8109/api/v1/pagos
+
+# -------------------------------------------------------------------------------
+# Payment Configuration
+# -------------------------------------------------------------------------------
+PAYMENT_TOPIC=payment-topic-test
+
+# -------------------------------------------------------------------------------
+# CRM Services
+# -------------------------------------------------------------------------------
+CRM_SERVER=http://localhost:82/wsVentaDigital/ADNDigital.svc
+CRM_SERVER_V2=http://localhost:3121
+CRM_COTIZADOR_FLEX_SERVER=https://site.ejemplo.com/CotizadorWebCRM/RegistroCotizacion.aspx?
+CRM_COTIZADOR_VIDA_SERVER=https://crm.ejemplo.com/CRM_WebCotizador_ADN/VentaDigital/Intermedio
+
+# -------------------------------------------------------------------------------
+# Cloud Storage
+# -------------------------------------------------------------------------------
+CLOUD_STORAGE_SERVER=http://localhost:3014
+
+# -------------------------------------------------------------------------------
+# Indenova (Firma Electrónica)
+# -------------------------------------------------------------------------------
+INDENOVA_USER_ID=12345
+INDENOVA_TOKEN_KEY=Basic GENERAR_TOKEN_BASE64
+INDENOVA_CLIENT_ID=GENERAR_CLIENT_ID_INDENOVA
+INDENOVA_SECRET=GENERAR_SECRET_INDENOVA
+
+# -------------------------------------------------------------------------------
+# Vtiger CRM
+# -------------------------------------------------------------------------------
+VTIGER_SERVER=http://localhost:8080
+VTIGER_SERVER_V2=http://localhost:8080
+VTIGER_USERNAME=admin
+VTIGER_PASSWORD=CAMBIAR_PASSWORD_VTIGER
+
+# -------------------------------------------------------------------------------
+# PLAFT Service
+# -------------------------------------------------------------------------------
+PLAFT_SERVER=http://localhost:8062
+PLAFT_CLIENT_ID=cliente_plaft
+PLAFT_CLIENT_SECRET=CAMBIAR_SECRET_PLAFT
+
+# -------------------------------------------------------------------------------
+# ACSELE Service
+# -------------------------------------------------------------------------------
+ACSELE_SERVER=http://localhost:7001/ws/
+
+# -------------------------------------------------------------------------------
+# Vida Free Service
+# -------------------------------------------------------------------------------
+VIDAFREE_SERVER=https://api-vidafree.ejemplo.com/vida-api/v1/
+VIDAFREE_API_KEY=GENERAR_API_KEY_VIDAFREE
+
+# -------------------------------------------------------------------------------
+# Culqi (Pasarela de Pagos)
+# -------------------------------------------------------------------------------
+# NOTA: Usar keys de TEST en desarrollo, NUNCA usar keys de producción
+CULQI_PUBLIC_KEY=pk_test_TU_PUBLIC_KEY
+CULQI_SECRET_KEY=sk_test_TU_SECRET_KEY
+
+# -------------------------------------------------------------------------------
+# Niubiz (Visa)
+# -------------------------------------------------------------------------------
+NIUBIZ_BASE_URL=https://apitestenv.vnforapps.com/
+NIUBIZ_MERCHANT_ID=522591303
+NIUBIZ_USERNAME=usuario_niubiz@ejemplo.com
+NIUBIZ_PASSWORD=CAMBIAR_PASSWORD_NIUBIZ
+
+# -------------------------------------------------------------------------------
+# Passarella (Payment Gateway)
+# -------------------------------------------------------------------------------
+PASSARELLA_SERVER=https://payment-gateway.ejemplo.com/api/v2/
+PASSARELLA_API_KEY=GENERAR_API_KEY_PASSARELLA
+
+# -------------------------------------------------------------------------------
+# ESN Service
+# -------------------------------------------------------------------------------
+ESN_SERVER=http://localhost:3779/estudio-necesidades-api/v1/
+ESN_USER=USUARIO_ESN
+ESN_PASSWORD=CAMBIAR_PASSWORD_ESN
+
+# -------------------------------------------------------------------------------
+# CVC Service
+# -------------------------------------------------------------------------------
+CVC_SERVER=http://localhost:3003/is-cvc-api/api/v1/
+
+# -------------------------------------------------------------------------------
+# SITC Service
+# -------------------------------------------------------------------------------
+SITC_SERVER=http://localhost:8076/Sat/
+
+# -------------------------------------------------------------------------------
+# SAMP Service
+# -------------------------------------------------------------------------------
+SAMP_SERVER=http://localhost:8018/Samp/
+
+# -------------------------------------------------------------------------------
+# Consentimiento Service
+# -------------------------------------------------------------------------------
+CONSENTIMIENTO_API=http://localhost:8040/consentimiento-api/api/v1/
+SME_API=http://localhost:8041/sme-envio-documentos/api/v1/
+SMS_API=http://localhost:8027/EnvioSMS/WSWebDinamicaSMS.svc/
+CONSENTIMIENTO_V2_API=https://api-consentimiento.ejemplo.com
+CONSENTIMIENTO_URL=https://consentimiento.ejemplo.com/
+
+# SME PDF Generation
+SME_PDF_RUTA_WORD=//servidor/plantillas
+SME_CONSENTIMIENTO_SERVER=http://localhost:8044/sme-gestor-documentos/api/
+SME_PDF_RUTA_PDF=//servidor/pdf/
+
+# -------------------------------------------------------------------------------
+# Plan Garantizado API
+# -------------------------------------------------------------------------------
+PG_API_KEY=GENERAR_API_KEY_PG
+PG_API_SERVER=https://api-pg.ejemplo.com/pg-api/v1/
+PG_API_RPC_CUMULO=https://api-pg-rpc.ejemplo.com/pg-rpc/v1/acseleRpc/cumulo
+API_CUMULO_SERVER=https://api-cumulo.ejemplo.com/cumulo
+FLAG_API_CUMULO=2
+
+# -------------------------------------------------------------------------------
+# Notificaciones
+# -------------------------------------------------------------------------------
+PG_API_NOTIFY=https://api-notificaciones.ejemplo.com/notificacion/enviar-notificacion
+PG_API_NOTIFICACIONES_SMS=https://api-notificaciones.ejemplo.com/notificacion/enviar-sms
+PG_API_NOTIFICACIONES_TRAZABILIDAD=https://api-notificaciones.ejemplo.com/notificacion/actualizar-consentimiento-aceptado
+
+# -------------------------------------------------------------------------------
+# URLs Públicas
+# -------------------------------------------------------------------------------
+URL_COTIZACION_PDF=https://www.ejemplo.com/siv-admin/api/v1/cotizaciones/pdf/
+URL_COTIZACION_VIDAFREE_PDF=https://www.ejemplo.com/siv-admin/api/v1/cotizaciones/vidafree/pdf/
+URL_COTIZACION_PDF2=https://www.ejemplo.com/siv-admin/api/v1/cotizaciones/pdf/
+URL_ADN_PDF=https://www.ejemplo.com/siv-admin/api/v1/adns/pdf/
+URL_COTIZACION_VIDAFREE=https://www.ejemplo.com/vidafree/?token=
+URL_SOLICITUD_LINK_PAGO=https://www.ejemplo.com/siv-web/zonasegura/pago?cliente=
+URL_SOLICITUD_LINK_PAGO_RECARGO=https://www.ejemplo.com/siv-web/zonasegura/pagoRecargo?cliente=
+URL_ADN_FRONT=https://www.ejemplo.com/
+
+# Link de Pagos
+URL_LINK_PAGO=https://api-pagos.ejemplo.com
+LINK_PAGO_APLICACION=TI_ADN_LOCAL
+
+# -------------------------------------------------------------------------------
+# Rutas de Archivos
+# -------------------------------------------------------------------------------
+RUTA_PLANTILLA_DOC=//servidor/templates
+
+# -------------------------------------------------------------------------------
+# New Relic
+# -------------------------------------------------------------------------------
+NEW_RELIC_APP_NAME=SIV Admin - Local
+NEW_RELIC_LICENSE_KEY=OBTENER_LICENSE_KEY_DE_NEW_RELIC

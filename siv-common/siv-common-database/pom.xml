@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>pe.interseguro.siv</groupId>
+		<artifactId>siv-common</artifactId>
+		<version>1.0</version>
+	</parent>
+	<groupId>pe.interseguro.siv</groupId>
+	<artifactId>siv-common-database</artifactId>
+	<version>1.0</version>
+	<packaging>jar</packaging>
+
+	<name>siv-common-database</name>
+	<url>https://www.interseguro.pe</url>
+
+	<!-- ........................................................................................ -->
+	<!-- PROPERTIES -->
+	<!-- ........................................................................................ -->
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<!-- ........................................................................................ -->
+	<!-- BUILD -->
+	<!-- ........................................................................................ -->
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution> <!--mvn antrun:run@hbm2java -->
+						<id>hbm2java</id>
+						<phase>none</phase>
+						<configuration>
+							<target>
+								<echo message="Start generating entities .." />
+								<taskdef name="hibernatetool"
+									classname="org.hibernate.tool.ant.HibernateToolTask" />
+								<hibernatetool>
+									<jdbcconfiguration
+										revengfile="src/main/resources/hibernate.reveng.xml"
+										packagename="pe.interseguro.siv.common.persistence.db"
+										detectmanytomany="true"
+										configurationfile="src/main/resources/hibernate.cfg.xml" />
+									<hbm2java destdir="src/main/java" jdk5="true"
+										ejb3="true" />
+								</hibernatetool>
+								<echo message="End generating entities" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-core</artifactId>
+						<version>4.3.11.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-entitymanager</artifactId>
+						<version>4.3.11.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate.common</groupId>
+						<artifactId>hibernate-commons-annotations</artifactId>
+						<version>4.0.5.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate.javax.persistence</groupId>
+						<artifactId>hibernate-jpa-2.1-api</artifactId>
+						<version>1.0.0.Final</version>
+					</dependency>
+					<dependency>
+						<groupId>javax.transaction</groupId>
+						<artifactId>jta</artifactId>
+						<version>1.1</version>
+					</dependency>
+					<dependency>
+						<groupId>freemarker</groupId>
+						<artifactId>freemarker</artifactId>
+						<version>2.3.8</version>
+					</dependency>
+
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>5.1.47</version>
+					</dependency>
+
+					<dependency>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+						<version>1.1</version>
+					</dependency>
+					<dependency>
+						<groupId>commons-collections</groupId>
+						<artifactId>commons-collections</artifactId>
+						<version>3.2.1</version>
+					</dependency>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-tools</artifactId>
+						<version>4.3.2.Final</version>
+						<exclusions>
+							<exclusion>
+								<groupId>*</groupId>
+								<artifactId>*</artifactId>
+							</exclusion>
+						</exclusions>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+		</plugins>
+	</build>
+
+
+</project>

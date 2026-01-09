@@ -1,0 +1,443 @@
+# =============================================================================
+# PLANTILLA DE CONFIGURACIÓN - SIV ADMIN
+# =============================================================================
+# IMPORTANTE: 
+# 1. Copiar este archivo como application.properties o application-{profile}.properties
+# 2. Reemplazar todos los valores entre ${} con las credenciales reales
+# 3. NO subir archivos con credenciales reales al repositorio
+# =============================================================================
+
+spring.profiles.active: local
+
+# -------------------------------------------------------------------------------
+# General Configuration
+# -------------------------------------------------------------------------------
+
+server.port: ${SERVER_PORT:8001}
+server.servlet.context-path: /siv-admin
+
+# Logging
+logging.level.pe.com.interseguro.siv.admin: INFO
+logging.level.org.springframework.web: DEBUG
+
+server.use-forwarded-headers: true
+
+# -------------------------------------------------------------------------------
+# Security - Spring Actuator
+# -------------------------------------------------------------------------------
+spring.security.user.name: ${SECURITY_USERNAME:admin}
+spring.security.user.password: ${SECURITY_PASSWORD}
+
+# Spring Boot Admin Client
+spring.boot.admin.client.url: ${ADMIN_CLIENT_URL:http://localhost:3143}
+spring.boot.admin.client.username: ${ADMIN_CLIENT_USERNAME:user}
+spring.boot.admin.client.password: ${ADMIN_CLIENT_PASSWORD}
+
+# Actuator endpoints
+management.endpoints.web.exposure.include: *
+management.endpoint.health.show-details: always
+
+# -------------------------------------------------------------------------------
+# SSL Configuration
+# -------------------------------------------------------------------------------
+server.ssl.enabled: ${SSL_ENABLED:false}
+server.ssl.key-store-type: PKCS12
+server.ssl.key-store: ${SSL_KEYSTORE:classpath:ssl-server.jks}
+server.ssl.key-store-password: ${SSL_KEYSTORE_PASSWORD}
+server.ssl.protocol: TLS
+server.ssl.enabled-protocols: TLSv1.2,TLSv1.3
+
+# -------------------------------------------------------------------------------
+# CORS Configuration
+# -------------------------------------------------------------------------------
+siv.cors.origins: ${CORS_ORIGINS:*}
+siv.cors.headers: *
+siv.cors.methods: OPTIONS,HEAD,GET,PUT,POST,DELETE,PATCH
+
+# API Keys
+siv.header.apikey-name: X-Apikey
+siv.header.apikey-value: ${API_KEY_VALUE}
+siv.header.apikey-visapi-name: X-Application-VisApi
+siv.header.apikey-visapi-value: ${API_KEY_VISAPI_VALUE}
+
+# -------------------------------------------------------------------------------
+# Database - MySQL
+# -------------------------------------------------------------------------------
+persistence.db.driverClass: com.mysql.cj.jdbc.Driver
+persistence.db.url: ${DB_MYSQL_URL}
+persistence.db.username: ${DB_MYSQL_USERNAME}
+persistence.db.password: ${DB_MYSQL_PASSWORD}
+persistence.db.domain: pe.interseguro.siv.common.persistence.db.mysql.domain
+persistence.db.dialect: org.hibernate.dialect.MySQLDialect
+persistence.db.show_sql: ${DB_SHOW_SQL:true}
+
+# -------------------------------------------------------------------------------
+# Database - PostgreSQL ACSELE
+# -------------------------------------------------------------------------------
+persistence.db.acsele.driverClass: org.postgresql.Driver
+persistence.db.acsele.url: ${DB_ACSELE_URL}
+persistence.db.acsele.username: ${DB_ACSELE_USERNAME}
+persistence.db.acsele.password: ${DB_ACSELE_PASSWORD}
+persistence.db.acsele.domain: pe.interseguro.siv.common.persistence.db.acsele.domain
+
+# -------------------------------------------------------------------------------
+# Database - SQL Server CRM
+# -------------------------------------------------------------------------------
+persistence.db.crm.driverClass: com.microsoft.sqlserver.jdbc.SQLServerDriver
+persistence.db.crm.url: ${DB_CRM_URL}
+persistence.db.crm.username: ${DB_CRM_USERNAME}
+persistence.db.crm.password: ${DB_CRM_PASSWORD}
+persistence.db.crm.domain: pe.interseguro.siv.common.persistence.db.crm.domain
+
+# -------------------------------------------------------------------------------
+# Database - PostgreSQL SITC
+# -------------------------------------------------------------------------------
+persistence.db.sitc.driverClass: org.postgresql.Driver
+persistence.db.sitc.url: ${DB_SITC_URL}
+persistence.db.sitc.username: ${DB_SITC_USERNAME}
+persistence.db.sitc.password: ${DB_SITC_PASSWORD}
+persistence.db.sitc.domain: pe.interseguro.siv.common.persistence.db.sitc.domain
+
+# -------------------------------------------------------------------------------
+# Database - PostgreSQL General
+# -------------------------------------------------------------------------------
+persistence.db.postgres.driverClass: org.postgresql.Driver
+persistence.db.postgres.url: ${DB_POSTGRES_URL}
+persistence.db.postgres.username: ${DB_POSTGRES_USERNAME}
+persistence.db.postgres.password: ${DB_POSTGRES_PASSWORD}
+persistence.db.postgres.domain: pe.interseguro.siv.common.persistence.db.postgres.domain
+
+# -------------------------------------------------------------------------------
+# REST Client Configuration
+# -------------------------------------------------------------------------------
+persistence.rest.client.encoding: UTF-8
+persistence.rest.client.timeout.wait.pesado: 210000
+persistence.rest.client.timeout.connection.pesado: 210000
+persistence.rest.client.timeout.wait.ligero: 30000
+persistence.rest.client.timeout.connection.ligero: 30000
+
+# -------------------------------------------------------------------------------
+# Email Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.interseguro.correo.servidor.digital: ${EMAIL_SERVER_DIGITAL}
+persistence.rest.client.interseguro.correo.enviarCorreo.digital: /v2/email/broadcast/send
+persistence.rest.client.interseguro.correo.servidor2: ${EMAIL_SERVER2}
+persistence.rest.client.interseguro.correo.enviarCorreo2: /v2/email/broadcast/send/sendgrid
+persistence.rest.client.interseguro.correo.servidor: ${EMAIL_SERVER}
+persistence.rest.client.interseguro.correo.enviarCorreo: /ServicioMail/Servicio_Enviar_Correo.svc/enviarCorreoRemitenteAdjuntos
+persistence.rest.client.interseguro.correo.enviarCorreo.remitente: ${EMAIL_REMITENTE:siv_admin@interseguro.com.pe}
+persistence.rest.client.interseguro.correo.enviarCorreo.remitente.display: SIV ADMIN
+persistence.rest.client.interseguro.correo.enviarCorreo.destinatario: ${EMAIL_DESTINATARIOS}
+
+# Email solicitud
+persistence.rest.client.interseguro.correo.enviarCorreo.solicitud.remitente: ${EMAIL_SOLICITUD_REMITENTE:noreply@interseguro.com.pe}
+persistence.rest.client.interseguro.correo.enviarCorreo.solicitud.remitente.display: Interseguro Vida Individual
+persistence.rest.client.interseguro.correo.enviarCorreo.solicitud.asunto: Solicitud de Seguro Vida
+persistence.rest.client.interseguro.correo.enviarCorreo.adn.asunto: Solicitud de Seguro Vida
+persistence.rest.client.interseguro.correo.enviarCorreo.solicitud.email.pruebas: ${EMAIL_PRUEBAS}
+persistence.rest.client.interseguro.correo.enviarCorreo.solicitud.asunto.supervisor.alerta: Alerta DPS
+persistence.rest.client.interseguro.correo.enviarCorreo.destinatario.supervisor.alerta.pago: ${EMAIL_SUPERVISOR_ALERTA}
+
+asunto.envioCorreo.consentimiento: Solicitud de consentimiento de asesoria
+asunto.envioCorreo.consentimiento.pdf: Constancia de consentimiento de asesoria
+
+# -------------------------------------------------------------------------------
+# SMS Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.interseguro.sms.servidor2: ${SMS_SERVER2}
+persistence.rest.client.interseguro.sms.enviarSms2: /api/sms/single/send
+persistence.rest.client.interseguro.sms.enviarSms.v: ${SMS_VERSION:2}
+persistence.rest.client.interseguro.sms.enviarMail.v: ${SMS_MAIL_VERSION:2}
+persistence.rest.client.interseguro.sms.servidor: ${SMS_SERVER}
+persistence.rest.client.interseguro.sms.enviarSms: /EnvioSMS/WSWebDinamicaSMS.svc/rest/EnviarSMS
+
+# -------------------------------------------------------------------------------
+# Azman Authentication Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.interseguro.azman.servidor: ${AZMAN_SERVER}
+persistence.rest.client.interseguro.azman.token: /token
+persistence.rest.client.interseguro.azman.token.grantType: password
+persistence.rest.client.interseguro.azman.token.username: ${AZMAN_USERNAME}
+persistence.rest.client.interseguro.azman.token.password: ${AZMAN_PASSWORD}
+persistence.rest.client.interseguro.azman.token.clientId: ${AZMAN_CLIENT_ID}
+persistence.rest.client.interseguro.azman.token.clientSecret: ${AZMAN_CLIENT_SECRET}
+persistence.rest.client.interseguro.azman.obtenerDatosUsuario: /api/Azman/ObtenerDatosUsuario
+persistence.rest.client.interseguro.azman.obtenerDatosUsuario.aplicacion: PORTALSISTEMA
+persistence.rest.client.interseguro.azman.obtenerDatosUsuario.dominio: dinterseguro
+
+# -------------------------------------------------------------------------------
+# Digital Services
+# -------------------------------------------------------------------------------
+persistence.rest.client.interseguro.digital.servidor: ${DIGITAL_SERVER}
+persistence.rest.client.interseguro.digital.token: /oauth/access_token
+persistence.rest.client.interseguro.digital.token.grantType: client_credentials
+persistence.rest.client.interseguro.digital.token.clientId: ${DIGITAL_CLIENT_ID}
+persistence.rest.client.interseguro.digital.token.clientSecret: ${DIGITAL_CLIENT_SECRET}
+persistence.rest.client.interseguro.digital.obtenerCliente: /cliente/{numeroDocumento}
+
+# -------------------------------------------------------------------------------
+# BUPO Services
+# -------------------------------------------------------------------------------
+persistence.rest.client.bupo.prospecto.servidor: ${BUPO_PROSPECTO_SERVER}
+persistence.rest.client.bupo.prospecto.ValidarProspectoAsignacion: /validacion/
+persistence.rest.client.bupo.agente.servidor: ${BUPO_AGENTE_SERVER}
+persistence.rest.client.bupo.agente.ObtenerDatosAgente: 
+persistence.rest.client.bupo.prospecto.AsginarProspecto: /asignacion
+persistence.rest.client.bupo.prospecto.CrearProspecto: /
+
+# -------------------------------------------------------------------------------
+# Global Services
+# -------------------------------------------------------------------------------
+persistence.rest.client.global.poliza.servidor: ${GLOBAL_POLIZA_SERVER}
+persistence.rest.client.global.plaft.servidor: ${GLOBAL_PLAFT_SERVER}
+persistence.rest.client.global.estructura.comercial.servidor: ${GLOBAL_ESTRUCTURA_COMERCIAL_SERVER}
+persistence.rest.client.global.documento.servidor: ${GLOBAL_DOCUMENTO_SERVER}
+persistence.rest.client.global.vtiger.vida.servidor: ${GLOBAL_VTIGER_SERVER}
+persistence.rest.client.global.solicitud.servidor: ${GLOBAL_SOLICITUD_SERVER}
+persistence.rest.client.global.transmitir.servidor: ${GLOBAL_TRANSMISION_SERVER}
+persistence.rest.client.global.vtiger.vida.servidorv2: ${GLOBAL_VTIGER_SERVER_V2}
+persistence.rest.client.global.plan.garantizado.servidor: ${GLOBAL_PLAN_GARANTIZADO_SERVER}
+persistence.rest.client.global.payment.servidor: ${GLOBAL_PAYMENT_SERVER}
+persistence.rest.client.global.asl.endoso.vida.servidor: ${GLOBAL_ASL_ENDOSO_SERVER}
+persistence.rest.client.global.pagos.servidor: ${GLOBAL_PAGOS_SERVER}
+
+# Global Payment Configuration
+persistence.rest.client.global.payment.credentials: /credentials
+persistence.rest.client.global.payment.pubsub.send: /pubsub/send
+persistence.rest.client.global.payment.topic: ${PAYMENT_TOPIC}
+persistence.rest.client.global.payment.applicationUser: ADN
+
+# -------------------------------------------------------------------------------
+# CRM Services
+# -------------------------------------------------------------------------------
+persistence.rest.client.crm.servidor: ${CRM_SERVER}
+persistence.rest.client.crm.servidor.v2: ${CRM_SERVER_V2}
+persistence.rest.client.crm.cotizadorFlex.servidor: ${CRM_COTIZADOR_FLEX_SERVER}
+persistence.rest.client.crm.cotizadorVidaIntermedio.servidor: ${CRM_COTIZADOR_VIDA_SERVER}
+
+# -------------------------------------------------------------------------------
+# Cloud Storage
+# -------------------------------------------------------------------------------
+persistence.rest.client.cloud-storage.servidor: ${CLOUD_STORAGE_SERVER}
+persistence.rest.client.cloud-storage.upload: /upload
+persistence.rest.client.cloud-storage.files: /filesDate
+persistence.rest.client.cloud-storage.file: /file
+persistence.rest.client.cloud-storage.delete: /delete
+persistence.rest.client.cloud-storage.header.app: app
+persistence.rest.client.cloud-storage.header.app.value: CRM
+
+# -------------------------------------------------------------------------------
+# Indenova (Firma Electrónica)
+# -------------------------------------------------------------------------------
+persistence.rest.client.indenova.servidor: https://www.esignabox.com/api/2.0
+persistence.rest.client.indenova.crearToken: /auth?userId=${INDENOVA_USER_ID}
+persistence.rest.client.indenova.crearToken.llave: ${INDENOVA_TOKEN_KEY}
+persistence.rest.client.indenova.crearToken.request.clientId: ${INDENOVA_CLIENT_ID}
+persistence.rest.client.indenova.crearToken.request.secret: ${INDENOVA_SECRET}
+persistence.rest.client.indenova.crearToken.request.userId: ${INDENOVA_USER_ID}
+persistence.rest.client.indenova.crearCircuito: /circuit/?include=FIRST_SIGNER_LINK
+persistence.rest.client.indenova.obtenerCircuito: /circuit/{codigoCircuito}
+persistence.rest.client.indenova.obtenerDocumentoCircuito: /circuit/docs/{codigoCircuito}?doctype=signed
+
+# -------------------------------------------------------------------------------
+# Vtiger CRM
+# -------------------------------------------------------------------------------
+persistence.rest.client.vtiger.servidor: ${VTIGER_SERVER}
+persistence.rest.client.vtiger.servidor.v2: ${VTIGER_SERVER_V2}
+persistence.rest.client.vtiger.crearToken: /webservice.php?operation=getchallenge&username=
+persistence.rest.client.vtiger.crearToken.request.username: ${VTIGER_USERNAME}
+persistence.rest.client.vtiger.crearSession: /webservice.php
+persistence.rest.client.vtiger.crearSession.request.operation: login
+persistence.rest.client.vtiger.crearSession.request.username: ${VTIGER_USERNAME}
+persistence.rest.client.vtiger.crearSession.request.userclaveacceso: ${VTIGER_PASSWORD}
+persistence.rest.client.vtiger.buscar: /webservice.php?operation=query&sessionName={1}&query={2}
+persistence.rest.client.vtiger.buscar.v2: /webservice.php?operation=query&sessionName={1}&query={2}
+persistence.rest.client.vtiger.Contacto: Contacts
+persistence.rest.client.vtiger.crearContacto: create
+persistence.rest.client.vtiger.actualizarContacto: update
+
+# -------------------------------------------------------------------------------
+# PLAFT Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.plaft.servidor: ${PLAFT_SERVER}
+persistence.rest.client.plaft.token: /oauth/access_token
+persistence.rest.client.plaft.token.grantType: client_credentials
+persistence.rest.client.plaft.token.clientId: ${PLAFT_CLIENT_ID}
+persistence.rest.client.plaft.token.clientSecret: ${PLAFT_CLIENT_SECRET}
+persistence.rest.client.plaft.calificacionPropuesta: /calificacion/propuesta
+persistence.rest.client.plaft.clientId: ${PLAFT_CLIENT_ID}
+
+# -------------------------------------------------------------------------------
+# ACSELE Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.acsele.servidor: ${ACSELE_SERVER}
+persistence.rest.client.acsele.service.token: usuarios/autenticar.do
+persistence.rest.client.acsele.service.obtenerIdTercero: terceros/consultarTerceros.do
+
+# -------------------------------------------------------------------------------
+# Vida Free Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.interseguro.vidafree.servidor: ${VIDAFREE_SERVER}
+persistence.rest.client.interseguro.vidafree.apiKey: ${VIDAFREE_API_KEY}
+persistence.rest.client.interseguro.vidafree.obtenerCotizaciones: cotizaciones/documento/
+persistence.rest.client.interseguro.vidafree.obtenerCotizacionDetalle: cotizaciones/consultar
+persistence.rest.client.interseguro.vidafree.guardar: cotizaciones/guardar
+
+# -------------------------------------------------------------------------------
+# Culqi (Pasarela de Pagos)
+# -------------------------------------------------------------------------------
+persistence.rest.client.culqi.baseSecureUrl: https://secure.culqi.com/v2/
+persistence.rest.client.culqi.baseOperationUrl: https://api.culqi.com/v2/
+persistence.rest.client.culqi.tokenizar: tokens
+persistence.rest.client.culqi.cargo: charges
+persistence.rest.client.culqi.publicKey: ${CULQI_PUBLIC_KEY}
+persistence.rest.client.culqi.secretKey: ${CULQI_SECRET_KEY}
+
+# -------------------------------------------------------------------------------
+# Niubiz (Visa)
+# -------------------------------------------------------------------------------
+persistence.rest.client.niubiz.baseUrl: ${NIUBIZ_BASE_URL}
+persistence.rest.client.niubiz.securityService: api.security/v1/security
+persistence.rest.client.niubiz.sessionService: api.ecommerce/v2/ecommerce/token/session/${NIUBIZ_MERCHANT_ID}
+persistence.rest.client.niubiz.security.username: ${NIUBIZ_USERNAME}
+persistence.rest.client.niubiz.security.password: ${NIUBIZ_PASSWORD}
+
+# -------------------------------------------------------------------------------
+# Passarella (Payment Gateway)
+# -------------------------------------------------------------------------------
+persistence.rest.client.interseguro.passarella.servidor: ${PASSARELLA_SERVER}
+persistence.rest.client.interseguro.passarella.apiKey: ${PASSARELLA_API_KEY}
+persistence.rest.client.interseguro.passarella.niubiz: NIUBIZ
+persistence.rest.client.interseguro.passarella.sesion: session
+persistence.rest.client.interseguro.passarella.tokenizar: tokenize
+persistence.rest.client.interseguro.passarella.primeraprima: charge
+persistence.rest.client.interseguro.passarella.primeraprima.recargo: charge
+
+# -------------------------------------------------------------------------------
+# ESN Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.esn.servidor: ${ESN_SERVER}
+persistence.rest.client.esn.credential.user: ${ESN_USER}
+persistence.rest.client.esn.credential.pass: ${ESN_PASSWORD}
+persistence.rest.client.esn.generarpdf: formatos/generar-pdf/
+
+# -------------------------------------------------------------------------------
+# CVC Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.cvc.servidor: ${CVC_SERVER}
+persistence.rest.client.cvc: cvc
+persistence.rest.client.cvc.channel: LINK_PAGO
+
+# -------------------------------------------------------------------------------
+# SITC Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.sitc.servidor: ${SITC_SERVER}
+persistence.rest.client.sitc.token: TokenWs.svc
+
+# -------------------------------------------------------------------------------
+# SAMP Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.samp.servidor: ${SAMP_SERVER}
+persistence.rest.client.samp.registro.digitalizacion: CobranzaMorosaWs.svc
+
+# -------------------------------------------------------------------------------
+# Consentimiento Service
+# -------------------------------------------------------------------------------
+persistence.rest.client.consentimiento.api: ${CONSENTIMIENTO_API}
+persistence.rest.client.sme.api: ${SME_API}
+persistence.rest.client.sms.api: ${SMS_API}
+persistence.rest.client.consentimiento.v2.api: ${CONSENTIMIENTO_V2_API}
+persistence.consentimiento.url: ${CONSENTIMIENTO_URL}
+persistence.sme.process.enviolink: 183
+persistence.sme.process.enviopdf: 184
+persistence.consentimiento.envviolink.maxretries: 3
+
+# SME PDF Generation
+persistence.rest.client.sme.generacionpdf.rutaword: ${SME_PDF_RUTA_WORD}
+persistence.rest.client.sme.generacionpdf.plantilla.accepted: Plantilla_consentimiento_VIDA_CON_UNIVERSAL.docx
+persistence.rest.client.sme.generacionpdf.plantilla.noaccepted: Plantilla_consentimiento_VIDA_SIN_UNIVERSAL.docx
+persistence.rest.client.sme.generacionpdf.plantilla.intercorp.accepted: Plantilla_consentimiento_CON_UNIVERSAL_INTERCORP.docx
+persistence.rest.client.sme.generacionpdf.plantilla.intercorp.noaccepted: Plantilla_consentimiento_SIN_UNIVERSAL_INTERCORP.docx
+persistence.rest.client.sme.consentimiento.generarpdf: ${SME_CONSENTIMIENTO_SERVER}
+persistence.rest.client.sme.generacionpdf.rutapdf: ${SME_PDF_RUTA_PDF}
+persistence.rest.client.sme.generacionpdf.prefijopdf: adn_
+persistence.rest.client.sme.generacionpdf.tempPDFPath: /tmp/
+
+# -------------------------------------------------------------------------------
+# Plan Garantizado API
+# -------------------------------------------------------------------------------
+persistence.rest.client.pg.api.key: ${PG_API_KEY}
+persistence.rest.client.pg.api: ${PG_API_SERVER}
+persistence.rest.client.pg.crear.cotizacion: cotizaciones/crear
+persistence.rest.client.pg.cumulo: rpc/obtenerCumulo
+persistence.rest.client.pg.api.rpc.cumulo: ${PG_API_RPC_CUMULO}
+persistence.rest.client.api.cumulo: ${API_CUMULO_SERVER}
+flag_api_cumulo: ${FLAG_API_CUMULO:2}
+
+# -------------------------------------------------------------------------------
+# Notificaciones
+# -------------------------------------------------------------------------------
+persistence.rest.client.pg.api.notify: ${PG_API_NOTIFY}
+persistence.rest.client.pg.api.notify.priority: sendgrid
+persistence.rest.client.global.source.sms: sadn
+persistence.rest.client.global.source.mail: madn
+persistence.rest.client.global.source.whatsapp: wadn
+persistence.rest.client.pg.api.notificaciones.sms: ${PG_API_NOTIFICACIONES_SMS}
+persistence.rest.client.pg.api.notificaciones.trazabilidad: ${PG_API_NOTIFICACIONES_TRAZABILIDAD}
+
+# -------------------------------------------------------------------------------
+# URLs Públicas
+# -------------------------------------------------------------------------------
+url.cotizacion.pdf: ${URL_COTIZACION_PDF}
+url.cotizacion.vidafree.pdf: ${URL_COTIZACION_VIDAFREE_PDF}
+url.cotizacion.pdf2: ${URL_COTIZACION_PDF2}
+url.adn.pdf: ${URL_ADN_PDF}
+url.cotizacion.vidafree: ${URL_COTIZACION_VIDAFREE}
+url.solicitud.link.pago: ${URL_SOLICITUD_LINK_PAGO}
+url.solicitud.link.pagoRecargo: ${URL_SOLICITUD_LINK_PAGO_RECARGO}
+url.adn.front: ${URL_ADN_FRONT}
+
+# Link de Pagos
+url.linkPago: ${URL_LINK_PAGO}
+url.linkPago.link: /link
+url.linkPago.eliminar: /eliminar-link
+url.linkPago.aplicacion: ${LINK_PAGO_APLICACION:TI_ADN}
+url.linkPago.expiracion: 24
+
+# -------------------------------------------------------------------------------
+# Archivos de Formato
+# -------------------------------------------------------------------------------
+archivo.formato.pep: Formato_PEP.pdf
+archivo.formato.pj: Formato_PJ.pdf
+archivo.formato.w9.english: FormatoW9Eng.pdf
+archivo.formato.w9.espanol: FormatoW9Esp.pdf
+archivo.formato.waiver: FormatoWaiver.pdf
+
+# -------------------------------------------------------------------------------
+# SMS Configuration
+# -------------------------------------------------------------------------------
+sms.cantidad.codigo: 6
+sms.cantidad.minuto: 60
+sms.celular.pruebas: ${SMS_CELULAR_PRUEBAS}
+
+# -------------------------------------------------------------------------------
+# Pasarela Configuration
+# -------------------------------------------------------------------------------
+pasarela.config.alerta.recurrente.cumulo.max: 150000.0
+pasarela.config.alerta.recurrente.imc.max: 30.0
+
+# -------------------------------------------------------------------------------
+# Rutas de Archivos
+# -------------------------------------------------------------------------------
+ruta.plantilla.doc.linux: ${RUTA_PLANTILLA_DOC}
+
+# -------------------------------------------------------------------------------
+# Multipart Configuration
+# -------------------------------------------------------------------------------
+spring.servlet.multipart.max-file-size: 2097KB
+spring.servlet.multipart.max-request-size: 2097KB
+
+# -------------------------------------------------------------------------------
+# Thymeleaf
+# -------------------------------------------------------------------------------
+spring.thymeleaf.cache: false

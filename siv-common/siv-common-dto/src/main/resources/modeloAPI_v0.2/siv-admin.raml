@@ -1,0 +1,230 @@
+#%RAML 1.0
+title: Servicio REST API - ADN Vida
+uses:
+  Types: Includes/Types.raml
+version: v1
+protocols: HTTPS
+baseUri: /siv-admin
+mediaType: application/json
+
+# ------------------------------------------------------------------------------------------
+# -- URIs
+# ------------------------------------------------------------------------------------------
+
+/usuarios/ingresos:
+    post:
+      description: |
+        Este API sirve para realizar el ingreso al sistema. Se debe seguir los
+        siguientes pasos:
+
+        Primero, validar en AzMan por API REST. Solo para la autenticación, NO
+        se va usar los roles AzMan
+
+        Segundo, luego de validar que el usuario exista en nuestro AD (AzMan)
+        se valida en CRM por REST API. Lo siguiente:
+        _ Que el usuario se encuentre acitvo en CRM
+        _ Que tenga el rol de agente VIDA (para este caso)
+
+        Finalmente, devolver respuesta correcta. Si en caso uno de los puntos validados
+        exista una excepción devolver al usuario "El usuario xxx no esta autorizado
+        para usar este sistema. Comuniquese con Mesa de Ayuda"
+      body:
+        application/json:
+          type: Types.UsuarioIngresoRequestDTO
+          example: !include Includes/examples/usuarioIngresoPostRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.UsuarioIngresoResponseDTO
+              example: !include Includes/examples/usuarioIngresoPostResponse.json
+
+/adns:
+  description: |
+    Sirve para los ramos vida y rentas.
+    Cuando se piense catalogar solo aumentar un atributo "ramo"
+    (1: vida / 2: rentas / 3: masivo / 4: digital)
+
+
+  /inicializaciones:
+    get:
+      description: |
+        Obtener los datos iniciales del ADN (al cargar la página)
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.ADNInicializacionResponseDTO
+              example: !include Includes/examples/adnInicializacionGetResponse.json
+
+
+  /reglamentos/{tipoDocCliente}/{numDocCliente}/{idUsuario}: #-- Al colocar el DNI se integra con el CRM para validar las reglas de ngocio si el agente puede usar ese cliente
+    description: |
+      Al ingresar el tipo documento y número documento (en la pantalla), se debe
+      mandar este API, donde realizará lo siguiente (todo devuelve string porque
+      al obtener los datos puede obtener autoguardado):
+
+      _ Validar en CRM por idUsuario y datos del cliente (tipoDocCliente / numDocCliente),
+        donde puede pasar:
+        _ SI el agente (idUsuario) no puede realizar un ADN con el cliente por reglas de CRM,
+          entonces mandar ERROR de negocio indicando que no puede seguir. Adicionalmente,
+          bloquear el botón SIGUIENTE
+        _ Si el agente puede hacer el ADN con este cliente. Seguir con los siguiente pasos
+
+      _ Recuperar del CRM los datos básicos del cliente (del titular)
+
+      _ Si tipoDoc y numDoc tiene un ADN registrado:
+        _ Entonces, obtener los siguientes datos:
+          _ datos de titular: Se mantiene de CRM API del paso anterior
+          _ datos familiar: Sacar de BD ADN
+          _ datos planes: Sacar de BD ADN
+          _ Validar si datos titular del crm y adn son distintos en nombres
+            y apellidos para mandar el "idCircuitoFirma" como NULL
+          _ También mandar los datos "idAutoguardado" NULL y idAdn NULL
+        _ Sino tiene un ADN registado, entonces:
+          _ Recuperar de la BD ADN el autoguardado, de la siguiente manera:
+            _ Se debe consultar por tipoDoc y numDoc del cliente para recuperar todos los datos
+              autoguardados (SOLO SI EN CASO APLIQUE)
+
+      _ Finalmente, devolver (RESPONSE) los datos del cliente cargados, donde debe pasar
+        lo siguiente:
+        _ Rellenar todos los campos del formulario
+        _ Guardar en cache: idAutoguardado y idCircuitoFirma (Si en caso aplique)
+        _ Activar AUTOGUARDADO
+        _ Si existe idCircuitoFirma
+          _ Bloquear el tipoDoc y numDoc (pantalla)
+          _ El botón SIGUIENTE NO debe llamar al API "/firma"
+        _ Si existe idAdn
+          _ Debe actualizar los datos en entidad Persona - Familia
+    get:
+      description:
+        Validar reglas CRM y recuperar datos del cliente (CRM + autoguardado)
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.ADNReglamentoResponseDTO
+              example: !include Includes/examples/adnReglamentoGetResponse.json
+
+  /firmas:
+    description: |
+      Se debe generar el PDF para enviar al API de indenova para que nos devuelva
+      el ID Circuito (idCircuitoFirma). Seguir la siguiente lógica:
+      _ Llenar todos los datos del titular. Al dar clic en "SIGUIENTE" se manda este API
+        (el API debe validar que esten todos los campos requeridos sino error)
+      _ Durante el envío de API:
+        _ Se manda todos los datos del titular
+        _ Se generar el PDF (en el server)
+        _ Se mandar el PDF a indenova (API Indenova) y se recupera el idCircuitoFirma
+      _ Se responde este API con idCircuitoFirma. Al llegar a la pantalla se debe realizar:
+          _ En API autoguardado. Se debe actualizar con idCircuitoFirma y guardar en cache
+          _ Abrir un modal para firma electrónica (API Indenova)
+          _ Firmar, cerrar modal (API Indenova)
+          _ LLAMAR al API "/registro"
+          _ Pasar a la página siguiente
+    post:
+      description: |
+        Registrar firma electrónica (integración con Indenova).
+
+        Se debe validar que todos los campos requeridos esten correctamente ingresados
+        sino no mandar alerta que falta un campo
+      body:
+        application/json:
+          type: Types.ADNFirmaRequestDTO
+          example: !include Includes/examples/adnFirmaPostRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.ADNFirmaResponseDTO
+              example: !include Includes/examples/adnFirmaPostResponse.json
+
+  /registros:
+    description: |
+      Registro de un titular (y familiares) de acuerdo a su(s) plan(es) a futuro.
+
+      <b> ESCENARIO 1 </b>
+      Si se da clic en botón SIGUIENTE. Aplicar la siguiente lógica:
+      _ Se manda los atributos siguientes en el registro:
+        _ tipo: 1
+        _ titular: todos los datos obligatorios
+        _ familiar: Si tuviera algún familiar
+        _ planFuturo: NULL
+        _ idAutoguardado: NULL
+        _ idCircuitoFirma: Obligatorio
+        _ idUsuario: Obligatorio
+        _ idAdn: La primera vez NULL (poner en cache) y resto de veces obligatorio
+      _ Se registra en BD LOCAL con estado REGISTRADO
+
+      <b> ESCENARIO 2 </b>
+      Si se da clic en botón "Quiero Cotizar". Aplicar la siguiente lógica:
+      _ Primero, se actualiza en BD local con estado COTIZADO y adicionalmente
+        eliminar físicamente el autoguardo en la BD por idAutoguardado
+      _ Segundo, API CRM registro y validación datos cliente (ESTE es clave)
+      _ Tercero, integración CRM archivos por API:
+        _ Generar un PDF de los formularios (datos titular, familiar y planes)
+        _ Recuperar el PDF de titular firmado (integración Indenova)
+        _ Registrar en CRM el API CRM archivo
+        _ EXCEPCIONES. Si falla CRM API archivo, entonces mandar correo de falla
+          al admin con el request inicial, pero si o si devolver mensaje exitoso
+    post:
+      description: |
+        Registrar todos los datos de la persona y su simulación de plan
+      body:
+        application/json:
+          type: Types.ADNRegistroRequestDTO
+          example: !include Includes/examples/adnRegistroPostRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.ADNRegistroResponseDTO
+              example: !include Includes/examples/adnRegistroPostResponse.json
+
+  /autoguardados:
+    description: |
+      Cada cierto tiempo configurado se debe guardar todo el formulario del ADN
+      con los datos que esten escritos en ese momento, así esten incorrectos
+      te da una foto de donde te quedaste.
+
+      El tiempo por defecto (configurable): 10 seg
+
+      <b>AL ENTRAR AL ADN</b>. Al colocar el Tipo Documento y Número Documento, si
+      existe un autoguardado recuperará los datos (API de reglamentos)
+
+      <b>AL REGISTRAR EL ADN (en botón Cotizador)</b>. Se debe limpiar el Autoguardado
+      para que no se recupere la próxima vez sus datos (eliminar x idAutoguardado en BD)
+    post:
+      description: |
+        Guardar datos de todo el formulario
+      body:
+        application/json:
+          type: Types.ADNAutoguardadoRequestDTO
+          example: !include Includes/examples/adnAutoguardadoPostRequest.json
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.ADNAutoguardadoResponseDTO
+              example: !include Includes/examples/adnAutoguardadoPostResponse.json
+
+  /recuperarAdns/{idADN}:
+    description: |
+      Recupera datos del ADN, persona, plan futuro, familiares para poder
+      comparar los cambios que realiza el usuario.
+      Cuando se detecta un cambio de Tipo documento, número documento, nombres,
+      apellido paterno y apellido materno en la pantalla del ADN, el sistema deberá
+      solicitar al usuario que realice una nueva firma.
+      Cuando se detecte cualquier cambio en la pantalla del ADN (Pantalla 1 o Pantalla 2)
+      deberá enviar un indicador de cambio de datos al API registros (boton quiero cotizar)
+      con la finalidad de que si NO hay cambios solo realice el llamado al boton cotizar.
+    get:
+      description: |
+        Recuperar ADNRecuperar
+      responses:
+        200:
+          body:
+            application/json:
+              type: Types.ADNRecuperarAdnResponseDTO
+              example: !include Includes/examples/adnRecuperarAdnGetResponse.json
+#--

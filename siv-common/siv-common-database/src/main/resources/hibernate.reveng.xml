@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC 
+ "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" 
+ "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+
+	<schema-selection match-table="adn" />
+	<schema-selection match-table="autoguardado" />
+	<schema-selection match-table="familiar" />
+	<schema-selection match-table="multitabla" />
+	<schema-selection match-table="persona" />
+	<schema-selection match-table="referido" />
+	<schema-selection match-table="plan_futuro" />
+	<schema-selection match-table="solicitud" />	
+	<schema-selection match-table="solicitud_beneficiario" />
+	<schema-selection match-table="solicitud_dps" />	
+	<schema-selection match-table="solicitud_dps_pregunta" />
+	<schema-selection match-table="solicitud_producto" />
+	<schema-selection match-table="solicitud_traspaso" />
+	<schema-selection match-table="solicitud_producto_detalle" />
+	<schema-selection match-table="poliza" />
+	
+	<type-mapping>
+		<sql-type jdbc-type="NVARCHAR" hibernate-type="java.lang.String" />
+		<sql-type jdbc-type="NCLOB" hibernate-type="java.sql.Clob" />
+		<sql-type jdbc-type="SMALLINT" hibernate-type="java.lang.Short" />
+		<sql-type jdbc-type="INTEGER" hibernate-type="java.lang.Integer" />
+		<sql-type jdbc-type="CHAR" hibernate-type="java.lang.String" />
+	</type-mapping>	
+	
+</hibernate-reverse-engineering>
+

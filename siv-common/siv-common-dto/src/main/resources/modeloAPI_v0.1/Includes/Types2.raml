@@ -1,0 +1,1549 @@
+<<<<<<< HEAD:siv-common/siv-common-dto/src/main/resources/modeloAPI_v0.1/Includes/Types.raml
+#%RAML 1.0 Library
+
+# ------------------------------------------------------------------------------------------
+# -- DTOs
+# ------------------------------------------------------------------------------------------
+
+types:
+
+  #-- bases
+  #-- --------------------------------------------------------------------------
+  BaseRequestDTO:
+    properties:
+      serialVersionUID?: integer
+
+  BaseResponseDTO:
+    properties:
+      codigoRespuesta:
+        type: string
+        description: |
+          01 - status code: 200
+          99 - Error Negocio (mostrar al usuario)
+      mensajeRespuesta:
+        type: string
+        description: |
+          01 - OK
+          99 - Según el error negocio
+      errorResource?: object #-- ErrorResourceDTO
+
+  GenericoComboBean:
+    properties:
+      codigo: string
+      descripcion: string
+
+
+  #-- /login
+  #-----------------------------------------------------------------------------
+
+  #--
+  UsuarioIngresoRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      usuario: string
+      password: string
+  UsuarioIngresoResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      jwtToken: string
+      idUsuario: string
+      nombreUsuario: string
+
+  #-- /adns/inicializaciones
+  #-----------------------------------------------------------------------------
+
+  ADNInicializacionParametroResponseDTO:
+    properties:
+      porcentajeIngresoIni: number
+      porcentajeIngresoFin: number
+      seguroVidaLeyRegla: number
+
+  #--
+  ADNInicializacionResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      tipoDocumento: GenericoComboBean[]
+      genero: GenericoComboBean[]
+      profesion: GenericoComboBean[]
+      actividadEconomica: GenericoComboBean[]
+      fumador: GenericoComboBean[]
+      tipoRelacion: GenericoComboBean[]
+      parametro: ADNInicializacionParametroResponseDTO
+
+
+  #-- /adns/reglamentos/{tipoDocCliente}/{numDocCliente}/{idUsuario}
+  #-----------------------------------------------------------------------------
+
+  ADNReglamentoTitularResponseDTO:
+    properties:
+      tipoDocumento: string
+      numeroDocumento: string
+      fechaNacimiento: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero: string
+      celular: string
+      correo: string
+      profesion: string
+      actividadEconomica: string
+      fumador: string
+
+  ADNReglamentoFamiliarResponseDTO:
+    properties:
+      tipoRelacion: string
+      nombres: string
+      edad: string
+
+  ADNReglamentoPlanFuturoBaseResponseDTO:
+    properties:
+      planEducacion: string
+      planProyecto: string
+      planJubilacion: string
+      ingresoTitular: string
+      porcentajeIngreso: string
+      totalIngreso: string
+      anioProteccion: string
+  ADNReglamentoPlanFuturoRespaldoResponseDTO:
+    properties:
+      ahorro: string
+      ahorroCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      propiedad: string
+      propiedadCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      vehiculo: string
+      vehiculoCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      seguroVida: string
+      seguroVidaCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      seguroVidaLey: string
+      seguroVidaLeyCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+  ADNReglamentoPlanFuturoCapitalResponsetDTO:
+    properties:
+      capitalProteccion: string
+      respaldoEconomico: string
+      afp: string
+      afpCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      totalCapitalProteger: string
+      adicional: string
+      nuevoCapitalProteger: string
+  ADNReglamentoPlanFuturoResponsetDTO:
+    properties:
+      base: ADNReglamentoPlanFuturoBaseResponseDTO
+      respaldo: ADNReglamentoPlanFuturoRespaldoResponseDTO
+      capitalProteger: ADNReglamentoPlanFuturoCapitalResponsetDTO
+
+  #--
+  ADNReglamentoResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      titular: ADNReglamentoTitularResponseDTO
+      familiar: ADNReglamentoFamiliarResponseDTO[]
+      planFuturo: ADNReglamentoPlanFuturoResponsetDTO
+      idAutoguardado: string
+      idCircuitoFirma: string
+      autoguardadoTiempo: integer #-- segundos
+      idAdn: integer
+      existeAdn:
+        description: |
+          1: Si. En caso este cliente ya tengo un ADN. idAutoguardado es null,
+             idAdn es null y idCircuitoFirma si se detecta que datos crm y
+             adn son distintos en los campos nombres y apellidos es NULL sino
+             obtenerlo
+          2: No.
+        type: integer
+
+
+  #-- /adns/firmas
+  #-- --------------------------------------------------------------------------
+
+  #--
+  ADNFirmaRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      tipoDocumento:
+        description: (1) DNI / (2) Carnet de Extranjería
+        type: integer
+        enum: [1,2]
+      numeroDocumento: string
+      fechaNacimiento:
+        description: Patrón de fecha es DD/MM/YYYY
+        type: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero:
+        description: (1) Masculino / (2) Femenino
+        type: integer
+        enum: [1,2]
+      celular: integer
+      correo: string
+      profesion:
+        description: |
+          (1) Profesor / (2) Abogado
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      actividadEconomica:
+        description: |
+          (1) Educación / (2) Transporte
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      fumador:
+        description: (1) Si / (2) No
+        type: integer
+        enum: [1,2]
+  ADNFirmaResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      idCircuitoFirma:
+        description: |
+          Este ID ayuda ha abrir el modal de indenova para la firma electrónica
+        type: string
+      circuitoUrl: string
+
+
+  #-- /adns/registros
+  #-- --------------------------------------------------------------------------
+
+  ADNRegistroTitularRequestDTO:
+    properties:
+      tipoDocumento:
+        description: (1) DNI / (2) Carnet de Extranjería
+        type: integer
+        enum: [1,2]
+      numeroDocumento: string
+      fechaNacimiento:
+        description: Patrón de fecha es DD/MM/YYYY
+        type: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero:
+        description: (1) Masculino / (2) Femenino
+        type: integer
+        enum: [1,2]
+      celular: integer
+      correo: string
+      profesion:
+        description: |
+          (1) Profesor / (2) Abogado
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      actividadEconomica:
+        description: |
+          (1) Educación / (2) Transporte
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      fumador:
+        description: (1) Si / (2) No
+        type: integer
+        enum: [1,2]
+
+  ADNRegistroFamiliarRequestDTO:
+    properties:
+      tipoRelacion:
+        description: |
+          Parentesco con el titular a registrar: (1) Esposo(a) / (2) Hijo(a)
+        type: integer
+        enum: [1,2]
+      nombres: string
+      edad: integer
+
+  ADNRegistroPlanFuturoBaseRequestDTO:
+    properties:
+      planEducacion:
+        description: |
+          Con check (1) / Sin check (2). Por lo menos debe estar seleccionado
+          un tipo de plan
+        type: integer
+      planProyecto:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      planJubilacion:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      ingresoTitular: number
+      porcentajeIngreso: number
+      totalIngreso: number
+      anioProteccion: integer
+  ADNRegistroPlanFuturoRespaldoRequestDTO:
+    properties:
+      ahorro: number
+      ahorroCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      propiedad: number
+      propiedadCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      vehiculo: number
+      vehiculoCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      seguroVida: number
+      seguroVidaCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      seguroVidaLey: number
+      seguroVidaLeyCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+  ADNRegistroPlanFuturoCapitalRequestDTO:
+    properties:
+      capitalProteccion: number
+      respaldoEconomico: number
+      afp: number
+      afpCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      totalCapitalProteger: number
+      adicional: number
+      nuevoCapitalProteger: number
+  ADNRegistroPlanFuturoRequestDTO:
+    properties:
+      base: ADNRegistroPlanFuturoBaseRequestDTO
+      respaldo: ADNRegistroPlanFuturoRespaldoRequestDTO
+      capitalProteger: ADNRegistroPlanFuturoCapitalRequestDTO
+
+  #--
+  ADNRegistroRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      tipo:
+        description: |
+          1: Registrado. Indica que solo esta ingresado en ADN con firma
+          2: Cotizado. Indica que esta en ADN con firma + integrado con CRM
+        type: integer
+        enum: [1,2]
+      titular: ADNRegistroTitularRequestDTO
+      familiar?: ADNRegistroFamiliarRequestDTO[]
+      planFuturo?: ADNRegistroPlanFuturoRequestDTO
+      idAutoguardado?:
+        description: |
+          Se envía el id del autoguardado para eliminarlo de la tabla
+          temporal, así no se mezcle cuando se realice otro ADN al mismo cliente
+        type: string
+      idCircuitoFirma:
+        description: |
+          Se debe guardar en la entidad ADN
+        type: string
+      idUsuario:
+        description: |
+          Se debe guardaren la entidad ADN
+        type: string
+      idAdn?:
+        description: |
+          Si es la primera vez, mandar vacío
+          Si es el resto de veces, mandar el idAdn
+        type: integer
+  ADNRegistroResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      idAdn: integer
+      idOportunidadCRM?:
+        description: |
+          Al registrar el ADN se va integrar con el CRM, el cual me va
+          proporcionar un idOportunidad que va servir para abrir el cotizador
+          actual
+        type: string
+
+
+  #-- /adns/autoguardados
+  #-----------------------------------------------------------------------------
+
+  ADNAutoguardadoTitularRequestDTO:
+    properties:
+      tipoDocumento: string
+      numeroDocumento: string
+      fechaNacimiento: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero: string
+      celular: string
+      correo: string
+      profesion: string
+      actividadEconomica: string
+      fumador: string
+
+  ADNAutoguardadoFamiliarRequestDTO:
+    properties:
+      tipoRelacion: string
+      nombres: string
+      edad: string
+
+  ADNAutoguardadoPlanFuturoBaseRequestDTO:
+    properties:
+      planEducacion: string
+      planProyecto: string
+      planJubilacion: string
+      ingresoTitular: string
+      porcentajeIngreso: string
+      totalIngreso: string
+      anioProteccion: string
+  ADNAutoguardadoPlanFuturoRespaldoRequestDTO:
+    properties:
+      ahorro: string
+      propiedad: string
+      vehiculo: string
+      seguroVida: string
+      seguroVidaLey: string
+  ADNAutoguardadoPlanFuturoCapitalRequestDTO:
+    properties:
+      capitalProteccion: string
+      respaldoEconomico: string
+      afp: string
+      totalCapitalProteger: string
+      adicional: string
+      nuevoCapitalProteger: string
+  ADNAutoguardadoPlanFuturoRequestDTO:
+    properties:
+      base: ADNAutoguardadoPlanFuturoBaseRequestDTO
+      respaldo: ADNAutoguardadoPlanFuturoRespaldoRequestDTO
+      capitalProteger: ADNAutoguardadoPlanFuturoCapitalRequestDTO
+
+  #--
+  ADNAutoguardadoRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      titular?: ADNAutoguardadoTitularRequestDTO
+      familiar?: ADNAutoguardadoFamiliarRequestDTO[]
+      planFuturo?: ADNAutoguardadoPlanFuturoRequestDTO
+      idAutoguardado?:
+        description: |
+          _ 1era vez. Se manda vacío el atributo idAutoguardado desde REQUEST
+          _ Resto de veces. Se manda obligatorio el atributo idAutoguardado desde REQUEST,
+            así en interno ya no se registra sino se actualiza (donde me ahorro una
+            consulta por tipoDoc y numDoc para recuperar el idAutoguardado en el back)
+          _ Cuando se recupera por tipoDoc y numDoc (por pantalla) se debe guardar en cache el idAutoguardado
+            para mandarlo en cada request desde aca
+        type: string
+      idCircuitoFirma?: string
+      idAdn?: integer
+  ADNAutoguardadoResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      idAutoguardado:
+        description: |
+          _ Cada vez que se obtenga esta repsuesta se debe guardar en cache el idAutoguardado
+
+
+#--
+
+
+#-- /recuperarAdns/{idADN}
+#-----------------------------------------------------------------------------
+  ADNRecuperarAdnResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      titular?: ADNAutoguardadoTitularRequestDTO
+      familiar?: ADNAutoguardadoFamiliarRequestDTO[]
+      planFuturo?: ADNAutoguardadoPlanFuturoRequestDTO
+      idAdn: integer
+
+#--
+#-----------------------------
+#-----------------------------
+#------   SOLICITUD   -------
+#-----------------------------
+#-----------------------------
+SolicitudValidarCotizacionResponseDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: integer
+    numeroCotizacion: string
+
+#-----------------------------
+SolicitudFormularioResponseDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: long
+    numeroCotizacion: string
+    moneda: string
+    monedaSimbolo: string
+    asegurado: SolicitudFormularioAseguradoResponseDTO
+    aseguradoIgualContratante: string
+    contratante?: SolicitudFormularioContratanteResponseDTO
+    cotizacion: SolicitudFormularioCotizacionResponseDTO
+    dps: SolicitudFormularioDPSResponseDTO
+    beneficiarios: SolicitudFormularioBeneficiarioResponseDTO[]
+    consentimientoAsegurado: string
+    consentimientoContratante: string
+    fechaFirmaAsegurado: string
+    fechaFirmaContratante: string
+    estadoSolicitud: string
+
+
+SolicitudFormularioBeneficiarioResponseDTO:
+  properties:
+    tipoBeneficiario: string
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    fechaNacimiento: string
+    tipoDocumento: string
+    numeroDocumento: string
+    tipoRelacion: string
+    distribucion: integer
+
+
+
+SolicitudFormularioAseguradoResponseDTO:
+  properties:
+    tipoDocumento: string
+    numeroDocumento: string
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    genero: string
+    fechaNacimiento: string
+    genero: string
+    estadoCivil: string
+    nacionalidad: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: string
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+    celular: string
+
+
+SolicitudFormularioCotizacionResponseDTO:
+  properties:
+    producto: string
+    cobertura: string
+    montoPrima: string
+    frecuenciaPago: string
+    fondoGarantizado: string
+    tasaGarantizada: string
+    pagoBeneficios: string
+    numeroCotizacion: string
+    coberturas: SolicitudFormularioCoberturaResponseDTO[]
+
+SolicitudFormularioCoberturaResponseDTO:
+  properties:
+    idCobetura: string
+    nombre: string
+
+SolicitudFormularioContratanteResponseDTO:
+  properties:
+    tipoDocumento: string
+    numeroDocumento:string
+    razonSocial: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    nombres: string
+    fechaNacimiento: string
+    genero: string
+    estadoCivil: string
+    nacionalidad: string
+    correo: string
+    celular: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: string
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+
+SolicitudFormularioDPSResponseDTO:
+  properties:
+    estatura: string
+    peso: string
+    imc: string
+    pesoVariacion: string
+    pesoAumentoDisminuyo: integer
+    pesoCantidad: string
+    pesoMotivo: string
+    fumador: string
+    fumadorCantidad: string
+    fumadorFrecuencia: string
+    drogas: string
+    drogasFecha: string
+    alcohol: string
+    alcoholCantidad: string
+    alcoholFrecuencia: string
+    preguntas: SolicitudFormularioDPSPreguntaResponseDTO[]
+
+SolicitudFormularioDPSPreguntaResponseDTO:
+  properties:
+    item: string
+    pregunta: string
+    respuesta: string
+    detalle: string
+    enfermedad: string
+    fechaDiagnostico: string
+    condicionActual: string
+    nombreMedicoHospital: string
+
+#-----------------------------
+#-----------------------------
+SolicitudGuardarRequestDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: long
+    numeroCotizacion: string
+    usuarioLogin: string
+    asegurado: SolicitudGuardarAseguradoRequestDTO
+    contratante: SolicitudGuardarContratanteRequestDTO
+    aseguradoIgualContratante: string
+    vinculoAsegurado: string
+    beneficiarios: SolicitudGuardarBeneficiarioRequestDTO[]
+    dps: SolicitudGuardarDPSRequestDTO
+    consentimientoAsegurado: string
+    consentimientoContratante: string
+
+SolicitudGuardarAseguradoRequestDTO:
+  properties:
+    estadoCivil: string
+    nacionalidad: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: integer
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+
+
+SolicitudGuardarContratanteRequestDTO:
+  properties:
+    tipoDocumento: string
+    numeroDocumento:string
+    razonSocial: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    nombres: string
+    fechaNacimiento: string
+    genero: string
+    estadoCivil: string
+    nacionalidad: string
+    correo: string
+    celular: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: string
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+
+SolicitudGuardarBeneficiarioRequestDTO:
+  properties:
+    tipoBeneficiario: string
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    fechaNacimiento: string
+    tipoDocumento: string
+    numeroDocumento: string
+    tipoRelacion: string
+    distribucion: integer
+
+
+SolicitudGuardarDPSRequestDTO:
+  properties:
+    estatura: double
+    peso: double
+    imc: double
+    pesoVariacion: integer
+    pesoAumentoDisminuyo: integer
+    pesoCantidad: double
+    pesoMotivo: string
+    fumador: integer
+    fumadorCantidad: string
+    fumadorFrecuencia: string
+    drogas: integer
+    drogasFecha: string
+    alcohol: integer
+    alcoholCantidad: string
+    alcoholFrecuencia: string
+    preguntas: SolicitudGuardarDPSPreguntaRequestDTO[]
+
+SolicitudGuardarDPSPreguntaRequestDTO:
+  properties:
+    item: string
+    pregunta: string
+    respuesta: integer
+    detalle: string
+    enfermedad: string
+    fechaDiagnostico: string
+    condicionActual: string
+    nombreMedicoHospital: string
+
+
+SolicitudGuardarResponseDTO:
+  type: BaseResponseDTO
+    properties:
+      idSolicitud: long
+      numeroCotizacion: string
+      asegurado: SolicitudGuardarPersonaResponseDTO
+      aseguradoIgualContratante: string
+      contratante?: SolicitudGuardarPersonaResponseDTO
+      fechaFirmaAsegurado: string
+      fechaFirmaContratante: string
+      estadoSolicitud: string
+
+SolicitudGuardarPersonaResponseDTO:
+  properties:
+    idPersona: Long
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    razonSocial: string
+    tipoDocumento: string
+    numeroDocumento: string
+    celular: string
+
+SolicitudFinalizarProcesoRequestDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: long
+    usuarioLogin: string
+
+SolicitudFinalizarProcesoResponseDTO:
+  type: BaseResponseDTO
+  properties:
+    numeroPropuesta: String
+=======
+#%RAML 1.0 Library
+
+# ------------------------------------------------------------------------------------------
+# -- DTOs
+# ------------------------------------------------------------------------------------------
+
+types:
+
+  #-- bases
+  #-- --------------------------------------------------------------------------
+  BaseRequestDTO:
+    properties:
+      serialVersionUID?: integer
+
+  BaseResponseDTO:
+    properties:
+      codigoRespuesta:
+        type: string
+        description: |
+          01 - status code: 200
+          99 - Error Negocio (mostrar al usuario)
+      mensajeRespuesta:
+        type: string
+        description: |
+          01 - OK
+          99 - Según el error negocio
+      errorResource?: object #-- ErrorResourceDTO
+
+  GenericoComboBean:
+    properties:
+      codigo: string
+      descripcion: string
+
+
+  #-- /login
+  #-----------------------------------------------------------------------------
+
+  #--
+  UsuarioIngresoRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      usuario: string
+      password: string
+  UsuarioIngresoResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      jwtToken: string
+      idUsuario: string
+      nombreUsuario: string
+
+  #-- /adns/inicializaciones
+  #-----------------------------------------------------------------------------
+
+  ADNInicializacionParametroResponseDTO:
+    properties:
+      porcentajeIngresoIni: number
+      porcentajeIngresoFin: number
+      seguroVidaLeyRegla: number
+
+  #--
+  ADNInicializacionResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      tipoDocumento: GenericoComboBean[]
+      genero: GenericoComboBean[]
+      profesion: GenericoComboBean[]
+      actividadEconomica: GenericoComboBean[]
+      fumador: GenericoComboBean[]
+      tipoRelacion: GenericoComboBean[]
+      parametro: ADNInicializacionParametroResponseDTO
+
+
+  #-- /adns/reglamentos/{tipoDocCliente}/{numDocCliente}/{idUsuario}
+  #-----------------------------------------------------------------------------
+
+  ADNReglamentoTitularResponseDTO:
+    properties:
+      tipoDocumento: string
+      numeroDocumento: string
+      fechaNacimiento: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero: string
+      celular: string
+      correo: string
+      profesion: string
+      actividadEconomica: string
+      fumador: string
+
+  ADNReglamentoFamiliarResponseDTO:
+    properties:
+      tipoRelacion: string
+      nombres: string
+      edad: string
+
+  ADNReglamentoPlanFuturoBaseResponseDTO:
+    properties:
+      planEducacion: string
+      planProyecto: string
+      planJubilacion: string
+      ingresoTitular: string
+      porcentajeIngreso: string
+      totalIngreso: string
+      anioProteccion: string
+  ADNReglamentoPlanFuturoRespaldoResponseDTO:
+    properties:
+      ahorro: string
+      ahorroCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      propiedad: string
+      propiedadCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      vehiculo: string
+      vehiculoCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      seguroVida: string
+      seguroVidaCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      seguroVidaLey: string
+      seguroVidaLeyCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+  ADNReglamentoPlanFuturoCapitalResponsetDTO:
+    properties:
+      capitalProteccion: string
+      respaldoEconomico: string
+      afp: string
+      afpCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: string
+      totalCapitalProteger: string
+      adicional: string
+      nuevoCapitalProteger: string
+  ADNReglamentoPlanFuturoResponsetDTO:
+    properties:
+      base: ADNReglamentoPlanFuturoBaseResponseDTO
+      respaldo: ADNReglamentoPlanFuturoRespaldoResponseDTO
+      capitalProteger: ADNReglamentoPlanFuturoCapitalResponsetDTO
+
+  #--
+  ADNReglamentoResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      titular: ADNReglamentoTitularResponseDTO
+      familiar: ADNReglamentoFamiliarResponseDTO[]
+      planFuturo: ADNReglamentoPlanFuturoResponsetDTO
+      idAutoguardado: string
+      idCircuitoFirma: string
+      autoguardadoTiempo: integer #-- segundos
+      idAdn: integer
+      existeAdn:
+        description: |
+          1: Si. En caso este cliente ya tengo un ADN. idAutoguardado es null,
+             idAdn es null y idCircuitoFirma si se detecta que datos crm y
+             adn son distintos en los campos nombres y apellidos es NULL sino
+             obtenerlo
+          2: No.
+        type: integer
+
+
+  #-- /adns/firmas
+  #-- --------------------------------------------------------------------------
+
+  #--
+  ADNFirmaRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      tipoDocumento:
+        description: (1) DNI / (2) Carnet de Extranjería
+        type: integer
+        enum: [1,2]
+      numeroDocumento: string
+      fechaNacimiento:
+        description: Patrón de fecha es DD/MM/YYYY
+        type: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero:
+        description: (1) Masculino / (2) Femenino
+        type: integer
+        enum: [1,2]
+      celular: integer
+      correo: string
+      profesion:
+        description: |
+          (1) Profesor / (2) Abogado
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      actividadEconomica:
+        description: |
+          (1) Educación / (2) Transporte
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      fumador:
+        description: (1) Si / (2) No
+        type: integer
+        enum: [1,2]
+  ADNFirmaResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      idCircuitoFirma:
+        description: |
+          Este ID ayuda ha abrir el modal de indenova para la firma electrónica
+        type: string
+      circuitoUrl: string
+
+
+  #-- /adns/registros
+  #-- --------------------------------------------------------------------------
+
+  ADNRegistroTitularRequestDTO:
+    properties:
+      tipoDocumento:
+        description: (1) DNI / (2) Carnet de Extranjería
+        type: integer
+        enum: [1,2]
+      numeroDocumento: string
+      fechaNacimiento:
+        description: Patrón de fecha es DD/MM/YYYY
+        type: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero:
+        description: (1) Masculino / (2) Femenino
+        type: integer
+        enum: [1,2]
+      celular: integer
+      correo: string
+      profesion:
+        description: |
+          (1) Profesor / (2) Abogado
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      actividadEconomica:
+        description: |
+          (1) Educación / (2) Transporte
+          :: De acuerdo a la lista enviada en el excel
+        type: integer
+        enum: [1,2]
+      fumador:
+        description: (1) Si / (2) No
+        type: integer
+        enum: [1,2]
+
+  ADNRegistroFamiliarRequestDTO:
+    properties:
+      tipoRelacion:
+        description: |
+          Parentesco con el titular a registrar: (1) Esposo(a) / (2) Hijo(a)
+        type: integer
+        enum: [1,2]
+      nombres: string
+      edad: integer
+
+  ADNRegistroPlanFuturoBaseRequestDTO:
+    properties:
+      planEducacion:
+        description: |
+          Con check (1) / Sin check (2). Por lo menos debe estar seleccionado
+          un tipo de plan
+        type: integer
+      planProyecto:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      planJubilacion:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      ingresoTitular: number
+      porcentajeIngreso: number
+      totalIngreso: number
+      anioProteccion: integer
+  ADNRegistroPlanFuturoRespaldoRequestDTO:
+    properties:
+      ahorro: number
+      ahorroCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      propiedad: number
+      propiedadCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      vehiculo: number
+      vehiculoCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      seguroVida: number
+      seguroVidaCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      seguroVidaLey: number
+      seguroVidaLeyCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+  ADNRegistroPlanFuturoCapitalRequestDTO:
+    properties:
+      capitalProteccion: number
+      respaldoEconomico: number
+      afp: number
+      afpCheck:
+        description: |
+          Con check (1) / Sin check (2)
+        type: integer
+      totalCapitalProteger: number
+      adicional: number
+      nuevoCapitalProteger: number
+  ADNRegistroPlanFuturoRequestDTO:
+    properties:
+      base: ADNRegistroPlanFuturoBaseRequestDTO
+      respaldo: ADNRegistroPlanFuturoRespaldoRequestDTO
+      capitalProteger: ADNRegistroPlanFuturoCapitalRequestDTO
+
+  #--
+  ADNRegistroRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      tipo:
+        description: |
+          1: Registrado. Indica que solo esta ingresado en ADN con firma
+          2: Cotizado. Indica que esta en ADN con firma + integrado con CRM
+        type: integer
+        enum: [1,2]
+      titular: ADNRegistroTitularRequestDTO
+      familiar?: ADNRegistroFamiliarRequestDTO[]
+      planFuturo?: ADNRegistroPlanFuturoRequestDTO
+      idAutoguardado?:
+        description: |
+          Se envía el id del autoguardado para eliminarlo de la tabla
+          temporal, así no se mezcle cuando se realice otro ADN al mismo cliente
+        type: string
+      idCircuitoFirma:
+        description: |
+          Se debe guardar en la entidad ADN
+        type: string
+      idUsuario:
+        description: |
+          Se debe guardaren la entidad ADN
+        type: string
+      idAdn?:
+        description: |
+          Si es la primera vez, mandar vacío
+          Si es el resto de veces, mandar el idAdn
+        type: integer
+  ADNRegistroResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      idAdn: integer
+      idOportunidadCRM?:
+        description: |
+          Al registrar el ADN se va integrar con el CRM, el cual me va
+          proporcionar un idOportunidad que va servir para abrir el cotizador
+          actual
+        type: string
+
+
+  #-- /adns/autoguardados
+  #-----------------------------------------------------------------------------
+
+  ADNAutoguardadoTitularRequestDTO:
+    properties:
+      tipoDocumento: string
+      numeroDocumento: string
+      fechaNacimiento: string
+      nombres: string
+      apellidoPaterno: string
+      apellidoMaterno: string
+      genero: string
+      celular: string
+      correo: string
+      profesion: string
+      actividadEconomica: string
+      fumador: string
+
+  ADNAutoguardadoFamiliarRequestDTO:
+    properties:
+      tipoRelacion: string
+      nombres: string
+      edad: string
+
+  ADNAutoguardadoPlanFuturoBaseRequestDTO:
+    properties:
+      planEducacion: string
+      planProyecto: string
+      planJubilacion: string
+      ingresoTitular: string
+      porcentajeIngreso: string
+      totalIngreso: string
+      anioProteccion: string
+  ADNAutoguardadoPlanFuturoRespaldoRequestDTO:
+    properties:
+      ahorro: string
+      propiedad: string
+      vehiculo: string
+      seguroVida: string
+      seguroVidaLey: string
+  ADNAutoguardadoPlanFuturoCapitalRequestDTO:
+    properties:
+      capitalProteccion: string
+      respaldoEconomico: string
+      afp: string
+      totalCapitalProteger: string
+      adicional: string
+      nuevoCapitalProteger: string
+  ADNAutoguardadoPlanFuturoRequestDTO:
+    properties:
+      base: ADNAutoguardadoPlanFuturoBaseRequestDTO
+      respaldo: ADNAutoguardadoPlanFuturoRespaldoRequestDTO
+      capitalProteger: ADNAutoguardadoPlanFuturoCapitalRequestDTO
+
+  #--
+  ADNAutoguardadoRequestDTO:
+    type: BaseRequestDTO
+    properties:
+      titular?: ADNAutoguardadoTitularRequestDTO
+      familiar?: ADNAutoguardadoFamiliarRequestDTO[]
+      planFuturo?: ADNAutoguardadoPlanFuturoRequestDTO
+      idAutoguardado?:
+        description: |
+          _ 1era vez. Se manda vacío el atributo idAutoguardado desde REQUEST
+          _ Resto de veces. Se manda obligatorio el atributo idAutoguardado desde REQUEST,
+            así en interno ya no se registra sino se actualiza (donde me ahorro una
+            consulta por tipoDoc y numDoc para recuperar el idAutoguardado en el back)
+          _ Cuando se recupera por tipoDoc y numDoc (por pantalla) se debe guardar en cache el idAutoguardado
+            para mandarlo en cada request desde aca
+        type: string
+      idCircuitoFirma?: string
+      idAdn?: integer
+  ADNAutoguardadoResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      idAutoguardado:
+        description: |
+          _ Cada vez que se obtenga esta repsuesta se debe guardar en cache el idAutoguardado
+
+
+#--
+
+
+#-- /recuperarAdns/{idADN}
+#-----------------------------------------------------------------------------
+  ADNRecuperarAdnResponseDTO:
+    type: BaseResponseDTO
+    properties:
+      titular?: ADNAutoguardadoTitularRequestDTO
+      familiar?: ADNAutoguardadoFamiliarRequestDTO[]
+      planFuturo?: ADNAutoguardadoPlanFuturoRequestDTO
+      idAdn: integer
+
+#--
+#-----------------------------
+#-----------------------------
+#------   SOLICITUD   -------
+#-----------------------------
+#-----------------------------
+SolicitudValidarCotizacionResponseDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: integer
+    numeroCotizacion: string
+
+#-----------------------------
+SolicitudFormularioResponseDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: long
+    numeroCotizacion: string
+    moneda: string
+    monedaSimbolo: string
+    asegurado: SolicitudFormularioAseguradoResponseDTO
+    aseguradoIgualContratante: string
+    contratante?: SolicitudFormularioContratanteResponseDTO
+    cotizacion: SolicitudFormularioCotizacionResponseDTO
+    dps: SolicitudFormularioDPSResponseDTO
+    beneficiarios: SolicitudFormularioBeneficiarioResponseDTO[]
+    consentimientoAsegurado: string
+    consentimientoContratante: string
+    fechaFirmaAsegurado: string
+    fechaFirmaContratante: string
+    estadoSolicitud: string
+
+
+SolicitudFormularioBeneficiarioResponseDTO:
+  properties:
+    tipoBeneficiario: string
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    fechaNacimiento: string
+    tipoDocumento: string
+    numeroDocumento: string
+    tipoRelacion: string
+    distribucion: integer
+
+
+
+SolicitudFormularioAseguradoResponseDTO:
+  properties:
+    tipoDocumento: string
+    numeroDocumento: string
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    genero: string
+    fechaNacimiento: string
+    genero: string
+    estadoCivil: string
+    nacionalidad: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: string
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+    celular: string
+
+
+SolicitudFormularioCotizacionResponseDTO:
+  properties:
+    producto: string
+    cobertura: string
+    montoPrima: string
+    frecuenciaPago: string
+    fondoGarantizado: string
+    tasaGarantizada: string
+    pagoBeneficios: string
+    numeroCotizacion: string
+    coberturas: SolicitudFormularioCoberturaResponseDTO[]
+
+SolicitudFormularioCoberturaResponseDTO:
+  properties:
+    idCobetura: string
+    nombre: string
+
+SolicitudFormularioContratanteResponseDTO:
+  properties:
+    tipoDocumento: string
+    numeroDocumento:string
+    razonSocial: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    nombres: string
+    fechaNacimiento: string
+    genero: string
+    estadoCivil: string
+    nacionalidad: string
+    correo: string
+    celular: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: string
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+
+SolicitudFormularioDPSResponseDTO:
+  properties:
+    estatura: string
+    peso: string
+    imc: string
+    pesoVariacion: string
+    pesoAumentoDisminuyo: integer
+    pesoCantidad: string
+    pesoMotivo: string
+    fumador: string
+    fumadorCantidad: string
+    fumadorFrecuencia: string
+    drogas: string
+    drogasFecha: string
+    alcohol: string
+    alcoholCantidad: string
+    alcoholFrecuencia: string
+    preguntas: SolicitudFormularioDPSPreguntaResponseDTO[]
+
+SolicitudFormularioDPSPreguntaResponseDTO:
+  properties:
+    item: string
+    pregunta: string
+    respuesta: string
+    detalle: string
+    enfermedad: string
+    fechaDiagnostico: string
+    condicionActual: string
+    nombreMedicoHospital: string
+
+#-----------------------------
+#-----------------------------
+SolicitudGuardarRequestDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: long
+    numeroCotizacion: string
+    usuarioLogin: string
+    asegurado: SolicitudGuardarAseguradoRequestDTO
+    contratante: SolicitudGuardarContratanteRequestDTO
+    aseguradoIgualContratante: string
+    vinculoAsegurado: string
+    beneficiarios: SolicitudGuardarBeneficiarioRequestDTO[]
+    dps: SolicitudGuardarDPSRequestDTO
+    consentimientoAsegurado: string
+    consentimientoContratante: string
+
+SolicitudGuardarAseguradoRequestDTO:
+  properties:
+    estadoCivil: string
+    nacionalidad: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: integer
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+
+
+SolicitudGuardarContratanteRequestDTO:
+  properties:
+    tipoDocumento: string
+    numeroDocumento:string
+    razonSocial: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    nombres: string
+    fechaNacimiento: string
+    genero: string
+    estadoCivil: string
+    nacionalidad: string
+    correo: string
+    celular: string
+    direccionTipo: string
+    direccionNombreVia: string
+    direccionNroMz: string
+    direccionInterior: string
+    direccionUrbanizacion: string
+    direccionDepartamento: string
+    direccionProvincia: string
+    direccionDistrito: string
+    centroTrabajo: string
+    actividadEconomica: string
+    ingresoMoneda: string
+    ingresoValor: string
+    profesion: string
+    profesionDetalle: string
+    esPEP: string
+    esSujetoObligado: string
+
+SolicitudGuardarBeneficiarioRequestDTO:
+  properties:
+    tipoBeneficiario: string
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    fechaNacimiento: string
+    tipoDocumento: string
+    numeroDocumento: string
+    tipoRelacion: string
+    distribucion: integer
+
+
+SolicitudGuardarDPSRequestDTO:
+  properties:
+    estatura: double
+    peso: double
+    imc: double
+    pesoVariacion: integer
+    pesoAumentoDisminuyo: integer
+    pesoCantidad: double
+    pesoMotivo: string
+    fumador: integer
+    fumadorCantidad: string
+    fumadorFrecuencia: string
+    drogas: integer
+    drogasFecha: string
+    alcohol: integer
+    alcoholCantidad: string
+    alcoholFrecuencia: string
+    preguntas: SolicitudGuardarDPSPreguntaRequestDTO[]
+
+SolicitudGuardarDPSPreguntaRequestDTO:
+  properties:
+    item: string
+    pregunta: string
+    respuesta: integer
+    detalle: string
+    enfermedad: string
+    fechaDiagnostico: string
+    condicionActual: string
+    nombreMedicoHospital: string
+
+
+SolicitudGuardarResponseDTO:
+  type: BaseResponseDTO
+    properties:
+      idSolicitud: long
+      numeroCotizacion: string
+      asegurado: SolicitudGuardarPersonaResponseDTO
+      aseguradoIgualContratante: string
+      contratante?: SolicitudGuardarPersonaResponseDTO
+      fechaFirmaAsegurado: string
+      fechaFirmaContratante: string
+      estadoSolicitud: string
+
+SolicitudGuardarPersonaResponseDTO:
+  properties:
+    idPersona: Long
+    nombres: string
+    apellidoPaterno: string
+    apellidoMaterno: string
+    razonSocial: string
+    tipoDocumento: string
+    numeroDocumento: string
+    celular: string
+
+SolicitudFinalizarProcesoRequestDTO:
+  type: BaseResponseDTO
+  properties:
+    idSolicitud: long
+    usuarioLogin: string
+
+SolicitudFinalizarProcesoResponseDTO:
+  type: BaseResponseDTO
+  properties:
+    numeroPropuesta: String
+>>>>>>> dev:siv-common/siv-common-dto/src/main/resources/modeloAPI_v0.1/Includes/Types2.raml

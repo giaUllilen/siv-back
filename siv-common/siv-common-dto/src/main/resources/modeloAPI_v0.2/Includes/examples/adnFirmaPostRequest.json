@@ -1,0 +1,15 @@
+{
+  "serialVersionUID": 123456,
+  "tipoDocumento": 1,
+  "numeroDocumento": "85630147",
+  "fechaNacimiento": "12/09/1968",
+  "nombres": "Juan",
+  "apellidoPaterno": "Perez",
+  "apellidoMaterno": "Del Solar",
+  "genero": 1,
+  "celular": 952304752,
+  "correo": "juanperez@gmail.com",
+  "profesion": 1,
+  "actividadEconomica": 1,
+  "fumador": 1
+}

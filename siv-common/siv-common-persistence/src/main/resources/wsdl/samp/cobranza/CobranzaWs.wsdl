@@ -1,0 +1,198 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="CobranzaMorosaWs" targetNamespace="http://tempuri.org/">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+<xs:import namespace="http://www.interseguro.com.pe/samp/cobranza"/>
+<xs:element name="CargaDatosReporteGestionCobranzaMorosa">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q1="http://www.interseguro.com.pe/samp/cobranza" minOccurs="0" name="consulta" nillable="true" type="q1:ReporteCobranzaMorosaConsulta"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="CargaDatosReporteGestionCobranzaMorosaResponse">
+<xs:complexType>
+<xs:sequence/>
+</xs:complexType>
+</xs:element>
+<xs:element name="RegistroDigitalizacionPagosVida">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q2="http://www.interseguro.com.pe/samp/cobranza" minOccurs="0" name="consulta" nillable="true" type="q2:DigitalizacionPagosVidaConsulta"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="RegistroDigitalizacionPagosVidaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q3="http://www.interseguro.com.pe/samp/cobranza" minOccurs="0" name="RegistroDigitalizacionPagosVidaResult" nillable="true" type="q3:DigitalizacionPagosVidaRespuesta"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+<xs:element name="anyType" nillable="true" type="xs:anyType"/>
+<xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+<xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+<xs:element name="boolean" nillable="true" type="xs:boolean"/>
+<xs:element name="byte" nillable="true" type="xs:byte"/>
+<xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+<xs:element name="decimal" nillable="true" type="xs:decimal"/>
+<xs:element name="double" nillable="true" type="xs:double"/>
+<xs:element name="float" nillable="true" type="xs:float"/>
+<xs:element name="int" nillable="true" type="xs:int"/>
+<xs:element name="long" nillable="true" type="xs:long"/>
+<xs:element name="QName" nillable="true" type="xs:QName"/>
+<xs:element name="short" nillable="true" type="xs:short"/>
+<xs:element name="string" nillable="true" type="xs:string"/>
+<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+<xs:element name="char" nillable="true" type="tns:char"/>
+<xs:simpleType name="char">
+<xs:restriction base="xs:int"/>
+</xs:simpleType>
+<xs:element name="duration" nillable="true" type="tns:duration"/>
+<xs:simpleType name="duration">
+<xs:restriction base="xs:duration">
+<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="guid" nillable="true" type="tns:guid"/>
+<xs:simpleType name="guid">
+<xs:restriction base="xs:string">
+<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:attribute name="FactoryType" type="xs:QName"/>
+<xs:attribute name="Id" type="xs:ID"/>
+<xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.interseguro.com.pe/samp/cobranza" elementFormDefault="qualified" targetNamespace="http://www.interseguro.com.pe/samp/cobranza">
+<xs:complexType name="ReporteCobranzaMorosaConsulta">
+<xs:sequence>
+<xs:element name="PeriodoCobranza" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="ReporteCobranzaMorosaConsulta" nillable="true" type="tns:ReporteCobranzaMorosaConsulta"/>
+<xs:complexType name="DigitalizacionPagosVidaConsulta">
+<xs:sequence>
+<xs:element name="NumeroPropuestaCadena" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+<xs:element name="Monto" type="xs:decimal"/>
+<xs:element name="Moneda" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+<xs:element name="IdPropuestaAfiliacion" type="xs:int"/>
+<xs:element name="IdCulqui" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+<xs:element name="CodUsuario" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+<xs:element name="CodUsuarioAplicacion" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="DigitalizacionPagosVidaConsulta" nillable="true" type="tns:DigitalizacionPagosVidaConsulta"/>
+<xs:complexType name="DigitalizacionPagosVidaRespuesta">
+<xs:sequence>
+<xs:element name="CodigoRespuesta" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+<xs:element name="MensajeRespuesta" nillable="true" type="xs:string">
+<xs:annotation>
+<xs:appinfo>
+<DefaultValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/" EmitDefaultValue="false"/>
+</xs:appinfo>
+</xs:annotation>
+</xs:element>
+<xs:element name="IdDigitalizacionPagosVida" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="DigitalizacionPagosVidaRespuesta" nillable="true" type="tns:DigitalizacionPagosVidaRespuesta"/>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="ICobranzaMorosaWs_CargaDatosReporteGestionCobranzaMorosa_InputMessage">
+<wsdl:part name="parameters" element="tns:CargaDatosReporteGestionCobranzaMorosa"/>
+</wsdl:message>
+<wsdl:message name="ICobranzaMorosaWs_CargaDatosReporteGestionCobranzaMorosa_OutputMessage">
+<wsdl:part name="parameters" element="tns:CargaDatosReporteGestionCobranzaMorosaResponse"/>
+</wsdl:message>
+<wsdl:message name="ICobranzaMorosaWs_RegistroDigitalizacionPagosVida_InputMessage">
+<wsdl:part name="parameters" element="tns:RegistroDigitalizacionPagosVida"/>
+</wsdl:message>
+<wsdl:message name="ICobranzaMorosaWs_RegistroDigitalizacionPagosVida_OutputMessage">
+<wsdl:part name="parameters" element="tns:RegistroDigitalizacionPagosVidaResponse"/>
+</wsdl:message>
+<wsdl:portType name="ICobranzaMorosaWs">
+<wsdl:operation name="CargaDatosReporteGestionCobranzaMorosa">
+<wsdl:input wsaw:Action="http://tempuri.org/ICobranzaMorosaWs/CargaDatosReporteGestionCobranzaMorosa" message="tns:ICobranzaMorosaWs_CargaDatosReporteGestionCobranzaMorosa_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/ICobranzaMorosaWs/CargaDatosReporteGestionCobranzaMorosaResponse" message="tns:ICobranzaMorosaWs_CargaDatosReporteGestionCobranzaMorosa_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="RegistroDigitalizacionPagosVida">
+<wsdl:input wsaw:Action="http://tempuri.org/ICobranzaMorosaWs/RegistroDigitalizacionPagosVida" message="tns:ICobranzaMorosaWs_RegistroDigitalizacionPagosVida_InputMessage"/>
+<wsdl:output wsaw:Action="http://tempuri.org/ICobranzaMorosaWs/RegistroDigitalizacionPagosVidaResponse" message="tns:ICobranzaMorosaWs_RegistroDigitalizacionPagosVida_OutputMessage"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="BasicHttpBinding_ICobranzaMorosaWs" type="tns:ICobranzaMorosaWs">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="CargaDatosReporteGestionCobranzaMorosa">
+<soap:operation soapAction="http://tempuri.org/ICobranzaMorosaWs/CargaDatosReporteGestionCobranzaMorosa" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RegistroDigitalizacionPagosVida">
+<soap:operation soapAction="http://tempuri.org/ICobranzaMorosaWs/RegistroDigitalizacionPagosVida" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="CobranzaMorosaWs">
+<wsdl:port name="BasicHttpBinding_ICobranzaMorosaWs" binding="tns:BasicHttpBinding_ICobranzaMorosaWs">
+<soap:address location="http://10.29.33.18/Samp/CobranzaMorosaWs.svc"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

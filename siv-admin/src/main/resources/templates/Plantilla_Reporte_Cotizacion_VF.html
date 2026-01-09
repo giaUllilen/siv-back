@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Cotización</title>
+    <style type="text/css">
+
+      * {
+        margin: 0;
+        padding: 0;
+        text-indent: 0;
+      }
+      body{
+                  font-size: 13px;
+      }
+
+      .datos-principales
+        {
+            margin-bottom: -10px;text-align: left; width:500px;white-space: pre;
+        }
+
+    td{
+        border: 1px solid black;
+    }
+
+      h1 {
+        color: black;
+        font-family: Arial, sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 15px !important;
+      }
+
+      h2 {
+        color: black;
+        font-family: Arial, sans-serif;
+        font-style: normal;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .p,
+      p {
+        color: black;
+        font-family: Arial, sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+        margin: 0pt;
+      }
+
+      table,
+      tbody {
+        vertical-align: top;
+        overflow: visible;
+      }
+    </style>
+</head>
+<body>
+<div style="page-break-after: always;">
+    <img th:src="@{'data:image/png;base64,' + ${logoImage}}" style="position:absolute; top:0px; left:0px; width:160px; height:50px;" />
+    <br><br><br>
+    <h1 style="text-align: center;">COTIZACIÓN DE SEGURO DE VIDA N° [[${cotizacion}]]</h1>
+    <br />
+    <table style="border-collapse:collapse;margin-left: 0;margin-right: auto;" cellspacing="0">
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Nombre del Asegurable</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${nom_asegurable}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Fecha de Nacimiento</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${fec_nac}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Sexo</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${sexo}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Documento de Identidad</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${documento}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Producto</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${producto}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Plan Cotizado</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${plan}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Periodo de Cobertura</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${per_cobertura + ' AÑOS'}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Periodo de Pago Prima</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${per_pago_prima + ' AÑOS'}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Frecuencia de Pago</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${frecuencia_pago}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Moneda</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${moneda}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">% devolución</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${devolucion + ' %'}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Total de devolución</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${tot_devolucion}]]</p>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table style="border-collapse:collapse;margin-left:15px" cellspacing="0">
+        <tr style="height:34pt">
+            <td style="width:142pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p style="text-indent: 0pt;line-height: 12pt;text-align: left;">
+                    <br />
+                </p>
+                <p class="s3" style="padding-left: 35pt;text-indent: 0pt;text-align: left;">Riesgos Cubiertos</p>
+            </td>
+            <td style="width:70pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-top: 4pt;padding-left: 14pt;padding-right: 13pt;text-indent: 0pt;text-align: center;"> Capital Asegurado ([[${moneda_simbolo}]])</p>
+            </td>
+            <td style="width:36pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-top: 4pt;padding-left: 6pt;padding-right: 5pt;text-indent: 0pt;text-align: center;">Tasa Anual (%)</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-left: 10pt;padding-right: 9pt;text-indent: 0pt;text-align: center;">Edad Mínima de Ingreso</p>
+            </td>
+            <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-left: 10pt;padding-right: 9pt;text-indent: 0pt;text-align: center;">Edad Máxima de Ingreso</p>
+            </td>
+            <td style="width:64pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-top: 4pt;padding-left: 7pt;padding-right: 6pt;text-indent: 0pt;text-align: center;">Edad Máxima de Permanencia</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-top: 4pt;padding-left: 6pt;padding-right: 5pt;text-indent: 0pt;text-align: center;"> Vigencia de cobertura</p>
+            </td>
+            <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s3" style="padding-top: 4pt;padding-left: 13pt;padding-right: 13pt;text-indent: 0pt;text-align: justify;"> Prima Anual ([[${moneda_simbolo}]])</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <p style="font-weight: bold;padding-left: 10px;text-align: left;">PRINCIPAL</p>
+            </td>
+        </tr>
+        <tr style="height:20px">
+            <td>
+                <p style="padding-left: 5pt;text-indent: 0pt;text-align: left;">[[${cob_principal}]]</p>
+            </td>
+            <td>
+                <p style="padding-left: 11pt;padding-right: 11pt;text-indent: 0pt;text-align: center;"> [[${cob_principal_monto}]]</p>
+            </td>
+            <td style="width:36pt;">
+                <p style="padding-left: 7pt;padding-right: 7pt;text-indent: 0pt;text-align: center;"> [[${cob_principal_tasa}]]</p>
+            </td>
+            <td>
+                <p style="padding-right: 18pt;text-indent: 0pt;text-align: right;"> [[${cob_principal_edad_min}]]</p>
+            </td>
+            <td>
+                <p style="padding-left: 18pt;padding-right: 17pt;text-indent: 0pt;text-align: center;"> [[${cob_principal_edad_max}]]</p>
+            </td>
+            <td>
+                <p style="padding-left: 25pt;padding-right: 25pt;text-indent: 0pt;text-align: center;"> [[${cob_principal_permanencia}]]</p>
+            </td>
+            <td>
+                <p style="padding-left: 18pt;padding-right: 17pt;text-indent: 0pt;text-align: center;"> [[${cob_principal_vigencia}]]</p>
+            </td>
+            <td>
+                <p style="padding-right: 5pt;text-indent: 0pt;text-align: right;"> [[${cob_principal_prima_anual}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <p style="font-weight: bold;padding-left: 10px;text-align: left;">ADICIONALES</p>
+            </td>
+        </tr>
+        <tr style="height:20px" th:if="${coberturas != null and coberturas.size() > 0}" th:each="cob : ${coberturas}">
+            <td>
+                <p style="padding-left: 5pt;text-indent: 0pt;line-height: 9pt;text-align: left;" th:text="${cob.nombre}"></p>
+            </td>
+            <td>
+                <p style="padding-left: 11pt;padding-right: 10pt;text-indent: 0pt;line-height: 9pt;text-align: center;" th:text="${cob.capital}"></p>
+            </td>
+            <td>
+                <p style="padding-left: 7pt;padding-right: 6pt;text-indent: 0pt;line-height: 9pt;text-align: center;" th:text="${cob.tasa}"></p>
+            </td>
+            <td>
+                <p style="padding-right: 18pt;text-indent: 0pt;line-height: 9pt;text-align: right;" th:text="${cob.edadMinimaIngreso}"></p>
+            </td>
+            <td>
+                <p style="padding-left: 17pt;padding-right: 17pt;text-indent: 0pt;line-height: 9pt;text-align: center;" th:text="${cob.edadMaximoIngreso}"></p>
+            </td>
+            <td>
+                <p style="padding-left: 25pt;padding-right: 24pt;text-indent: 0pt;line-height: 9pt;text-align: center;" th:text="${cob.edadMaximaPerm}"></p>
+            </td>
+            <td>
+                <p style="padding-left: 17pt;padding-right: 17pt;text-indent: 0pt;line-height: 9pt;text-align: center;" th:text="${cob.vigenciaCobertura}"></p>
+            </td>
+            <td>
+                <p style="padding-right: 5pt;text-indent: 0pt;line-height: 9pt;text-align: right;" th:text="${cob.primaAnual}"></p>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table style="border-collapse:collapse;margin-left:152.35pt" cellspacing="0">
+        <tr style="height:11pt">
+            <td style="width:319pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s4" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Prima Anual</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-right: 5pt;text-indent: 0pt;text-align: right;" th:text="${prima_anual}"></p>
+            </td>
+        </tr>
+        <tr style="height:11pt">
+            <td style="width:319pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s4" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Factor de Pago</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">[[${factor_pago}]]</p>
+            </td>
+        </tr>
+        <tr style="height:11pt">
+            <td style="width:319pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s4" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Prima Comercial</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-right: 5pt;text-indent: 0pt;text-align: right;" th:text="${prima_comercial}"></p>
+            </td>
+        </tr>
+        <tr style="height:11pt">
+            <td style="width:319pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s4" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">I.G.V.</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-right: 5pt;text-indent: 0pt;text-align: right;">[[${igv}]]</p>
+            </td>
+        </tr>
+        <tr style="height:11pt">
+            <td style="width:319pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s4" style="padding-left: 5pt;text-indent: 0pt;text-align: left;">Prima Comercial + IGV - [[${frecuencia_pago}]]</p>
+            </td>
+            <td style="width:49pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-right: 5pt;text-indent: 0pt;text-align: right;" th:text="${prima_comercial_total}"></p>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <table style="width:700px;border-collapse:collapse;margin-left: 0;margin-right: auto;" cellspacing="0">
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Nombre del Agente</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${nom_agente}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Fecha de Cotización</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${fec_cot}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="width:150px;border: 0 !important;">
+                <p style="text-align: left;">Cotización válida hasta el</p>
+            </td>
+            <td style="width:30px;border: 0 !important;">
+                <p style="text-align: center;">:</p>
+            </td>
+            <td style="width:400px;border: 0 !important;">
+                <p style="text-align: left;">[[${fec_val_cot}]]</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width:300px;border: 0 !important;">
+                <p style="text-align: left;">Se realizó un estudio de necesidades previo a esta cotización.</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width:300px;border: 0 !important;">
+                <p style="text-align: left;">Para cualquier consulta adicional sírvase llamar al teléfono 500-0000.</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width:300px;border: 0 !important;">
+                <p style="text-align: left;">La cotización es referencial y no implica ningún compromiso de INTERSEGURO con la persona asegurable.</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="width:300px;border: 0 !important;">
+                <p style="text-align: left;">En caso que el contratante sea persona jurídica se cobrará IGV. La Tasa de Costo Efectivo Anual (TCEA) es [[${tcea}]]</p>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <div th:if="${coberturas.size() < 4 or (coberturas.size() == 4 and requerimientos.size() == 1)}">
+        <div th:if="${requerimientos != null and requerimientos.size() > 0}">
+            <h1 style="margin-left: auto;margin-right: auto;margin-bottom:10px;">Exigencias Médicas</h1>
+            <table style="border-collapse:collapse;margin-left: auto;margin-right: auto;margin-bottom:10px;" cellspacing="0">
+                <tr>
+                    <td style="width:99pt;">
+                        <p style="font-weight:bold;text-align: center;">Item</p>
+                    </td>
+                    <td style="width:85pt;">
+                        <p style="font-weight:bold;text-align: center;"> Cod.Exig.Med.</p>
+                    </td>
+                    <td style="width:298pt;">
+                        <p style="font-weight:bold;text-align: center;"> Exigencia Médica</p>
+                    </td>
+                </tr>
+                <tr th:each="req : ${requerimientos}">
+                    <td>
+                        <p style="text-align: center;" th:text="${req.item}"></p>
+                    </td>
+                    <td>
+                        <p style="text-align: center;" th:text="${req.codigo}"></p>
+                    </td>
+                    <td>
+                        <p style="text-align: center;" th:text="${req.descripcion}"></p>
+                    </td>
+                </tr>
+            </table>
+            <p style="margin-left: auto;margin-right: auto;">En caso de aceptación de la presente cotización, el Asegurado deberá cumplir con las Exigencias Médicas para continuar con el proceso de emisión de su póliza.</p>
+        </div>
+        <br /><br />
+        <table style="margin-left: auto;margin-right: auto;margin-bottom:10px;" cellspacing="0">
+            <tr>
+                <td style="width:50px;border:0;">
+                    <p style="font-weight:bold;text-align: center;">Firma:</p>
+                </td>
+                <td style="width:200px;border:0;">
+                    <p>_____________________________</p>
+                </td>
+                <td style="width:50px;border:0;">
+                    <p style="font-weight:bold;text-align: center;">Fecha:</p>
+                </td>
+                <td style="width:200px;border:0;">
+                    <p>_____________________________</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div th:if="${coberturas.size() >= 4 and requerimientos.size() > 1}" style="page-break-before:always">
+    <img th:src="@{'data:image/png;base64,' + ${logoImage}}" style="position: fixed; top: 0; left: 0; width:160px; height:50px;" />
+    <br><br><br>
+    <div th:if="${requerimientos != null and requerimientos.size() > 0}">
+        <h1 style="margin-left: auto;margin-right: auto;margin-bottom:10px;">Exigencias Médicas</h1>
+        <table style="border-collapse:collapse;margin-left: auto;margin-right: auto;margin-bottom:10px;" cellspacing="0">
+            <tr>
+                <td style="width:99pt;">
+                    <p style="font-weight:bold;text-align: center;">Item</p>
+                </td>
+                <td style="width:85pt;">
+                    <p style="font-weight:bold;text-align: center;"> Cod.Exig.Med.</p>
+                </td>
+                <td style="width:298pt;">
+                    <p style="font-weight:bold;text-align: center;"> Exigencia Médica</p>
+                </td>
+            </tr>
+            <tr th:each="req : ${requerimientos}">
+                <td>
+                    <p style="text-align: center;" th:text="${req.item}"></p>
+                </td>
+                <td>
+                    <p style="text-align: center;" th:text="${req.codigo}"></p>
+                </td>
+                <td>
+                    <p style="text-align: center;" th:text="${req.descripcion}"></p>
+                </td>
+            </tr>
+        </table>
+        <p style="margin-left: auto;margin-right: auto;">En caso de aceptación de la presente cotización, el Asegurado deberá cumplir con las Exigencias Médicas para continuar con el proceso de emisión de su póliza.</p>
+    </div>
+    <br /><br />
+    <table style="margin-left: auto;margin-right: auto;margin-bottom:10px;" cellspacing="0">
+        <tr>
+            <td style="width:50px;border:0;">
+                <p style="font-weight:bold;text-align: center;">Firma:</p>
+            </td>
+            <td style="width:200px;border:0;">
+                <p>_____________________________</p>
+            </td>
+            <td style="width:50px;border:0;">
+                <p style="font-weight:bold;text-align: center;">Fecha:</p>
+            </td>
+            <td style="width:200px;border:0;">
+                <p>_____________________________</p>
+            </td>
+        </tr>
+    </table>
+</div>
+<div style="page-break-before:always">
+    <img th:src="@{'data:image/png;base64,' + ${logoImage}}" style="position: fixed; top: 0; left: 0; width:160px; height:50px;" />
+    <br><br><br>
+    <h1 style="text-align: center;">TABLA DE PORCENTAJES DE DEVOLUCIÓN ANTICIPADA</h1>
+    <p style="text-align: center;">(por años cumplidos) de vigencia</p>
+    <br />
+    <table style="border: 1px solid black;border-collapse:collapse;margin-left: auto;margin-right: auto;">
+        <tr style="height:22pt">
+            <td style="border: 0 !important;">
+                <p style="padding-top: 4pt;padding-left: 6px;text-align: left;">Asegurado
+                </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6pt;text-align: left;"> [[${nom_asegurable}]]</p>
+            </td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6pt;text-align: left;">% Devolución
+                </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6pt;text-align: left;"> [[${devolucion}]]%</p>
+            </td>
+        </tr>
+        <tr style="height:22pt">
+            <td style="border: 0 !important;">
+                <p style="padding-top: 1pt;padding-left: 6px;text-align: left;">Plan                </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 2pt;padding-left: 6px;text-align: left;">[[${plan}]]</p>
+            </td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 2pt;padding-left: 6px;text-align: left;">Fecha termino</p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 2pt;padding-left: 6px;text-align: left;"> [[${fec_termino}]]</p>
+            </td>
+        </tr>
+        <tr style="height:22pt">
+            <td style="border: 0 !important;">
+                <p style="padding-top: 1pt;padding-left: 6px;text-align: left;">Capital                </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 2pt;padding-left: 6px;text-align: left;"> [[${cap_asegurado}]]</p>
+            </td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 2pt;padding-left: 6px;text-align: left;">Periodo de Cobertura</p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 2pt;padding-left: 6px;text-align: left;"> [[${per_cobertura}]]</p>
+            </td>
+        </tr>
+        <tr style="height:22pt">
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6px;text-align: left;">Forma de Pago
+                </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 6pt;padding-left: 6px;text-align: left;"> [[${frecuencia_pago}]]</p>
+            </td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 6pt;padding-left: 6px;text-align: left;">Periodo de Pago Primas</p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 6pt;padding-left: 6px;text-align: left;"> [[${per_pago_prima}]]</p>
+            </td>
+        </tr>
+        <tr style="height:22pt">
+            <td style="border: 0 !important;">
+                <p style="padding-top: 4pt;padding-left: 6px;text-align: left;">Edad Actuarial
+                </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6px;text-align: left;">[[${edad}]]</p>
+            </td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6px;text-align: left;">Moneda Origen </p>
+            </td>
+            <td style="width:20px !important;padding-top:5px;border: 0 !important;text-align: center;">:</td>
+            <td style="border: 0 !important;">
+                <p style="padding-top: 5pt;padding-left: 6px;text-align: left;"> [[${moneda}]]([[${moneda_simbolo}]])</p>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <br />
+    <h1 style="text-align: center;">DETALLE DE PORCENTAJES DE DEVOLUCIÓN ANTICIPADA</h1>
+    <br />
+    <table style="border-collapse:collapse;margin-left: auto;margin-right: auto;" cellspacing="0">
+        <tr style="height:52pt">
+            <td>
+                <p style="padding-top: 16pt;text-align: center;width:100px;"> Fin/Año</p>
+            </td>
+            <td>
+                <p style="padding-top: 8pt;text-align: center;width:150px;">% devolución</p>
+                <p style="text-align: center;">Estandar</p>
+                <p style="text-align: center;">anticipada</p>
+            </td>
+            <td>
+                <p style="padding-top: 8pt;text-align: center;width:150px;">% devolución</p>
+                <p style="text-align: center;">elegida</p>
+                <p style="text-align: center;">por cliente</p>
+            </td>
+            <td>
+                <p style="padding-top: 8pt;text-align: center;width:150px;">% devolución </p>
+                <p style="text-align: center;">anticipada</p>
+                <p style="text-align: center;">al cliente (*)</p>
+            </td>
+        </tr>
+        <tr style="height:17pt" th:if="${devoluciones != null and devoluciones.size() > 0}" th:each="dev : ${devoluciones}">
+            <td>
+                <p style="padding-top: 1pt;padding-left: 11pt;text-indent: 0pt;text-align: center;" th:text="${dev.anio}"></p>
+            </td>
+            <td>
+                <p style="padding-top: 1pt;padding-left: 12pt;padding-right: 1pt;text-indent: 0pt;text-align: center;" th:text="${dev.devEstandar}"></p>
+            </td>
+            <td>
+                <p style="padding-top: 1pt;padding-right: 12pt;text-indent: 0pt;text-align: right;" th:text="${dev.devCliente}"></p>
+            </td>
+            <td>
+                <p style="padding-top: 1pt;padding-left: 22pt;padding-right: 11pt;text-indent: 0pt;text-align: center;" th:text="${dev.devolucion}"></p>
+            </td>
+        </tr>
+    </table>
+    <br /><br /><br />
+    <div th:if="${devoluciones_extra.size() == 0}">
+        <p style="text-align: left;">
+           <span>*Por año cumplido y pagado de vigencia</span><br><br>
+           <span>*Este porcentaje será multiplicado por el valor que el cliente haya acumulado a la fecha en que decide solicitar la devolución anticipada.</span>
+        </p>
+    </div>
+</div>
+<div style="page-break-after: before;" th:if="${devoluciones_extra != null and devoluciones_extra.size() > 0}">
+    <br><br><br>
+    <img th:src="@{'data:image/png;base64,' + ${logoImage}}" style="position:fixed; top:0px; left:0px; width:160px; height:50px;" />
+    <br><br><br>
+    <h1></h1>
+    <br />
+    <table style="border-collapse:collapse;margin-left: auto;margin-right: auto;" cellspacing="0">
+        <tr style="height:17pt" th:each="dev : ${devoluciones_extra}">
+            <td style="text-align: center;width:100px;">
+                <p style="padding-top: 1pt;padding-left: 11pt;text-indent: 0pt;text-align: center;" th:text="${dev.anio}"></p>
+            </td>
+            <td style="text-align: center;width:150px;">
+                <p style="padding-top: 1pt;padding-left: 12pt;padding-right: 1pt;text-indent: 0pt;text-align: center;" th:text="${dev.devEstandar}"></p>
+            </td>
+            <td style="text-align: center;width:150px;">
+                <p style="padding-top: 1pt;padding-right: 12pt;text-indent: 0pt;text-align: right;" th:text="${dev.devCliente}"></p>
+            </td>
+            <td style="text-align: center;width:150px;">
+                <p style="padding-top: 1pt;padding-left: 22pt;padding-right: 11pt;text-indent: 0pt;text-align: center;" th:text="${dev.devolucion}"></p>
+            </td>
+        </tr>
+    </table>
+    <br /><br /><br />
+    <p style="text-align: left;">
+        <span>*Por año cumplido y pagado de vigencia</span><br /><br />
+        <span>*Este porcentaje será multiplicado por el valor que el cliente haya acumulado a la fecha en que decide solicitar la devolución anticipada.</span>
+    </p>
+</div>
+</body>
+</html>
