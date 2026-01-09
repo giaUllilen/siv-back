@@ -1,0 +1,63 @@
+{
+  "codigoRespuesta": "01",
+  "mensajeRespuesta": "OK",
+  "titular": {
+    "tipoDocumento": "1",
+    "numeroDocumento": "85630147",
+    "fechaNacimiento": "12/09/1968",
+    "nombres": "Juan",
+    "apellidoPaterno": "Perez",
+    "apellidoMaterno": "Del Solar",
+    "genero": "1",
+    "celular": "952304752",
+    "correo": "juanperez@gmail.com",
+    "profesion": "1",
+    "actividadEconomica": "1",
+    "fumador": "1"
+  },
+  "familiar": [
+    {
+      "tipoRelacion": "1",
+      "nombres": "Jesus Perez",
+      "edad": "17"
+    },
+    {
+      "tipoRelacion": "3",
+      "nombres": "Ana Perez",
+      "edad": "25"
+    }
+  ],
+  "planFuturo": {
+    "base": {
+      "planEducacion": "1",
+      "planProyecto": "0",
+      "planJubilacion": "1",
+      "ingresoTitular": "4000",
+      "porcentajeIngreso": "5",
+      "totalIngreso": "200",
+      "anioProteccion": "15"
+    },
+    "respaldo": {
+      "ahorro": "0",
+      "ahorroCheck": "2",
+      "propiedad": "200000",
+      "propiedadCheck": "2",
+      "vehiculo": "25000",
+      "vehiculoCheck": "2",
+      "seguroVida": "0",
+      "seguroVidaCheck": "2",
+      "seguroVidaLey": "54000",
+      "seguroVidaLeyCheck": "2"
+    },
+    "capitalProteger": {
+      "capitalProteccion": "720000",
+      "respaldoEconomico": "264000",
+      "afp": "352800",
+      "afpCheck": "2",
+      "totalCapitalProteger": "103200",
+      "adicional": "100000",
+      "nuevoCapitalProteger": "203200"
+    }
+  },
+  "idAdn": 1
+}

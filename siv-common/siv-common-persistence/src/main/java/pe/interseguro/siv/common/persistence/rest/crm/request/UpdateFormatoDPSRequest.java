@@ -1,0 +1,18 @@
+package pe.interseguro.siv.common.persistence.rest.crm.request;
+
+import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UpdateFormatoDPSRequest implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3896275148336103464L;
+
+	private UpdateFormatoDPSParamRequest param;
+}

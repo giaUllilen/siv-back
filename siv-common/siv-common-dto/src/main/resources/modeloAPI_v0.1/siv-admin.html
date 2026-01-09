@@ -1,0 +1,471 @@
+<!DOCTYPE HTML><html><head><title>Servicio REST API - ADN Vida API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/raml2html/raml2html 6.4.1"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script><script type="text/javascript">
+      $(document).ready(function() {
+        $('.page-header pre code, .top-resource-description pre code, .modal-body pre code').each(function(i, block) {
+          hljs.highlightBlock(block);
+        });
+
+        $('[data-toggle]').click(function() {
+          var selector = $(this).data('target') + ' pre code';
+          $(selector).each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        });
+
+        // open modal on hashes like #_action_get
+        $(window).bind('hashchange', function(e) {
+          var anchor_id = document.location.hash.substr(1); //strip #
+          var element = $('#' + anchor_id);
+
+          // do we have such element + is it a modal?  --> show it
+          if (element.length && element.hasClass('modal')) {
+            element.modal('show');
+          }
+        });
+
+        // execute hashchange on first page load
+        $(window).trigger('hashchange');
+
+        // remove url fragment on modal hide
+        $('.modal').on('hidden.bs.modal', function() {
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
+        });
+      });
+    </script><style>
+      .hljs {
+        background: transparent;
+      }
+      .parent {
+        color: #999;
+      }
+      .list-group-item > .badge {
+        float: none;
+        margin-right: 6px;
+      }
+      .panel-title > .methods {
+        float: right;
+      }
+      .badge {
+        border-radius: 0;
+        text-transform: uppercase;
+        width: 70px;
+        font-weight: normal;
+        color: #f3f3f6;
+        line-height: normal;
+      }
+      .badge_get {
+        background-color: #63a8e2;
+      }
+      .badge_post {
+        background-color: #6cbd7d;
+      }
+      .badge_put {
+        background-color: #22bac4;
+      }
+      .badge_delete {
+        background-color: #d26460;
+      }
+      .badge_patch {
+        background-color: #ccc444;
+      }
+      .list-group, .panel-group {
+        margin-bottom: 0;
+      }
+      .panel-group .panel+.panel-white {
+        margin-top: 0;
+      }
+      .panel-group .panel-white {
+        border-bottom: 1px solid #F5F5F5;
+        border-radius: 0;
+      }
+      .panel-white:last-child {
+        border-bottom-color: white;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+      }
+      .panel-white .panel-heading {
+        background: white;
+      }
+      .tab-pane ul {
+        padding-left: 2em;
+      }
+      .tab-pane h1 {
+        font-size: 1.3em;
+      }
+      .tab-pane h2 {
+        font-size: 1.2em;
+        padding-bottom: 4px;
+        border-bottom: 1px solid #ddd;
+      }
+      .tab-pane h3 {
+        font-size: 1.1em;
+      }
+      .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+      }
+      #sidebar {
+        margin-top: 30px;
+        padding-right: 5px;
+        overflow: auto;
+        height: 90%;
+      }
+      .top-resource-description {
+        border-bottom: 1px solid #ddd;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description {
+        border-bottom: 1px solid #fcfcfc;
+        background: #fcfcfc;
+        padding: 15px 15px 0 15px;
+        margin: -15px -15px 10px -15px;
+      }
+      .resource-description p:last-child {
+        margin: 0;
+      }
+      .list-group .badge {
+        float: left;
+      }
+      .method_description {
+        margin-left: 85px;
+      }
+      .method_description p:last-child {
+        margin: 0;
+      }
+      .list-group-item {
+        cursor: pointer;
+      }
+      .list-group-item:hover {
+        background-color: #f5f5f5;
+      }
+      pre code {
+        overflow: auto;
+        word-wrap: normal;
+        white-space: pre;
+      }
+      .items {
+        background: #f5f5f5;
+        color: #333;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+      }
+      .examples {
+        margin-left: 0.5em;
+      }
+      .resource-modal li > ul {
+        margin-bottom: 1em;
+      }
+    </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>Servicio REST API - ADN Vida API documentation <small>version v1</small></h1><p>/siv-admin</p></div><div class="panel panel-default"><div class="panel-heading"><h3 id="usuarios_ingresos" class="panel-title">/usuarios/ingresos</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_usuarios_ingresos"><span class="parent"></span>/usuarios/ingresos</a> <span class="methods"><a href="#usuarios_ingresos_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_usuarios_ingresos" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#usuarios_ingresos_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Este API sirve para realizar el ingreso al sistema. Se debe seguir los siguientes pasos:</p><p>Primero, validar en AzMan por API REST. Solo para la autenticación, NO se va usar los roles AzMan</p><p>Segundo, luego de validar que el usuario exista en nuestro AD (AzMan) se valida en CRM por REST API. Lo siguiente: <em>Que el usuario se encuentre acitvo en CRM</em> Que tenga el rol de agente VIDA (para este caso)</p><p>Finalmente, devolver respuesta correcta. Si en caso uno de los puntos validados exista una excepción devolver al usuario "El usuario xxx no esta autorizado para usar este sistema. Comuniquese con Mesa de Ayuda"</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="usuarios_ingresos_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent"></span>/usuarios/ingresos</h4></div><div class="modal-body"><div class="alert alert-info"><p>Este API sirve para realizar el ingreso al sistema. Se debe seguir los siguientes pasos:</p><p>Primero, validar en AzMan por API REST. Solo para la autenticación, NO se va usar los roles AzMan</p><p>Segundo, luego de validar que el usuario exista en nuestro AD (AzMan) se valida en CRM por REST API. Lo siguiente: <em>Que el usuario se encuentre acitvo en CRM</em> Que tenga el rol de agente VIDA (para este caso)</p><p>Finalmente, devolver respuesta correcta. Si en caso uno de los puntos validados exista una excepción devolver al usuario "El usuario xxx no esta autorizado para usar este sistema. Comuniquese con Mesa de Ayuda"</p></div><ul class="nav nav-tabs"><li class="active"><a href="#usuarios_ingresos_post_request" data-toggle="tab">Request</a></li><li><a href="#usuarios_ingresos_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="usuarios_ingresos_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>serialVersionUID</strong>: <em>(integer)</em></li><li><strong>usuario</strong>: <em>required (string)</em></li><li><strong>password</strong>: <em>required (string)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "usuario": "equisper",
+  "password": "Primeras"
+}
+</code></pre></div></div><div class="tab-pane" id="usuarios_ingresos_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>codigoRespuesta</strong>: <em>required (string)</em><p>01 - status code: 200 99 - Error Negocio (mostrar al usuario)</p></li><li><strong>mensajeRespuesta</strong>: <em>required (string)</em><p>01 - OK 99 - Según el error negocio</p></li><li><strong>errorResource</strong>: <em>(object)</em><ul></ul></li><li><strong>jwtToken</strong>: <em>required (string)</em></li><li><strong>idUsuario</strong>: <em>required (string)</em></li><li><strong>nombreUsuario</strong>: <em>required (string)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "codigoRespuesta": "01",
+  "mensajeRespuesta": "OK",
+  "jwtToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IiBEb2UiLCJhZG1pbiI6dHJ1ZX0.Wp-p679n41Cnj0yM7egVvDLGR6zWvNIvuulUOFRmtWs",
+  "idUsuario": "cdiazval",
+  "nombreUsuario": "Carlos Diaz Valverde"
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="adns" class="panel-title">/adns</h3></div><div class="panel-body"><div class="top-resource-description"><p>Sirve para los ramos vida y rentas. Cuando se piense catalogar solo aumentar un atributo "ramo" (1: vida / 2: rentas / 3: masivo / 4: digital)</p></div><div class="panel-group"><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_adns_inicializaciones"><span class="parent">/adns</span>/inicializaciones</a> <span class="methods"><a href="#adns_inicializaciones_get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_adns_inicializaciones" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#adns_inicializaciones_get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Obtener los datos iniciales del ADN (al cargar la página)</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="adns_inicializaciones_get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/adns</span>/inicializaciones</h4></div><div class="modal-body"><div class="alert alert-info"><p>Obtener los datos iniciales del ADN (al cargar la página)</p></div><ul class="nav nav-tabs"><li class="active"><a href="#adns_inicializaciones_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="adns_inicializaciones_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: Types.BaseResponseDTO</p><strong>Properties</strong><ul><li><strong>tipoDocumento</strong>: <em>required (array of GenericoComboBean)</em><p><strong>Items</strong>: GenericoComboBean</p><div class="items"><ul><li><strong>codigo</strong>: <em>required (string)</em></li><li><strong>descripcion</strong>: <em>required (string)</em></li></ul></div></li><li><strong>genero</strong>: <em>required (array of GenericoComboBean)</em><p><strong>Items</strong>: GenericoComboBean</p><div class="items"><ul><li><strong>codigo</strong>: <em>required (string)</em></li><li><strong>descripcion</strong>: <em>required (string)</em></li></ul></div></li><li><strong>profesion</strong>: <em>required (array of GenericoComboBean)</em><p><strong>Items</strong>: GenericoComboBean</p><div class="items"><ul><li><strong>codigo</strong>: <em>required (string)</em></li><li><strong>descripcion</strong>: <em>required (string)</em></li></ul></div></li><li><strong>actividadEconomica</strong>: <em>required (array of GenericoComboBean)</em><p><strong>Items</strong>: GenericoComboBean</p><div class="items"><ul><li><strong>codigo</strong>: <em>required (string)</em></li><li><strong>descripcion</strong>: <em>required (string)</em></li></ul></div></li><li><strong>fumador</strong>: <em>required (array of GenericoComboBean)</em><p><strong>Items</strong>: GenericoComboBean</p><div class="items"><ul><li><strong>codigo</strong>: <em>required (string)</em></li><li><strong>descripcion</strong>: <em>required (string)</em></li></ul></div></li><li><strong>tipoRelacion</strong>: <em>required (array of GenericoComboBean)</em><p><strong>Items</strong>: GenericoComboBean</p><div class="items"><ul><li><strong>codigo</strong>: <em>required (string)</em></li><li><strong>descripcion</strong>: <em>required (string)</em></li></ul></div></li><li><strong>parametro</strong>: <em>required (object)</em><ul><li><strong>porcentajeIngresoIni</strong>: <em>required (number)</em></li><li><strong>porcentajeIngresoFin</strong>: <em>required (number)</em></li><li><strong>seguroVidaLeyRegla</strong>: <em>required (number)</em></li></ul></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+    "codigoRespuesta": "O1",
+    "mensajeRespuesta": "OK",
+    "tipoDocumento": [
+      {
+        "codigo": "1",
+        "descripcion": "DNI"
+      },
+      {
+        "codigo": "1",
+        "descripcion": "Carnet Extranjería"
+      }
+    ],
+    "genero": [
+      {
+        "codigo": "1",
+        "descripcion": "Masculino"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Femenino"
+      }
+    ],
+    "profesion": [
+      {
+        "codigo": "1",
+        "descripcion": "Ingeniero"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Abogado"
+      }
+    ],
+    "actividadEconomica": [
+      {
+        "codigo": "1",
+        "descripcion": "Vendedor"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Seguridad"
+      }
+    ],
+    "fumador": [
+      {
+        "codigo": "1",
+        "descripcion": "Si"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "No"
+      }
+    ],
+    "tipoRelacion": [
+      {
+        "codigo": "1",
+        "descripcion": "Esposo(a)"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Hijo(a)"
+      }
+    ],
+    "parametro": {
+      "porcentajeIngresoIni": 5.0,
+      "porcentajeIngresoFin": 10.0,
+      "seguroVidaLeyRegla": 16.0
+    }
+
+}
+</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_adns_reglamentos__tipodoccliente___numdoccliente___idusuario_"><span class="parent">/adns</span>/reglamentos/{tipoDocCliente}/{numDocCliente}/{idUsuario}</a> <span class="methods"><a href="#adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get"><span class="badge badge_get">get</span></a></span></h4></div><div id="panel_adns_reglamentos__tipodoccliente___numdoccliente___idusuario_" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Al ingresar el tipo documento y número documento (en la pantalla), se debe mandar este API, donde realizará lo siguiente (todo devuelve string porque al obtener los datos puede obtener autoguardado):</p><p><em>Validar en CRM por idUsuario y datos del cliente (tipoDocCliente / numDocCliente), donde puede pasar:</em> SI el agente (idUsuario) no puede realizar un ADN con el cliente por reglas de CRM, entonces mandar ERROR de negocio indicando que no puede seguir. Adicionalmente, bloquear el botón SIGUIENTE _ Si el agente puede hacer el ADN con este cliente. Seguir con los siguiente pasos</p><p>_ Recuperar del CRM los datos básicos del cliente (del titular)</p><p><em>Si tipoDoc y numDoc tiene un ADN registrado:</em> Entonces, obtener los siguientes datos: <em>datos de titular: Se mantiene de CRM API del paso anterior</em> datos familiar: Sacar de BD ADN <em>datos planes: Sacar de BD ADN</em> Validar si datos titular del crm y adn son distintos en nombres y apellidos para mandar el "idCircuitoFirma" como NULL <em>También mandar los datos "idAutoguardado" NULL y idAdn NULL</em> Sino tiene un ADN registado, entonces: <em>Recuperar de la BD ADN el autoguardado, de la siguiente manera:</em> Se debe consultar por tipoDoc y numDoc del cliente para recuperar todos los datos autoguardados (SOLO SI EN CASO APLIQUE)</p><p><em>Finalmente, devolver (RESPONSE) los datos del cliente cargados, donde debe pasar lo siguiente:</em> Rellenar todos los campos del formulario <em>Guardar en cache: idAutoguardado y idCircuitoFirma (Si en caso aplique)</em> Activar AUTOGUARDADO <em>Si existe idCircuitoFirma</em> Bloquear el tipoDoc y numDoc (pantalla) <em>El botón SIGUIENTE NO debe llamar al API "/firma"</em> Si existe idAdn _ Debe actualizar los datos en entidad Persona - Familia</p></div><div class="list-group"><div onclick="window.location.href = '#adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get'" class="list-group-item"><span class="badge badge_get">get</span><div class="method_description"><p>Validar reglas CRM y recuperar datos del cliente (CRM + autoguardado)</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get</span> <span class="parent">/adns</span>/reglamentos/{tipoDocCliente}/{numDocCliente}/{idUsuario}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Validar reglas CRM y recuperar datos del cliente (CRM + autoguardado)</p></div><ul class="nav nav-tabs"><li class="active"><a href="#adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get_request" data-toggle="tab">Request</a></li><li><a href="#adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get_request"><h3>URI Parameters</h3><ul><li><strong>tipoDocCliente</strong>: <em>required (string)</em></li><li><strong>numDocCliente</strong>: <em>required (string)</em></li><li><strong>idUsuario</strong>: <em>required (string)</em></li></ul></div><div class="tab-pane" id="adns_reglamentos__tipodoccliente___numdoccliente___idusuario__get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: Types.BaseResponseDTO</p><strong>Properties</strong><ul><li><strong>titular</strong>: <em>required (object)</em><ul><li><strong>tipoDocumento</strong>: <em>required (string)</em></li><li><strong>correo</strong>: <em>required (string)</em></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>celular</strong>: <em>required (string)</em></li><li><strong>fechaNacimiento</strong>: <em>required (string)</em></li><li><strong>fumador</strong>: <em>required (string)</em></li><li><strong>profesion</strong>: <em>required (string)</em></li><li><strong>apellidoMaterno</strong>: <em>required (string)</em></li><li><strong>genero</strong>: <em>required (string)</em></li><li><strong>actividadEconomica</strong>: <em>required (string)</em></li><li><strong>apellidoPaterno</strong>: <em>required (string)</em></li><li><strong>numeroDocumento</strong>: <em>required (string)</em></li></ul></li><li><strong>familiar</strong>: <em>required (array of ADNReglamentoFamiliarResponseDTO)</em><p><strong>Items</strong>: ADNReglamentoFamiliarResponseDTO</p><div class="items"><ul><li><strong>tipoRelacion</strong>: <em>required (string)</em></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>edad</strong>: <em>required (string)</em></li></ul></div></li><li><strong>planFuturo</strong>: <em>required (object)</em><ul><li><strong>base</strong>: <em>required (object)</em><ul><li><strong>planEducacion</strong>: <em>required (string)</em></li><li><strong>planProyecto</strong>: <em>required (string)</em></li><li><strong>planJubilacion</strong>: <em>required (string)</em></li><li><strong>ingresoTitular</strong>: <em>required (string)</em></li><li><strong>porcentajeIngreso</strong>: <em>required (string)</em></li><li><strong>totalIngreso</strong>: <em>required (string)</em></li><li><strong>anioProteccion</strong>: <em>required (string)</em></li></ul></li><li><strong>respaldo</strong>: <em>required (object)</em><ul><li><strong>ahorroCheck</strong>: <em>required (string)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>propiedad</strong>: <em>required (string)</em></li><li><strong>seguroVidaLey</strong>: <em>required (string)</em></li><li><strong>ahorro</strong>: <em>required (string)</em></li><li><strong>seguroVida</strong>: <em>required (string)</em></li><li><strong>propiedadCheck</strong>: <em>required (string)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>vehiculoCheck</strong>: <em>required (string)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>vehiculo</strong>: <em>required (string)</em></li><li><strong>seguroVidaLeyCheck</strong>: <em>required (string)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>seguroVidaCheck</strong>: <em>required (string)</em><p>Con check (1) / Sin check (2)</p></li></ul></li><li><strong>capitalProteger</strong>: <em>required (object)</em><ul><li><strong>capitalProteccion</strong>: <em>required (string)</em></li><li><strong>respaldoEconomico</strong>: <em>required (string)</em></li><li><strong>afp</strong>: <em>required (string)</em></li><li><strong>afpCheck</strong>: <em>required (string)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>totalCapitalProteger</strong>: <em>required (string)</em></li><li><strong>adicional</strong>: <em>required (string)</em></li><li><strong>nuevoCapitalProteger</strong>: <em>required (string)</em></li></ul></li></ul></li><li><strong>idAutoguardado</strong>: <em>required (string)</em></li><li><strong>idCircuitoFirma</strong>: <em>required (string)</em></li><li><strong>autoguardadoTiempo</strong>: <em>required (integer)</em></li><li><strong>idAdn</strong>: <em>required (integer)</em></li><li><strong>existeAdn</strong>: <em>required (integer)</em><p>1: Si. En caso este cliente ya tengo un ADN. idAutoguardado es null, idAdn es null y idCircuitoFirma si se detecta que datos crm y adn son distintos en los campos nombres y apellidos es NULL sino obtenerlo 2: No.</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "codigoRespuesta": "01",
+  "mensajeRespuesta": "OK",
+  "titular": {
+    "tipoDocumento": "1",
+    "numeroDocumento": "85630147",
+    "fechaNacimiento": "12/09/1968",
+    "nombres": "Juan",
+    "apellidoPaterno": "Perez",
+    "apellidoMaterno": "Del Solar",
+    "genero": "1",
+    "celular": "952304752",
+    "correo": "juanperez@gmail.com",
+    "profesion": "1",
+    "actividadEconomica": "1",
+    "fumador": "1"
+  },
+  "familiar": [
+    {
+      "tipoRelacion": "1",
+      "nombres": "Jesus Perez",
+      "edad": "17"
+    },
+    {
+      "tipoRelacion": "3",
+      "nombres": "Ana Perez",
+      "edad": "25"
+    }
+  ],
+  "planFuturo": {
+    "base": {
+      "planEducacion": "1",
+      "planProyecto": "0",
+      "planJubilacion": "1",
+      "ingresoTitular": "4000",
+      "porcentajeIngreso": "5",
+      "totalIngreso": "200",
+      "anioProteccion": "15"
+    },
+    "respaldo": {
+      "ahorro": "0",
+      "ahorroCheck": "2",
+      "propiedad": "200000",
+      "propiedadCheck": "2",
+      "vehiculo": "25000",
+      "vehiculoCheck": "2",
+      "seguroVida": "0",
+      "seguroVidaCheck": "2",
+      "seguroVidaLey": "54000",
+      "seguroVidaLeyCheck": "2"
+    },
+    "capitalProteger": {
+      "capitalProteccion": "720000",
+      "respaldoEconomico": "264000",
+      "afp": "352800",
+      "afpCheck": "2",
+      "totalCapitalProteger": "103200",
+      "adicional": "100000",
+      "nuevoCapitalProteger": "203200"
+    }
+  },
+  "idAutoguardado": "123456",
+  "idCircuitoFirma": "ABC123XYZ",
+  "autoguardadoTiempo": 10,
+  "idAdn": 1,
+  "existeAdn": 2
+}
+</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_adns_firmas"><span class="parent">/adns</span>/firmas</a> <span class="methods"><a href="#adns_firmas_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_adns_firmas" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Se debe generar el PDF para enviar al API de indenova para que nos devuelva el ID Circuito (idCircuitoFirma). Seguir la siguiente lógica: <em>Llenar todos los datos del titular. Al dar clic en "SIGUIENTE" se manda este API (el API debe validar que esten todos los campos requeridos sino error)</em> Durante el envío de API: <em>Se manda todos los datos del titular</em> Se generar el PDF (en el server) <em>Se mandar el PDF a indenova (API Indenova) y se recupera el idCircuitoFirma</em> Se responde este API con idCircuitoFirma. Al llegar a la pantalla se debe realizar: <em>En API autoguardado. Se debe actualizar con idCircuitoFirma y guardar en cache</em> Abrir un modal para firma electrónica (API Indenova) <em>Firmar, cerrar modal (API Indenova)</em> LLAMAR al API "/registro" _ Pasar a la página siguiente</p></div><div class="list-group"><div onclick="window.location.href = '#adns_firmas_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Registrar firma electrónica (integración con Indenova).</p><p>Se debe validar que todos los campos requeridos esten correctamente ingresados sino no mandar alerta que falta un campo</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="adns_firmas_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/adns</span>/firmas</h4></div><div class="modal-body"><div class="alert alert-info"><p>Registrar firma electrónica (integración con Indenova).</p><p>Se debe validar que todos los campos requeridos esten correctamente ingresados sino no mandar alerta que falta un campo</p></div><ul class="nav nav-tabs"><li class="active"><a href="#adns_firmas_post_request" data-toggle="tab">Request</a></li><li><a href="#adns_firmas_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="adns_firmas_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>tipoDocumento</strong>: <em>required (one of 1, 2)</em><p>(1) DNI / (2) Carnet de Extranjería</p></li><li><strong>correo</strong>: <em>required (string)</em></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>celular</strong>: <em>required (integer)</em></li><li><strong>fechaNacimiento</strong>: <em>required (string)</em><p>Patrón de fecha es DD/MM/YYYY</p></li><li><strong>fumador</strong>: <em>required (one of 1, 2)</em><p>(1) Si / (2) No</p></li><li><strong>profesion</strong>: <em>required (one of 1, 2)</em><p>(1) Profesor / (2) Abogado :: De acuerdo a la lista enviada en el excel</p></li><li><strong>apellidoMaterno</strong>: <em>required (string)</em></li><li><strong>genero</strong>: <em>required (one of 1, 2)</em><p>(1) Masculino / (2) Femenino</p></li><li><strong>serialVersionUID</strong>: <em>(integer)</em></li><li><strong>actividadEconomica</strong>: <em>required (one of 1, 2)</em><p>(1) Educación / (2) Transporte :: De acuerdo a la lista enviada en el excel</p></li><li><strong>apellidoPaterno</strong>: <em>required (string)</em></li><li><strong>numeroDocumento</strong>: <em>required (string)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "serialVersionUID": 123456,
+  "tipoDocumento": 1,
+  "numeroDocumento": "85630147",
+  "fechaNacimiento": "12/09/1968",
+  "nombres": "Juan",
+  "apellidoPaterno": "Perez",
+  "apellidoMaterno": "Del Solar",
+  "genero": 1,
+  "celular": 952304752,
+  "correo": "juanperez@gmail.com",
+  "profesion": 1,
+  "actividadEconomica": 1,
+  "fumador": 1
+}
+</code></pre></div></div><div class="tab-pane" id="adns_firmas_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>codigoRespuesta</strong>: <em>required (string)</em><p>01 - status code: 200 99 - Error Negocio (mostrar al usuario)</p></li><li><strong>mensajeRespuesta</strong>: <em>required (string)</em><p>01 - OK 99 - Según el error negocio</p></li><li><strong>errorResource</strong>: <em>(object)</em><ul></ul></li><li><strong>idCircuitoFirma</strong>: <em>required (string)</em><p>Este ID ayuda ha abrir el modal de indenova para la firma electrónica</p></li><li><strong>circuitoUrl</strong>: <em>required (string)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "codigoRespuesta": "01",
+  "mensajeRespuesta": "OK",
+  "idCircuitoFirma": "ABC123XYZ",
+  "circuitoUrl": "https://www.google.com.pe"
+}
+</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_adns_registros"><span class="parent">/adns</span>/registros</a> <span class="methods"><a href="#adns_registros_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_adns_registros" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Registro de un titular (y familiares) de acuerdo a su(s) plan(es) a futuro.</p><p><b>ESCENARIO 1</b> Si se da clic en botón SIGUIENTE. Aplicar la siguiente lógica: <em>Se manda los atributos siguientes en el registro:</em> tipo: 1 <em>titular: todos los datos obligatorios</em> familiar: Si tuviera algún familiar <em>planFuturo: NULL</em> idAutoguardado: NULL <em>idCircuitoFirma: Obligatorio</em> idUsuario: Obligatorio <em>idAdn: La primera vez NULL (poner en cache) y resto de veces obligatorio</em> Se registra en BD LOCAL con estado REGISTRADO</p><p><b>ESCENARIO 2</b> Si se da clic en botón "Quiero Cotizar". Aplicar la siguiente lógica: <em>Primero, se actualiza en BD local con estado COTIZADO y adicionalmente eliminar físicamente el autoguardo en la BD por idAutoguardado</em> Segundo, API CRM registro y validación datos cliente (ESTE es clave) <em>Tercero, integración CRM archivos por API:</em> Generar un PDF de los formularios (datos titular, familiar y planes) <em>Recuperar el PDF de titular firmado (integración Indenova)</em> Registrar en CRM el API CRM archivo _ EXCEPCIONES. Si falla CRM API archivo, entonces mandar correo de falla al admin con el request inicial, pero si o si devolver mensaje exitoso</p></div><div class="list-group"><div onclick="window.location.href = '#adns_registros_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Registrar todos los datos de la persona y su simulación de plan</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="adns_registros_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/adns</span>/registros</h4></div><div class="modal-body"><div class="alert alert-info"><p>Registrar todos los datos de la persona y su simulación de plan</p></div><ul class="nav nav-tabs"><li class="active"><a href="#adns_registros_post_request" data-toggle="tab">Request</a></li><li><a href="#adns_registros_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="adns_registros_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: Types.BaseRequestDTO</p><strong>Properties</strong><ul><li><strong>tipo</strong>: <em>required (one of 1, 2)</em><p>1: Registrado. Indica que solo esta ingresado en ADN con firma 2: Cotizado. Indica que esta en ADN con firma + integrado con CRM</p></li><li><strong>titular</strong>: <em>required (object)</em><ul><li><strong>tipoDocumento</strong>: <em>required (one of 1, 2)</em><p>(1) DNI / (2) Carnet de Extranjería</p></li><li><strong>correo</strong>: <em>required (string)</em></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>celular</strong>: <em>required (integer)</em></li><li><strong>fechaNacimiento</strong>: <em>required (string)</em><p>Patrón de fecha es DD/MM/YYYY</p></li><li><strong>fumador</strong>: <em>required (one of 1, 2)</em><p>(1) Si / (2) No</p></li><li><strong>profesion</strong>: <em>required (one of 1, 2)</em><p>(1) Profesor / (2) Abogado :: De acuerdo a la lista enviada en el excel</p></li><li><strong>apellidoMaterno</strong>: <em>required (string)</em></li><li><strong>genero</strong>: <em>required (one of 1, 2)</em><p>(1) Masculino / (2) Femenino</p></li><li><strong>actividadEconomica</strong>: <em>required (one of 1, 2)</em><p>(1) Educación / (2) Transporte :: De acuerdo a la lista enviada en el excel</p></li><li><strong>apellidoPaterno</strong>: <em>required (string)</em></li><li><strong>numeroDocumento</strong>: <em>required (string)</em></li></ul></li><li><strong>familiar</strong>: <em>(array of ADNRegistroFamiliarRequestDTO)</em><p><strong>Items</strong>: ADNRegistroFamiliarRequestDTO</p><div class="items"><ul><li><strong>tipoRelacion</strong>: <em>required (one of 1, 2)</em><p>Parentesco con el titular a registrar: (1) Esposo(a) / (2) Hijo(a)</p></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>edad</strong>: <em>required (integer)</em></li></ul></div></li><li><strong>planFuturo</strong>: <em>(object)</em><ul><li><strong>base</strong>: <em>required (object)</em><ul><li><strong>planEducacion</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2). Por lo menos debe estar seleccionado un tipo de plan</p></li><li><strong>planProyecto</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>planJubilacion</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>ingresoTitular</strong>: <em>required (number)</em></li><li><strong>porcentajeIngreso</strong>: <em>required (number)</em></li><li><strong>totalIngreso</strong>: <em>required (number)</em></li><li><strong>anioProteccion</strong>: <em>required (integer)</em></li></ul></li><li><strong>respaldo</strong>: <em>required (object)</em><ul><li><strong>ahorroCheck</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>propiedad</strong>: <em>required (number)</em></li><li><strong>seguroVidaLey</strong>: <em>required (number)</em></li><li><strong>ahorro</strong>: <em>required (number)</em></li><li><strong>seguroVida</strong>: <em>required (number)</em></li><li><strong>propiedadCheck</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>vehiculoCheck</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>vehiculo</strong>: <em>required (number)</em></li><li><strong>seguroVidaLeyCheck</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>seguroVidaCheck</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li></ul></li><li><strong>capitalProteger</strong>: <em>required (object)</em><ul><li><strong>capitalProteccion</strong>: <em>required (number)</em></li><li><strong>respaldoEconomico</strong>: <em>required (number)</em></li><li><strong>afp</strong>: <em>required (number)</em></li><li><strong>afpCheck</strong>: <em>required (integer)</em><p>Con check (1) / Sin check (2)</p></li><li><strong>totalCapitalProteger</strong>: <em>required (number)</em></li><li><strong>adicional</strong>: <em>required (number)</em></li><li><strong>nuevoCapitalProteger</strong>: <em>required (number)</em></li></ul></li></ul></li><li><strong>idAutoguardado</strong>: <em>(string)</em><p>Se envía el id del autoguardado para eliminarlo de la tabla temporal, así no se mezcle cuando se realice otro ADN al mismo cliente</p></li><li><strong>idCircuitoFirma</strong>: <em>required (string)</em><p>Se debe guardar en la entidad ADN</p></li><li><strong>idUsuario</strong>: <em>required (string)</em><p>Se debe guardaren la entidad ADN</p></li><li><strong>idAdn</strong>: <em>(integer)</em><p>Si es la primera vez, mandar vacío Si es el resto de veces, mandar el idAdn</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "tipo": 2,
+  "titular": {
+    "tipoDocumento": 1,
+    "numeroDocumento": "85630147",
+    "fechaNacimiento": "12/09/1968",
+    "nombres": "Juan",
+    "apellidoPaterno": "Perez",
+    "apellidoMaterno": "Del Solar",
+    "genero": 1,
+    "celular": 952304752,
+    "correo": "juanperez@gmail.com",
+    "profesion": 1,
+    "actividadEconomica": 1,
+    "fumador": 1
+  },
+  "familiar": [
+    {
+      "tipoRelacion": 1,
+      "nombres": "Jesus Perez",
+      "edad": 17
+    },
+    {
+      "tipoRelacion": 3,
+      "nombres": "Ana Perez",
+      "edad": 25
+    }
+  ],
+  "planFuturo": {
+    "base": {
+      "planEducacion": 1,
+      "planProyecto": 0,
+      "planJubilacion": 1,
+      "ingresoTitular": 4000,
+      "porcentajeIngreso": 5,
+      "totalIngreso": 200,
+      "anioProteccion": 15
+    },
+    "respaldo": {
+      "ahorro": 0,
+      "ahorroCheck": 2,
+      "propiedad": 200000,
+      "propiedadCheck": 2,
+      "vehiculo": 25000,
+      "vehiculoCheck": 2,
+      "seguroVida": 0,
+      "seguroVidaCheck": 2,
+      "seguroVidaLey": 54000,
+      "seguroVidaLeyCheck": 2
+    },
+    "capitalProteger": {
+      "capitalProteccion": 720000,
+      "respaldoEconomico": 264000,
+      "afp": 352800,
+      "afpCheck": 2,
+      "totalCapitalProteger": 103200,
+      "adicional": 100000,
+      "nuevoCapitalProteger": 203200
+    }
+  },
+  "idAutoguardado": "a23dke2",
+  "idCircuitoFirma": "abc123xyz",
+  "idUsuario": "cdiazval",
+  "idAdn": 1
+}
+</code></pre></div></div><div class="tab-pane" id="adns_registros_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>codigoRespuesta</strong>: <em>required (string)</em><p>01 - status code: 200 99 - Error Negocio (mostrar al usuario)</p></li><li><strong>mensajeRespuesta</strong>: <em>required (string)</em><p>01 - OK 99 - Según el error negocio</p></li><li><strong>errorResource</strong>: <em>(object)</em><ul></ul></li><li><strong>idAdn</strong>: <em>required (integer)</em></li><li><strong>idOportunidadCRM</strong>: <em>(string)</em><p>Al registrar el ADN se va integrar con el CRM, el cual me va proporcionar un idOportunidad que va servir para abrir el cotizador actual</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "codigoRespuesta": "01",
+  "mensajeRespuesta": "OK",
+  "idAdn": 1,
+  "idOportunidadCRM": "85630147"
+}
+</code></pre></div></div></div></div></div></div></div></div><div class="panel panel-white resource-modal"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_adns_autoguardados"><span class="parent">/adns</span>/autoguardados</a> <span class="methods"><a href="#adns_autoguardados_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_adns_autoguardados" class="panel-collapse collapse"><div class="panel-body"><div class="resource-description"><p>Cada cierto tiempo configurado se debe guardar todo el formulario del ADN con los datos que esten escritos en ese momento, así esten incorrectos te da una foto de donde te quedaste.</p><p>El tiempo por defecto (configurable): 10 seg</p><p><b>AL ENTRAR AL ADN</b>. Al colocar el Tipo Documento y Número Documento, si existe un autoguardado recuperará los datos (API de reglamentos)</p><p><b>AL REGISTRAR EL ADN (en botón Cotizador)</b>. Se debe limpiar el Autoguardado para que no se recupere la próxima vez sus datos (eliminar x idAutoguardado en BD)</p></div><div class="list-group"><div onclick="window.location.href = '#adns_autoguardados_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>Guardar datos de todo el formulario</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="adns_autoguardados_post"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/adns</span>/autoguardados</h4></div><div class="modal-body"><div class="alert alert-info"><p>Guardar datos de todo el formulario</p></div><ul class="nav nav-tabs"><li class="active"><a href="#adns_autoguardados_post_request" data-toggle="tab">Request</a></li><li><a href="#adns_autoguardados_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="adns_autoguardados_post_request"><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: Types.BaseRequestDTO</p><strong>Properties</strong><ul><li><strong>titular</strong>: <em>(object)</em><ul><li><strong>tipoDocumento</strong>: <em>required (string)</em></li><li><strong>correo</strong>: <em>required (string)</em></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>celular</strong>: <em>required (string)</em></li><li><strong>fechaNacimiento</strong>: <em>required (string)</em></li><li><strong>fumador</strong>: <em>required (string)</em></li><li><strong>profesion</strong>: <em>required (string)</em></li><li><strong>apellidoMaterno</strong>: <em>required (string)</em></li><li><strong>genero</strong>: <em>required (string)</em></li><li><strong>actividadEconomica</strong>: <em>required (string)</em></li><li><strong>apellidoPaterno</strong>: <em>required (string)</em></li><li><strong>numeroDocumento</strong>: <em>required (string)</em></li></ul></li><li><strong>familiar</strong>: <em>(array of ADNAutoguardadoFamiliarRequestDTO)</em><p><strong>Items</strong>: ADNAutoguardadoFamiliarRequestDTO</p><div class="items"><ul><li><strong>tipoRelacion</strong>: <em>required (string)</em></li><li><strong>nombres</strong>: <em>required (string)</em></li><li><strong>edad</strong>: <em>required (string)</em></li></ul></div></li><li><strong>planFuturo</strong>: <em>(object)</em><ul><li><strong>base</strong>: <em>required (object)</em><ul><li><strong>planEducacion</strong>: <em>required (string)</em></li><li><strong>planProyecto</strong>: <em>required (string)</em></li><li><strong>planJubilacion</strong>: <em>required (string)</em></li><li><strong>ingresoTitular</strong>: <em>required (string)</em></li><li><strong>porcentajeIngreso</strong>: <em>required (string)</em></li><li><strong>totalIngreso</strong>: <em>required (string)</em></li><li><strong>anioProteccion</strong>: <em>required (string)</em></li></ul></li><li><strong>respaldo</strong>: <em>required (object)</em><ul><li><strong>ahorro</strong>: <em>required (string)</em></li><li><strong>propiedad</strong>: <em>required (string)</em></li><li><strong>vehiculo</strong>: <em>required (string)</em></li><li><strong>seguroVida</strong>: <em>required (string)</em></li><li><strong>seguroVidaLey</strong>: <em>required (string)</em></li></ul></li><li><strong>capitalProteger</strong>: <em>required (object)</em><ul><li><strong>capitalProteccion</strong>: <em>required (string)</em></li><li><strong>respaldoEconomico</strong>: <em>required (string)</em></li><li><strong>afp</strong>: <em>required (string)</em></li><li><strong>totalCapitalProteger</strong>: <em>required (string)</em></li><li><strong>adicional</strong>: <em>required (string)</em></li><li><strong>nuevoCapitalProteger</strong>: <em>required (string)</em></li></ul></li></ul></li><li><strong>idAutoguardado</strong>: <em>(string)</em><p><em>1era vez. Se manda vacío el atributo idAutoguardado desde REQUEST</em> Resto de veces. Se manda obligatorio el atributo idAutoguardado desde REQUEST, así en interno ya no se registra sino se actualiza (donde me ahorro una consulta por tipoDoc y numDoc para recuperar el idAutoguardado en el back) _ Cuando se recupera por tipoDoc y numDoc (por pantalla) se debe guardar en cache el idAutoguardado para mandarlo en cada request desde aca</p></li><li><strong>idCircuitoFirma</strong>: <em>(string)</em></li><li><strong>idAdn</strong>: <em>(integer)</em></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "titular": {
+    "tipoDocumento": "1",
+    "numeroDocumento": "85630147",
+    "fechaNacimiento": "12/09/1968",
+    "nombres": "Juan",
+    "apellidoPaterno": "Perez",
+    "apellidoMaterno": "Del Solar",
+    "genero": "1",
+    "celular": "952304752",
+    "correo": "juanperez@gmail.com",
+    "profesion": "1",
+    "actividadEconomica": "1",
+    "fumador": "1"
+  },
+  "familiar": [
+    {
+      "tipoRelacion": "1",
+      "nombres": "Jesus Perez",
+      "edad": "17"
+    },
+    {
+      "tipoRelacion": "3",
+      "nombres": "Ana Perez",
+      "edad": "25"
+    }
+  ],
+  "planFuturo": {
+    "base": {
+      "planEducacion": "1",
+      "planProyecto": "0",
+      "planJubilacion": "1",
+      "ingresoTitular": "4000",
+      "porcentajeIngreso": "5",
+      "totalIngreso": "200",
+      "anioProteccion": "15"
+    },
+    "respaldo": {
+      "ahorro": "0",
+      "propiedad": "200000",
+      "vehiculo": "25000",
+      "seguroVida": "0",
+      "seguroVidaLey": "54000"
+    },
+    "capitalProteger": {
+      "capitalProteccion": "720000",
+      "respaldoEconomico": "264000",
+      "afp": "352800",
+      "totalCapitalProteger": "103200",
+      "adicional": "100000",
+      "nuevoCapitalProteger": "203200"
+    }
+  },
+  "idAutoguardado": "123456",
+  "idCircuitoFirma": "ABC123XYZ",
+  "idAdn": 1
+}
+</code></pre></div></div><div class="tab-pane" id="adns_autoguardados_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Media type</strong>: application/json</p><p><strong>Type</strong>: object</p><strong>Properties</strong><ul><li><strong>codigoRespuesta</strong>: <em>required (string)</em><p>01 - status code: 200 99 - Error Negocio (mostrar al usuario)</p></li><li><strong>mensajeRespuesta</strong>: <em>required (string)</em><p>01 - OK 99 - Según el error negocio</p></li><li><strong>errorResource</strong>: <em>(object)</em><ul></ul></li><li><strong>idAutoguardado</strong>: <em>required (string)</em><p>_ Cada vez que se obtenga esta repsuesta se debe guardar en cache el idAutoguardado</p></li></ul><p><strong>Example</strong>:</p><div class="examples"><pre><code>{
+  "codigoRespuesta": "01",
+  "mensajeRespuesta": "OK",
+  "idAutoguardado": "a23dke2"
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#usuarios_ingresos">/usuarios/ingresos</a></li><li><a href="#adns">/adns</a></li></ul></div></div></div></div></body></html>

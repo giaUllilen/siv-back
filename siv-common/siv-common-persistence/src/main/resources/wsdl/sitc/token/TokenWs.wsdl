@@ -1,0 +1,299 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:i0="http://tempuri.org/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://www.interseguro.com.pe/TokenServices/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="TokenWs" targetNamespace="http://www.interseguro.com.pe/TokenServices/">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.interseguro.com.pe/TokenServices/">
+<xs:import namespace="http://schemas.datacontract.org/2004/07/Interseguro.Sat.Domain.Afiliaciones.Modelo"/>
+<xs:element name="ValidarVigToken">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="glsToken" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuarioAplicacion" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ValidarVigTokenResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ValidarVigTokenResult" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="RegistrarToken">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="numPropuesta" type="xs:long"/>
+<xs:element minOccurs="0" name="numIp" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuarioAplicacion" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="RegistrarTokenResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="RegistrarTokenResult" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ConsultarDatosCrm">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="numPropuesta" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ConsultarDatosCrmResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Interseguro.Sat.Domain.Afiliaciones.Modelo" minOccurs="0" name="ConsultarDatosCrmResult" nillable="true" type="q1:Propuesta"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ConsultarPoliza">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="numPoliza" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ConsultarPolizaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Interseguro.Sat.Domain.Afiliaciones.Modelo" minOccurs="0" name="ConsultarPolizaResult" nillable="true" type="q2:Poliza"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ActualizarAfiliacionPropuesta">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="numeroPropuesta" type="xs:long"/>
+<xs:element minOccurs="0" name="numeroPoliza" type="xs:long"/>
+<xs:element minOccurs="0" name="moneda" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="codPeriodoPago" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuarioAplicacion" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ActualizarAfiliacionPropuestaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ActualizarAfiliacionPropuestaResult" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ActualizarNumeroPropuesta">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="propuestaAnt" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="propuestaNueva" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuario" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="usuarioAplicacion" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ActualizarNumeroPropuestaResponse">
+<xs:complexType>
+<xs:sequence>
+<xs:element minOccurs="0" name="ActualizarNumeroPropuestaResult" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/">
+<xs:element name="anyType" nillable="true" type="xs:anyType"/>
+<xs:element name="anyURI" nillable="true" type="xs:anyURI"/>
+<xs:element name="base64Binary" nillable="true" type="xs:base64Binary"/>
+<xs:element name="boolean" nillable="true" type="xs:boolean"/>
+<xs:element name="byte" nillable="true" type="xs:byte"/>
+<xs:element name="dateTime" nillable="true" type="xs:dateTime"/>
+<xs:element name="decimal" nillable="true" type="xs:decimal"/>
+<xs:element name="double" nillable="true" type="xs:double"/>
+<xs:element name="float" nillable="true" type="xs:float"/>
+<xs:element name="int" nillable="true" type="xs:int"/>
+<xs:element name="long" nillable="true" type="xs:long"/>
+<xs:element name="QName" nillable="true" type="xs:QName"/>
+<xs:element name="short" nillable="true" type="xs:short"/>
+<xs:element name="string" nillable="true" type="xs:string"/>
+<xs:element name="unsignedByte" nillable="true" type="xs:unsignedByte"/>
+<xs:element name="unsignedInt" nillable="true" type="xs:unsignedInt"/>
+<xs:element name="unsignedLong" nillable="true" type="xs:unsignedLong"/>
+<xs:element name="unsignedShort" nillable="true" type="xs:unsignedShort"/>
+<xs:element name="char" nillable="true" type="tns:char"/>
+<xs:simpleType name="char">
+<xs:restriction base="xs:int"/>
+</xs:simpleType>
+<xs:element name="duration" nillable="true" type="tns:duration"/>
+<xs:simpleType name="duration">
+<xs:restriction base="xs:duration">
+<xs:pattern value="\-?P(\d*D)?(T(\d*H)?(\d*M)?(\d*(\.\d*)?S)?)?"/>
+<xs:minInclusive value="-P10675199DT2H48M5.4775808S"/>
+<xs:maxInclusive value="P10675199DT2H48M5.4775807S"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="guid" nillable="true" type="tns:guid"/>
+<xs:simpleType name="guid">
+<xs:restriction base="xs:string">
+<xs:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:attribute name="FactoryType" type="xs:QName"/>
+<xs:attribute name="Id" type="xs:ID"/>
+<xs:attribute name="Ref" type="xs:IDREF"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/Interseguro.Sat.Domain.Afiliaciones.Modelo" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Interseguro.Sat.Domain.Afiliaciones.Modelo">
+<xs:complexType name="Propuesta">
+<xs:sequence>
+<xs:element minOccurs="0" name="FechaVencimiento" nillable="true" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="FechaVencimientoCadena" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GlsTipoCuenta" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Institucion" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Moneda" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="Numero" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumeroDiaCobro" type="xs:int"/>
+<xs:element minOccurs="0" name="NumeroPropuesta" type="xs:long"/>
+<xs:element minOccurs="0" name="TipoCuentaString" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Propuesta" nillable="true" type="tns:Propuesta"/>
+<xs:complexType name="Poliza">
+<xs:sequence>
+<xs:element minOccurs="0" name="FchVencTarjeta" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GlsBanco" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GlsDiaCobro" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GlsNumDiaCobro" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GlsPeriodoPago" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="GlsTipoCuenta" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumDiaCobro" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumPoliza" nillable="true" type="xs:string"/>
+<xs:element minOccurs="0" name="NumeroTarjeta" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:element name="Poliza" nillable="true" type="tns:Poliza"/>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="ITokenWs_ValidarVigToken_InputMessage">
+<wsdl:part name="parameters" element="tns:ValidarVigToken"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ValidarVigToken_OutputMessage">
+<wsdl:part name="parameters" element="tns:ValidarVigTokenResponse"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_RegistrarToken_InputMessage">
+<wsdl:part name="parameters" element="tns:RegistrarToken"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_RegistrarToken_OutputMessage">
+<wsdl:part name="parameters" element="tns:RegistrarTokenResponse"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ConsultarDatosCrm_InputMessage">
+<wsdl:part name="parameters" element="tns:ConsultarDatosCrm"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ConsultarDatosCrm_OutputMessage">
+<wsdl:part name="parameters" element="tns:ConsultarDatosCrmResponse"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ConsultarPoliza_InputMessage">
+<wsdl:part name="parameters" element="tns:ConsultarPoliza"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ConsultarPoliza_OutputMessage">
+<wsdl:part name="parameters" element="tns:ConsultarPolizaResponse"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ActualizarAfiliacionPropuesta_InputMessage">
+<wsdl:part name="parameters" element="tns:ActualizarAfiliacionPropuesta"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ActualizarAfiliacionPropuesta_OutputMessage">
+<wsdl:part name="parameters" element="tns:ActualizarAfiliacionPropuestaResponse"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ActualizarNumeroPropuesta_InputMessage">
+<wsdl:part name="parameters" element="tns:ActualizarNumeroPropuesta"/>
+</wsdl:message>
+<wsdl:message name="ITokenWs_ActualizarNumeroPropuesta_OutputMessage">
+<wsdl:part name="parameters" element="tns:ActualizarNumeroPropuestaResponse"/>
+</wsdl:message>
+<wsdl:portType name="ITokenWs">
+<wsdl:operation name="ValidarVigToken">
+<wsdl:input wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ValidarVigToken" message="tns:ITokenWs_ValidarVigToken_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ValidarVigTokenResponse" message="tns:ITokenWs_ValidarVigToken_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="RegistrarToken">
+<wsdl:input wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/RegistrarToken" message="tns:ITokenWs_RegistrarToken_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/RegistrarTokenResponse" message="tns:ITokenWs_RegistrarToken_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="ConsultarDatosCrm">
+<wsdl:input wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ConsultarDatosCrm" message="tns:ITokenWs_ConsultarDatosCrm_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ConsultarDatosCrmResponse" message="tns:ITokenWs_ConsultarDatosCrm_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="ConsultarPoliza">
+<wsdl:input wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ConsultarPoliza" message="tns:ITokenWs_ConsultarPoliza_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ConsultarPolizaResponse" message="tns:ITokenWs_ConsultarPoliza_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="ActualizarAfiliacionPropuesta">
+<wsdl:input wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ActualizarAfiliacionPropuesta" message="tns:ITokenWs_ActualizarAfiliacionPropuesta_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ActualizarAfiliacionPropuestaResponse" message="tns:ITokenWs_ActualizarAfiliacionPropuesta_OutputMessage"/>
+</wsdl:operation>
+<wsdl:operation name="ActualizarNumeroPropuesta">
+<wsdl:input wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ActualizarNumeroPropuesta" message="tns:ITokenWs_ActualizarNumeroPropuesta_InputMessage"/>
+<wsdl:output wsaw:Action="http://www.interseguro.com.pe/TokenServices/ITokenWs/ActualizarNumeroPropuestaResponse" message="tns:ITokenWs_ActualizarNumeroPropuesta_OutputMessage"/>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="BasicHttpBinding_ITokenWs" type="tns:ITokenWs">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="ValidarVigToken">
+<soap:operation soapAction="http://www.interseguro.com.pe/TokenServices/ITokenWs/ValidarVigToken" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="RegistrarToken">
+<soap:operation soapAction="http://www.interseguro.com.pe/TokenServices/ITokenWs/RegistrarToken" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConsultarDatosCrm">
+<soap:operation soapAction="http://www.interseguro.com.pe/TokenServices/ITokenWs/ConsultarDatosCrm" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConsultarPoliza">
+<soap:operation soapAction="http://www.interseguro.com.pe/TokenServices/ITokenWs/ConsultarPoliza" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ActualizarAfiliacionPropuesta">
+<soap:operation soapAction="http://www.interseguro.com.pe/TokenServices/ITokenWs/ActualizarAfiliacionPropuesta" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ActualizarNumeroPropuesta">
+<soap:operation soapAction="http://www.interseguro.com.pe/TokenServices/ITokenWs/ActualizarNumeroPropuesta" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="TokenWs">
+<wsdl:port name="BasicHttpBinding_ITokenWs" binding="tns:BasicHttpBinding_ITokenWs">
+<soap:address location="http://10.29.37.76/Sat/TokenWs.svc"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

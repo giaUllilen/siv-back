@@ -1,0 +1,70 @@
+{
+    "codigoRespuesta": "O1",
+    "mensajeRespuesta": "OK",
+    "tipoDocumento": [
+      {
+        "codigo": "1",
+        "descripcion": "DNI"
+      },
+      {
+        "codigo": "1",
+        "descripcion": "Carnet Extranjería"
+      }
+    ],
+    "genero": [
+      {
+        "codigo": "1",
+        "descripcion": "Masculino"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Femenino"
+      }
+    ],
+    "profesion": [
+      {
+        "codigo": "1",
+        "descripcion": "Ingeniero"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Abogado"
+      }
+    ],
+    "actividadEconomica": [
+      {
+        "codigo": "1",
+        "descripcion": "Vendedor"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Seguridad"
+      }
+    ],
+    "fumador": [
+      {
+        "codigo": "1",
+        "descripcion": "Si"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "No"
+      }
+    ],
+    "tipoRelacion": [
+      {
+        "codigo": "1",
+        "descripcion": "Esposo(a)"
+      },
+      {
+        "codigo": "2",
+        "descripcion": "Hijo(a)"
+      }
+    ],
+    "parametro": {
+      "porcentajeIngresoIni": 5.0,
+      "porcentajeIngresoFin": 10.0,
+      "seguroVidaLeyRegla": 16.0
+    }
+
+}

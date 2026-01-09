@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="pe.interseguro.siv.common.persistence.db.acsele.repository.AcseleRepository">
+	<resultMap type="pe.interseguro.siv.common.persistence.db.acsele.bean.PolizaAcsele" id="resultCursorPolizas">
+		<id column="IDOPERACION" property="idOperacion" /><result column="numeropoliza"
+			property="numeroPoliza" />
+		<result column="ESTADO" property="estadoPoliza" />
+		<result column="producto" property="nombreProducto" />
+		<result column="frecuenciapago" property="frecuenciaPago" />
+		<result column="primatotal" property="primaTotal" />
+		<result column="iniciovigencia" property="inicioVigencia" />
+		<result column="finvigencia" property="finVigencia" />
+		<result column="cobertura" property="cobertura" />
+		<result column="capital" property="capital" />
+		<result column="primaneta" property="primaNeta" />
+		<result column="ultimopago" property="ultimoPago" /></resultMap>
+</mapper>

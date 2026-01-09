@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+    body {
+
+      font-family: "Arial Narrow","Arial", sans-serifs;
+      font-size: 12pt;
+    }
+
+    section {
+      background: white;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 0.5cm;
+
+    }
+    /* .a4 {
+    width: 29.7cm;
+ 
+    } */
+
+    table {
+      align-items: center;
+      vertical-align: middle;
+    }
+
+    .table-main>tbody>tr>td,
+    .table-main>thead>tr>th {
+      padding: 5px 6px;
+
+    }
+
+    .table-cards,
+    .table-cards td {
+      border-left: 1px solid black;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+      border-collapse: collapse;
+      min-height: 25px;
+      word-wrap: break-word;
+      table-layout: fixed;
+    }
+    </style>
+</head>
+
+<body>
+<section class="a4">
+    <table class="table table-main" border="0" cellpadding="0" cellspacing="0"
+             style="width: 100%">
+        <tbody>
+        <tr>
+            <td><img src="logo-interseguro-black.jpg" th:attr="src=@{classpath:templates/logo-interseguro-black.jpg},title=#{logo},alt=#{logo}"/></td>
+
+            <td style="width:50%;text-align: right;" ><span style="font-size:12.0pt">Solicitud</span> <span style="font-size:18.0pt;font-weight: bold;" th:text="'N° '+ ${numero_propuesta}">N°
+             </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-main" border="0" cellpadding="0" cellspacing="0"
+            style="width: 100%">
+        <tbody>
+        <tr>
+         
+            <td style="text-align:center;font-size: 16pt;"><b>Autorización de Cargo de Primas</b></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+            <td style="border:0.51px solid"><b>Producto:</b> <span th:text="${producto}"></span> </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="background: black;color:#fff;font-size:12pt">I. Datos Personales</td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom: 1px solid"><b>Apellido Paterno</b> <span th:text="${contratante.apellido_paterno}" ></span></td>
+                        <td></td>
+                        <td style="border-bottom: 1px solid"><b>Apellido Materno</b> <span th:text="${contratante.apellido_materno}" ></span></td>
+                    </tr>
+                    </tbody>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table" style="width: 50%">
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom: 1px solid"><b>Nombres </b> <span th:text="${contratante.nombres}" ></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom: 1px solid">
+                            <table class="table" style="width:100%">
+                                <tbody>
+                                <tr>
+                                    <td><b>Doc. de Identidad</b></td>
+                                    <td><b>DNI</b></td>
+                                    <td><img id="chk_cont_tdoc_dni" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_tdoc_dni}}"
+                                             alt="chk_cont_tdoc_dni" />
+                                    </td>
+                                    <td><b>RUC</b></td>
+                                    <td><img id="chk_cont_tdoc_ruc" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_tdoc_ruc}}"
+                                             alt="chk_cont_tdoc_ruc" />
+                                    </td>
+                                    <td><b>CE</b></td>
+                                    <td><img id="chk_cont_tdoc_ce" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_tdoc_ce}}"
+                                             alt="chk_cont_tdoc_ce" /></td>
+                                    <td><b>CI</b></td>
+                                    <td><img id="chk_cont_tdoc_ci" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_tdoc_ci}}"
+                                             alt="chk_cont_tdoc_ci" /></td>
+                                    <td><b>Otro doc</b></td>
+                                    <td><img id="chk_cont_tdoc_otro" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_tdoc_otro}}"
+                                             alt="chk_cont_tdoc_otro" />
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td></td>
+                        <td style="border-bottom: 1px solid;width:35% "><b>N° </b><span th:text="${contratante.numero_documento}" ></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom: 1px solid">
+                            <table class="table" style="width:100%">
+                                <tbody>
+                                <tr>
+                                    <td><b>Dirección</b></td>
+                                    <td><b>Jr.</b></td>
+                                    <td><img id="chk_cont_dir_jr" src="./mini_circle_incomplete.png"  th:src="@{${chk_cont_dir_jr}}"
+                                             alt="chk_aseg_tdoc_dni" /></td>
+                                    <td><b>Av.</b></td>
+                                    <td><img id="chk_cont_dir_av" src="./mini_circle_incomplete.png"  th:src="@{${chk_cont_dir_av}}"
+                                             alt="chk_aseg_tdoc_ruc" /></td>
+                                    <td><b>Calle</b></td>
+                                    <td><img id="chk_cont_dir_calle" src="./mini_circle_incomplete.png"  th:src="@{${chk_cont_dir_calle}}"
+                                             alt="chk_aseg_tdoc_ce" />
+                                    </td>
+                                    <td><b>Otro</b></td>
+                                    <td><img id="chk_cont_dir_otro" src="./mini_circle_incomplete.png"  th:src="@{${chk_cont_dir_otro}}"
+                                             alt="chk_aseg_tdoc_ce" />
+                                    </td>
+                                    <td style="width:50% "><span th:text="${contratante.direccion}" ></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid">
+                <table class="table" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td style="width:25%">
+                            <table class="table" style="width: 100%">
+                                <tbody>
+                                <tr>
+                                    <td style="width:50%"><b>N°/Mz./Lt.</b></td>
+                                    <td><span th:text="${contratante.nro_mz_lt}" ></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td style="width:30%">
+                            <table class="table" style="width: 100%">
+                                <tbody>
+                                <tr>
+                                    <td style="width:60%"><b>Dpto./ Oficina/ Int</b></td>
+                                    <td><span th:text="${contratante.dpto_of_int}" ></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table style="width: 100%">
+                                <tbody>
+                                <tr>
+                                    <td style="width:15%"><b>Distrito</b></td>
+                                    <td><span th:text="${contratante.distrito}" ></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid">
+                <table class="table" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <table class="table" style="width: 100%">
+                                <tbody>
+                                <tr>
+                                    <td style="width:20%"><b>Provincia </b></td>
+                                    <td><span th:text="${contratante.provincia}" ></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                        <td>
+                            <table class="table" style="width: 100%">
+                                <tbody>
+                                <tr>
+                                    <td style="width:20%"><b>Departamento </b></td>
+                                    <td><span th:text="${contratante.departamento}" ></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table" style="width: 50%">
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom: 1px solid"><b>Celular </b> <span th:text="${contratante.celular}" ></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table" style="width: 100%">
+                    <tbody>
+                    <tr>
+                        <td style="border-bottom: 1px solid">
+                            <table class="table" style="width:75%">
+                                <tbody>
+                                <tr>
+                                    <td><b>Frecuencia de pago</b></td>
+                                    <td><b>Anual</b></td>
+                                    <td><img id="chk_cont_frec_anual" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_frec_anual}}"
+                                             alt="chk_cont_frec_anual" /></td>
+                                    <td><b>Semestral</b></td>
+                                    <td><img id="chk_cont_frec_sem" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_frec_sem}}"
+                                             alt="chk_cont_frec_sem" />
+                                    </td>
+                                    <td><b>Trimestral</b></td>
+                                    <td><img id="chk_cont_frec_trim" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_frec_trim}}"
+                                             alt="chk_cont_frec_trim" />
+                                    </td>
+                                    <td><b>Mensual</b></td>
+                                    <td><img id="chk_cont_frec_men" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_frec_men}}"
+                                             alt="chk_cont_frec_men" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>Correo Electrónico</b></td>
+                            <td> <span th:text="${contratante.correo_electronico}" ></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="background: black;color:#fff;font-size:12pt"><b>II. Autorización de Cargo de Primas</b></td>
+        </tr>
+        <tr>
+            <td>Autorizo a Interseguro Compañía de Seguros S.A. a cargar la(s) prima(s) de mi Seguro de Vida Individual
+                en:
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table table-main" border="0" style="width:100%;border-spacing: 0px;">
+                    <tbody>
+                    <tr>
+                        <td style="width:50%;background: black;color:#fff;font-size:12pt"><b>Datos de la Tarjeta</b>
+                        </td>
+                        <td style="width:50%;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width:50%;">
+                            <table class="table" style="width:100%;border-spacing: 0px;">
+                                <tbody>
+                                <tr>
+
+                                    <td>Visa</td>
+                                    <td><img id="chk_tarjeta_visa" src="./mini_circle_incomplete.png"  th:src="@{${chk_tarjeta_visa}}"
+                                             alt="chk_tarjeta_visa" /></td>
+                                    <td>Mastercard</td>
+                                    <td><img id="chk_tarjeta_mastercard" src="./mini_circle_incomplete.png"  th:src="@{${chk_tarjeta_mastercard}}"
+                                             alt="chk_tarjeta_mastercard" /></td>
+                                    <td>American Express</td>
+                                    <td><img id="chk_tarjeta_amex" src="./mini_circle_incomplete.png"  th:src="@{${chk_tarjeta_amex}}"
+                                             alt="chk_tarjeta_amex" />
+                                    </td>
+                                    <td>Diners</td>
+                                    <td><img id="chk_tarjeta_diners" src="./mini_circle_incomplete.png"  th:src="@{${chk_tarjeta_diners}}"
+                                             alt="chk_tarjeta_diners" />
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                        <td style="width:50%;">
+                            <table style="width:100%;border-spacing: 0px;">
+                                <tbody>
+                                <tr>
+                                    <td style="width:22%;"> N° de Tarjeta</td>
+                                    <td>
+                                        <table class="table-cards" style="width:100%;border-spacing: 0px;text-align: center;">
+                                            <tbody>
+                                            <tr>
+                                                <td><span th:text="${t_1}" ></span></td>
+                                                <td><span th:text="${t_1}" ></span></td>
+                                                <td><span th:text="${t_2}" ></span></td>
+                                                <td><span th:text="${t_3}" ></span></td>
+                                                <td><span th:text="${t_4}" ></span></td>
+                                                <td><span th:text="${t_5}" ></span></td>
+                                                <td><span th:text="${t_6}" ></span></td>
+                                                <td><span th:text="${t_7}" ></span></td>
+                                                <td><span th:text="${t_8}" ></span></td>
+                                                <td><span th:text="${t_9}" ></span></td>
+                                                <td><span th:text="${t_10}" ></span></td>
+                                                <td><span th:text="${t_11}" ></span></td>
+                                                <td><span th:text="${t_12}" ></span></td>
+                                                <td><span th:text="${t_13}" ></span></td>
+                                                <td><span th:text="${t_14}" ></span></td>
+                                                <td><span th:text="${t_15}" ></span></td>
+                                                <td><span th:text="${t_16}" ></span></td>
+
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"></td>
+                    </tr>
+                    <tr>
+                        <td style="width:60%;">
+                            <table style="width:100%;border-spacing: 0px;">
+                                <tbody>
+                                <tr>
+                                    <td style="width:40%;">Fecha de Vencimiento</td>
+                                    <td style="width:29%;">
+                                        <table style="width:100%;border-spacing: 0px;">
+                                            <tbody>
+                                            <tr>
+                                                <td style="padding-right: 10px;">Mes</td>
+                                                <td>
+                                                    <table class="table-cards " style="width:100%;border-spacing: 0px;">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td><span th:text="${vencimiento_mes_1}" ></span></td>
+                                                            <td><span th:text="${vencimiento_mes_2}" ></span></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                    <td style="width:2%;"></td>
+                                    <td style="width:29%;">
+                                        <table style="width:100%;border-spacing: 0px;">
+                                            <tbody>
+                                            <tr>
+                                                <td style="padding-right: 10px;">Año</td>
+                                                <td>
+                                                    <table class="table-cards" style="width:100%;border-spacing: 0px;">
+                                                        <tbody>
+                                                        <tr>
+                                                            <td><span th:text="${vencimiento_anio_3}" ></span></td>
+                                                            <td><span th:text="${vencimiento_anio_4}" ></span></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table-main" style="width:50%">
+                    <tbody>
+                    <tr>
+                        <td style="width:50%;background: black;color:#fff;font-size:12pt">
+                            <b>Cuenta Bancaria</b>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid">
+                <table class="table" style="width:60%;border-spacing: 0px;">
+                    <tbody>
+                    <tr>
+                        <td style="width:25%">Tipo de Cuenta</td>
+                        <td style="width:10%">Ahorro</td>
+                        <td><img id="chk_cont_cuenta_ahorro" src="./mini_circle_incomplete.png" th:src="@{${chk_cont_cuenta_ahorro}}"
+                                 alt="chk_cont_cuenta_ahorro" /></td>
+                        <td style="width:18%">Cta. Corriente</td>
+                        <td><img id="chk_cont_cuenta_corriente" src="./mini_circle_incomplete.png"  th:src="@{${chk_cont_cuenta_corriente}}"
+                                 alt="chk_cont_cuenta_corriente" /></td>
+                        <td style="width:10%">Otros</td>
+                        <td><img id="chk_cont_cuenta_otro" src="./mini_circle_incomplete.png"  th:src="@{${chk_cont_cuenta_otro}}"
+                                 alt="chk_cont_cuenta_otro" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid">
+                <table class="table" style="width:80%;border-spacing: 0px;">
+                    <tbody>
+                    <tr>
+                        <td style="width:19%">Banco Continental</td>
+                        <td><img id="chk_banco_conti" src="./mini_circle_incomplete.png" th:src="@{${chk_banco_conti}}"
+                                 alt="chk_banco_conti" /></td>
+                        <td style="width:17%">Banco de Crédito</td>
+                        <td><img id="chk_banco_bcp" src="./mini_circle_incomplete.png" th:src="@{${chk_banco_bcp}}"
+                                 alt="chk_banco_bcp" /></td>
+                        <td style="width:17%">Banco Interbank</td>
+                        <td><img id="chk_banco_ibk" src="./mini_circle_incomplete.png" th:src="@{${chk_banco_ibk}}"
+                                 alt="chk_banco_ibk" /></td>
+                        <td style="width:11%">Scotiabank</td>
+                        <td><img id="chk_banco_scotia" src="./mini_circle_incomplete.png" th:src="@{${chk_banco_scotia}}"
+                                 alt="chk_banco_scotia" />
+                        </td>
+                        <td style="width:8%">Otros</td>
+                        <td><img id="chk_banco_otro" src="./mini_circle_incomplete.png" th:src="@{${chk_banco_otro}}"
+                                 alt="chk_banco_otro" />
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="border-bottom: 1px solid">
+                <table class="table" style="width:50%;border-spacing: 0px;">
+                    <tbody>
+                    <tr>
+                        <td style="width:30%">Moneda</td>
+                        <td style="width:10%">Soles</td>
+                        <td><img id="chk_moneda_soles" src="./mini_circle_incomplete.png" th:src="@{${chk_moneda_soles}}"
+                                 alt="chk_cont_cuenta_ahorro" /></td>
+                        <td style="width:10%">Dólares</td>
+                        <td><img id="chk_moneda_dolares" src="./mini_circle_incomplete.png" th:src="@{${chk_moneda_dolares}}" 
+                            alt="chk_moneda_dolares"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>Número de cuenta:
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="table-cards" style="width:50%;border-spacing: 0px;">
+                    <tbody>
+                    <tr>
+                        <td><span th:text="${c_1}" ></span></td>
+                        <td><span th:text="${c_2}" ></span></td>
+                        <td><span th:text="${c_3}" ></span></td>
+                        <td><span th:text="${c_4}" ></span></td>
+                        <td><span th:text="${c_5}" ></span></td>
+                        <td><span th:text="${c_6}" ></span></td>
+                        <td><span th:text="${c_7}" ></span></td>
+                        <td><span th:text="${c_8}" ></span></td>
+                        <td><span th:text="${c_9}" ></span></td>
+                        <td><span th:text="${c_10}" ></span></td>
+                        <td><span th:text="${c_11}" ></span></td>
+                        <td><span th:text="${c_12}" ></span></td>
+                        <td><span th:text="${c_13}" ></span></td>
+                        <td><span th:text="${c_14}" ></span></td>
+                        <td><span th:text="${c_15}" ></span></td>
+                        <td><span th:text="${c_16}" ></span></td>
+                        <td><span th:text="${c_17}" ></span></td>
+                        <td><span th:text="${c_18}" ></span></td>
+                        <td><span th:text="${c_19}" ></span></td>
+                        <td><span th:text="${c_20}" ></span></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="height:50px"></td>
+        </tr>
+        <tr>
+            <td>
+                <table style="width:100%;text-align:center;" border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <table class="table-main" style="width:100%; " border="0" cellpadding="0" cellspacing="0">
+                                <tbody>
+                                <tr>
+                                    <td style="width:40%;border-bottom:1px solid black"><span th:text="${contratante.nombres_completos}" ></span></td>
+                                    <td style="width:15%"></td>
+                                    <td style="border-bottom:1px solid black"> Fecha: <span th:text="${fecha_firma_dia}" ></span> de <span th:text="${fecha_firma_mes}" ></span> de
+                                        <span th:text="${fecha_firma_anio}" ></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Firma del titular</td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:40px"></td>
+        </tr>
+        <tr>
+            <td>Declaro conocer y aceptar en su integridad las condiciones descritas en el reverso del presente
+                documento.
+            </td>
+        </tr>
+        <tr>
+            <td style="height:40px"></td>
+        </tr>
+        </tbody>
+        <tr>
+            <td style="text-align:justify;font-family: Arial, Helvetica, sans-serif;font-size:11pt">
+                <p>A través de la presente solicitud autorizo pagar de manera recurrente, a mes adelantado, con cargo al
+                    medio de pago y la moneda elegida el valor
+                    de la prima de mi seguro de vida, conforme a lo señalado en las Condiciones Particulares. La
+                    afiliación tendrá efecto luego de que el Banco o la
+                    procesadora de la tarjeta de crédito dé conformidad a la misma. El cobro de la(s) prima(s) podrá
+                    realizarse a partir del día 10 de cada mes, por lo
+                    que me comprometo a tener los fondos necesarios para que el cargo se realice en forma satisfactoria.
+                    De no tener éxito inicialmente, se
+                    reintentará el (los) cargo(s) de la(s) prima(s) impaga(s) durante el transcurso del mes.
+                </p>
+                <p>En caso estuviere atrasado en una o más primas y/o existiera algún préstamo, el cargo será por el
+                    total de las primas impagas, incluyendo
+                    aquellos gastos y/o intereses generados por dicho retraso y/o por los intereses del préstamo,
+                    respectivamente.</p>
+                <p>Los cargos en la tarjeta de crédito serán aplicados según la priorización definida por cada banco y
+                    se realizarán en la moneda que defina el cliente
+                    en la solicitud. De elegir la opción de cargo en nuevos soles, ya sea en tarjeta de crédito o en
+                    cuenta bancaria, el monto de la prima expresada en
+                    moneda extranjera se convertirá con el tipo de cambio vigente al momento de efectuar la
+                    transacción.</p>
+                <p>En caso de reemplazo de la tarjeta por pérdida, robo, renovación o vencimiento, el Banco actualizará
+                    el nuevo número de tarjeta de crédito para
+                    poder continuar con el cargo automático. Sin perjuicio de ello, es obligación del Cliente informar a
+                    Interseguro el cambio del número de tarjeta.</p>
+                <p>La presente autorización de cargo se entenderá dada, para todos los efectos legales, el mismo día en
+                    que se realice el cargo automático en la
+                    cuenta bancaria o en la tarjeta de crédito y se entenderá que se encuentra vigente en iguales
+                    términos, en tanto se puedan ejecutar los cargos de
+                    las primas correspondientes.</p>
+                <p>El cambio de la presente autorización de cargo de primas deberá realizarse previa coordinación con
+                    Interseguro. </p>
+                <p>Según lo establecido en las Condiciones Generales de su póliza, para el caso de las solicitudes de
+                    término de contrato, la compañía seguirá
+                    realizando los cargos y/o cobranzas hasta que haya aceptado la solicitud de término de contrato del
+                    cliente.</p>
+                <p>La presente instrucción expirará en forma automática en caso de caducidad del contrato con su Banco o
+                    con Interseguro. </p>
+                <p>Interseguro carecerá de toda responsabilidad si el cargo de las primas no puede realizarse por
+                    insuficiencia de saldos o cualquier otro motivo no
+                    imputable a la compañía. Es responsabilidad del contratante verificar que los cargos de prima se
+                    realicen.
+                    La presente autorización deja sin efecto la vía de pago antes utilizada.</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="height:40px"></td>
+        </tr>
+    </table>
+</section>
+</body>
+
+</html>

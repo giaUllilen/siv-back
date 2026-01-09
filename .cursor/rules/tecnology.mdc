@@ -1,0 +1,85 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Este es un proyecto desarrollado en Node con TypeScript y Hapi como framework de servidor. Para acceder a la base de datos utiliza SQL Server (MSSQL) según se evidencia en las conexiones configuradas, y para las APIs externas utiliza axios.
+
+La estructura del proyecto es la siguiente:
+rentas-api-cotizador-rv/
+│
+├── src/                       # Código fuente de la aplicación
+│   ├── connections/           # Conexiones a servicios externos
+│   │   └── database/          # Conexiones a bases de datos
+│   │       └── Exp_serv.connector.ts
+│   │
+│   ├── controllers/           # Controladores que manejan las peticiones HTTP
+│   │   ├── controller.factory.ts
+│   │   └── actividad.controller.ts
+│   │
+│   ├── documentation/         # Documentación de la API
+│   │   ├── actividad.doc.ts
+│   │   └── error.doc.ts
+│   │
+│   ├── integration/           # Integraciones con servicios externos
+│   │   ├── impl/              # Implementaciones de servicios
+│   │   ├── models/            # Modelos para integraciones
+│   │   └── otro-externo.service.ts
+│   │
+│   ├── middleware/            # Middleware para procesar solicitudes
+│   │   ├── error.ts
+│   │   └── context.ts
+│   │
+│   ├── plugins/               # Plugins para el servidor Hapi
+│   │   ├── health.ts
+│   │   ├── logger.ts
+│   │   ├── swagger.ts
+│   │   └── test.ts
+│   │
+│   ├── repositories/          # Capa de acceso a datos
+│   │   ├── actividad/
+│   │   └── otro-repositorio/
+│   │
+│   ├── routes/                # Definición de rutas API
+│   │   ├── actividad.routes.ts
+│   │   ├── test.ts
+│   │   └── v1.ts
+│   │
+│   ├── services/              # Lógica de negocio
+│   │   └── actividad/
+│   │
+│   ├── shared/                # Recursos compartidos
+│   │   ├── base/              # Clases base
+│   │   ├── dtos/              # Data Transfer Objects
+│   │   ├── entities/          # Entidades de dominio
+│   │   ├── mappers/           # Conversores entre formatos
+│   │   ├── types/             # Tipos compartidos
+│   │   ├── utils/             # Utilidades compartidas
+│   │   ├── constants.ts
+│   │   ├── error.ts
+│   │   ├── readme.md
+│   │   └── status.codes.ts
+│   │
+│   ├── types/                 # Definiciones de tipos globales
+│   │   └── hapi.d.ts
+│   │
+│   ├── utils/                 # Utilidades y funciones auxiliares
+│   │   ├── decorators/        # Decoradores personalizados
+│   │   ├── context.ts
+│   │   ├── date.ts
+│   │   ├── environment.ts
+│   │   └── logger.ts
+│   │
+│   └── index.ts               # Punto de entrada de la aplicación
+│
+├── .github/                   # Configuraciones de GitHub
+├── .git/                      # Repositorio Git
+├── .cursor/                   # Configuración de Cursor
+├── .gitignore                 # Archivos ignorados por Git
+├── Dockerfile                 # Configuración para Docker
+├── README.md                  # Documentación del proyecto
+├── package.json               # Dependencias y scripts
+├── package-lock.json          # Versiones exactas de dependencias
+├── runLocal.bat               # Script para ejecutar localmente en Windows
+├── runLocal.sh                # Script para ejecutar localmente en Unix/Linux
+└── tsconfig.json              # Configuración de TypeScript
