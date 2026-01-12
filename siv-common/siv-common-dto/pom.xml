@@ -22,9 +22,18 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>17</jdk.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<springframework.version>5.1.6.RELEASE</springframework.version>
 	</properties>
+	
+	<repositories>
+	    <repository>
+	        <id>projectlombok.org</id>
+	        <url>https://projectlombok.org/edge-releases</url>
+	    </repository>
+	</repositories>
 
 	<!-- ........................................................................................ -->
 	<!-- DEPENDENCIES -->
@@ -65,7 +74,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.6</version>
+			<version>edge-SNAPSHOT</version>
 			<optional>true</optional>
 		</dependency>
         <dependency>
@@ -99,10 +108,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<source>17</source>
+					<target>17</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>edge-SNAPSHOT</version>
+						</path>
+					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -24,6 +24,10 @@
 	        <id>rdc</id>
 	        <url>https://nexus.saas.hand-china.com/content/repositories/rdc/</url>
 	    </repository>
+	    <repository>
+	        <id>projectlombok.org</id>
+	        <url>https://projectlombok.org/edge-releases</url>
+	    </repository>
 	</repositories>
 	<!-- ........................................................................................ -->
 	<!-- PROPERTIES -->
@@ -31,7 +35,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>17</jdk.version>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
 		<springframework.version>5.1.6.RELEASE</springframework.version>
 	</properties>
 
@@ -118,12 +124,12 @@
 		    <version>12.1.0.2</version>
 		</dependency>				
 
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.12</version>
-			<optional>true</optional>
-		</dependency>
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+		<version>edge-SNAPSHOT</version>
+		<optional>true</optional>
+	</dependency>
 		<dependency>
 		  	<groupId>org.postgresql</groupId>
 		  	<artifactId>postgresql</artifactId>
@@ -181,10 +187,30 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
+					<source>17</source>
+					<target>17</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>edge-SNAPSHOT</version>
+						</path>
+					</annotationProcessorPaths>
+					<fork>true</fork>
+					<compilerArgs>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.model=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED</arg>
+						<arg>--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED</arg>
+					</compilerArgs>
 				</configuration>
 			</plugin>
 			<plugin>
