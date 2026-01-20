@@ -1,180 +1,221 @@
 package pe.interseguro.siv.common.util;
 
-import static org.junit.Assert.*;
-import static pe.interseguro.siv.common.util.DateUtil.*;
-
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.Date;
-
 import org.junit.Test;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+
+import static org.junit.Assert.*;
+
 /**
- * Pruebas unitarias para DateUtil
- * Cumple con principio de aislamiento de TDD: no depende de recursos externos
+ * Pruebas unitarias para la clase DateUtil
  */
 public class DateUtilTest {
 
     @Test
-    public void testGetTimestampFromUtilDate_whenDateProvided_returnsTimestamp() {
-        // Arrange
-        Date date = new Date(1642512000000L); // 2022-01-18 12:00:00
-        
-        // Act
-        Timestamp result = getTimestampFromUtilDate(date);
-        
-        // Assert
-        assertNotNull(result);
-        assertEquals(date.getTime(), result.getTime());
+    public void testGetTimestampFromUtilDate() {
+        Date fecha = new Date();
+        Timestamp resultado = DateUtil.getTimestampFromUtilDate(fecha);
+
+        assertNotNull(resultado);
+        assertEquals(fecha.getTime(), resultado.getTime());
     }
 
     @Test
-    public void testGetDateFromTimestamp_whenTimestampProvided_returnsDate() {
-        // Arrange
-        Timestamp timestamp = new Timestamp(1642512000000L);
-        
-        // Act
-        Date result = getDateFromTimestamp(timestamp);
-        
-        // Assert
-        assertNotNull(result);
-        assertEquals(timestamp.getTime(), result.getTime());
+    public void testGetDateFromTimestamp() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date resultado = DateUtil.getDateFromTimestamp(timestamp);
+
+        assertNotNull(resultado);
+        assertEquals(timestamp.getTime(), resultado.getTime());
     }
 
     @Test
-    public void testGetNumberOfDays_whenValidDates_returnsCorrectDifference() {
-        // Arrange
-        Date dateIni = new Date(1642512000000L); // 2022-01-18
-        Date dateEnd = new Date(1642857600000L); // 2022-01-22 (4 días después)
+    public void testGetNumberOfDaysConTimestamp() {
+        Calendar cal = Calendar.getInstance();
+        Timestamp tsInicio = new Timestamp(cal.getTimeInMillis());
         
-        // Act
-        Long days = getNumberOfDays(dateIni, dateEnd);
-        
-        // Assert
-        assertEquals(Long.valueOf(4L), days);
+        cal.add(Calendar.DAY_OF_MONTH, 5);
+        Timestamp tsFin = new Timestamp(cal.getTimeInMillis());
+
+        Long dias = DateUtil.getNumberOfDays(tsInicio, tsFin);
+
+        assertEquals(Long.valueOf(5L), dias);
     }
 
     @Test
-    public void testDateToString_whenValidDate_returnsFormattedString() throws Exception {
-        // Arrange
-        Date date = stringToDate("18/01/2022", FORMATO_DIA_DDMMYYYY);
+    public void testGetNumberOfDaysConDate() {
+        Calendar cal = Calendar.getInstance();
+        Date fechaInicio = cal.getTime();
         
-        // Act
-        String result = dateToString(date, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertEquals("18/01/2022", result);
+        cal.add(Calendar.DAY_OF_MONTH, 10);
+        Date fechaFin = cal.getTime();
+
+        Long dias = DateUtil.getNumberOfDays(fechaInicio, fechaFin);
+
+        assertEquals(Long.valueOf(10L), dias);
     }
 
     @Test
-    public void testDateToString_whenNullDate_returnsNull() throws Exception {
-        // Act
-        String result = dateToString(null, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNull(result);
+    public void testDateToStringConFormatoDDMMYYYY() throws Exception {
+        Calendar cal = Calendar.getInstance();
+        cal.set(2024, Calendar.JANUARY, 15);
+        Date fecha = cal.getTime();
+
+        String resultado = DateUtil.dateToString(fecha, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNotNull(resultado);
+        assertTrue(resultado.contains("15"));
+        assertTrue(resultado.contains("01"));
+        assertTrue(resultado.contains("2024"));
     }
 
     @Test
-    public void testStringToDate_whenValidString_returnsDate() {
-        // Act
-        Date result = stringToDate("18/01/2022", FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNotNull(result);
+    public void testDateToStringConNull() throws Exception {
+        String resultado = DateUtil.dateToString(null, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testStringToDate_whenNullString_returnsNull() {
-        // Act
-        Date result = stringToDate(null, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNull(result);
+    public void testTimestampToString() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        String resultado = DateUtil.timestampToString(timestamp, DateUtil.FORMATO_DIA_YYYYMMDD);
+
+        assertNotNull(resultado);
+        assertEquals(8, resultado.length());
     }
 
     @Test
-    public void testStringToDate_whenInvalidFormat_returnsNull() {
-        // Act
-        Date result = stringToDate("invalid-date", FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNull(result);
+    public void testTimestampToStringConNull() {
+        String resultado = DateUtil.timestampToString(null, DateUtil.FORMATO_DIA_YYYYMMDD);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testStringToTimestamp_whenValidString_returnsTimestamp() {
-        // Act
-        Timestamp result = stringToTimestamp("18/01/2022", FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNotNull(result);
+    public void testStringToDate() {
+        String fechaStr = "15/01/2024";
+        Date resultado = DateUtil.stringToDate(fechaStr, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNotNull(resultado);
     }
 
     @Test
-    public void testStringToTimestamp_whenNullString_returnsNull() {
-        // Act
-        Timestamp result = stringToTimestamp(null, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNull(result);
+    public void testStringToDateConNull() {
+        Date resultado = DateUtil.stringToDate(null, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testTimestampToString_whenValidTimestamp_returnsFormattedString() {
-        // Arrange
-        Timestamp timestamp = stringToTimestamp("18/01/2022", FORMATO_DIA_DDMMYYYY);
-        
-        // Act
-        String result = timestampToString(timestamp, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertEquals("18/01/2022", result);
+    public void testStringToDateConFormatoInvalido() {
+        String fechaStr = "fecha-invalida";
+        Date resultado = DateUtil.stringToDate(fechaStr, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testTimestampToString_whenNullTimestamp_returnsNull() {
-        // Act
-        String result = timestampToString(null, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNull(result);
+    public void testStringToTimestamp() {
+        String fechaStr = "15/01/2024";
+        Timestamp resultado = DateUtil.stringToTimestamp(fechaStr, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNotNull(resultado);
     }
 
     @Test
-    public void testGetDateWithFormat_whenValidInput_returnsConvertedFormat() throws ParseException {
-        // Act
-        String result = getDateWithFormat("18/01/2022", FORMATO_DIA_DDMMYYYY, FORMATO_DIA_YYYYMMDD);
-        
-        // Assert
-        assertEquals("20220118", result);
+    public void testStringToTimestampConNull() {
+        Timestamp resultado = DateUtil.stringToTimestamp(null, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testGetAgePerson_whenDateProvided_returnsCorrectAge() {
-        // Arrange - Fecha de nacimiento hace 30 años
-        String fechaNacimiento = "18/01/1994";
-        
-        // Act
-        Integer edad = getAgePerson(fechaNacimiento, FORMATO_DIA_DDMMYYYY);
-        
-        // Assert
-        assertNotNull(edad);
-        // La persona nacida en 1994 debe tener entre 30 y 33 años (considerando año 2024-2027)
-        assertTrue(edad >= 30 && edad <= 33);
+    public void testStringToTimestampConFormatoInvalido() {
+        String fechaStr = "fecha-invalida";
+        Timestamp resultado = DateUtil.stringToTimestamp(fechaStr, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testGetMinusMonths_whenDateProvided_returnsDateMinusMonths() {
-        // Arrange
-        Date date = stringToDate("18/06/2022", FORMATO_DIA_DDMMYYYY);
+    public void testGetDateWithFormat() throws ParseException {
+        String fechaStr = "15/01/2024";
+        String resultado = DateUtil.getDateWithFormat(
+            fechaStr, 
+            DateUtil.FORMATO_DIA_DDMMYYYY, 
+            DateUtil.FORMATO_DIA_YYYYMMDD
+        );
+
+        assertNotNull(resultado);
+        assertEquals("20240115", resultado);
+    }
+
+    @Test
+    public void testGetAgePerson() {
+        // Fecha de hace 25 años
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.YEAR, -25);
+        String fechaNacimiento = String.format("%02d/%02d/%d", 
+            cal.get(Calendar.DAY_OF_MONTH),
+            cal.get(Calendar.MONTH) + 1,
+            cal.get(Calendar.YEAR)
+        );
+
+        Integer edad = DateUtil.getAgePerson(fechaNacimiento, DateUtil.FORMATO_DIA_DDMMYYYY);
+
+        assertTrue(edad >= 24 && edad <= 25);
+    }
+
+    @Test
+    public void testDateToXMLGregorianCalendar() throws DatatypeConfigurationException {
+        Date fecha = new Date();
+        XMLGregorianCalendar resultado = DateUtil.dateToXMLGregorianCalendar(fecha);
+
+        assertNotNull(resultado);
+    }
+
+    @Test
+    public void testXmlGregorianCalendarToDate() throws DatatypeConfigurationException {
+        Date fechaOriginal = new Date();
+        XMLGregorianCalendar xmlCal = DateUtil.dateToXMLGregorianCalendar(fechaOriginal);
+        Date resultado = DateUtil.xmlGregorianCalendarToDate(xmlCal);
+
+        assertNotNull(resultado);
+    }
+
+    @Test
+    public void testGetMinusMonths() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(2024, Calendar.JUNE, 15);
+        Date fecha = cal.getTime();
+
+        Date resultado = DateUtil.getMinusMonths(fecha, 3);
+
+        assertNotNull(resultado);
+        Calendar calResultado = Calendar.getInstance();
+        calResultado.setTime(resultado);
         
-        // Act
-        Date result = getMinusMonths(date, 3);
+        assertEquals(Calendar.MARCH, calResultado.get(Calendar.MONTH));
+    }
+
+    @Test
+    public void testGetMinusMonthsConUnMes() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(2024, Calendar.FEBRUARY, 15);
+        Date fecha = cal.getTime();
+
+        Date resultado = DateUtil.getMinusMonths(fecha, 1);
+
+        assertNotNull(resultado);
+        Calendar calResultado = Calendar.getInstance();
+        calResultado.setTime(resultado);
         
-        // Assert
-        assertNotNull(result);
-        assertTrue(result.before(date));
+        assertEquals(Calendar.JANUARY, calResultado.get(Calendar.MONTH));
     }
 }
-

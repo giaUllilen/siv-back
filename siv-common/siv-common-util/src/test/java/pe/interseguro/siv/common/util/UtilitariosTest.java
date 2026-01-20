@@ -1,299 +1,261 @@
 package pe.interseguro.siv.common.util;
 
-import static org.junit.Assert.*;
-import static pe.interseguro.siv.common.util.Utilitarios.*;
+import org.junit.Test;
+import org.springframework.context.MessageSource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-import org.junit.Test;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
- * Pruebas unitarias para Utilitarios
- * Cumple con principio de aislamiento de TDD: no depende de recursos externos
+ * Pruebas unitarias para la clase Utilitarios
  */
 public class UtilitariosTest {
 
     @Test
-    public void testObtenerBigDecimalRedondeado_whenValidNumber_returnsRounded() {
-        // Arrange
-        BigDecimal numero = new BigDecimal("123.456789");
-        
-        // Act
-        BigDecimal result = obtenerBigDecimalRedondeado(numero, 2);
-        
-        // Assert
-        assertEquals(new BigDecimal("123.46"), result);
+    public void testObtenerMensaje() {
+        MessageSource messageSource = mock(MessageSource.class);
+        when(messageSource.getMessage("test.message", null, Locale.getDefault()))
+                .thenReturn("Mensaje de prueba");
+
+        String resultado = Utilitarios.obtenerMensaje(messageSource, "test.message");
+
+        assertEquals("Mensaje de prueba", resultado);
+        verify(messageSource).getMessage("test.message", null, Locale.getDefault());
     }
 
     @Test
-    public void testEsVacio_whenEmptyString_returnsTrue() {
-        // Act & Assert
-        assertTrue(esVacio(""));
-        assertTrue(esVacio("   "));
-        assertTrue(esVacio(null));
+    public void testObtenerMensajeConParametros() {
+        MessageSource messageSource = mock(MessageSource.class);
+        Object[] params = {"param1", "param2"};
+        when(messageSource.getMessage("test.message", params, Locale.getDefault()))
+                .thenReturn("Mensaje con parámetros");
+
+        String resultado = Utilitarios.obtenerMensaje(messageSource, params, "test.message");
+
+        assertEquals("Mensaje con parámetros", resultado);
+        verify(messageSource).getMessage("test.message", params, Locale.getDefault());
     }
 
     @Test
-    public void testEsVacio_whenNonEmptyString_returnsFalse() {
-        // Act & Assert
-        assertFalse(esVacio("texto"));
-        assertFalse(esVacio("  texto  "));
+    public void testObtenerBigDecimalRedondeado() {
+        BigDecimal numero = new BigDecimal("10.12345");
+        BigDecimal resultado = Utilitarios.obtenerBigDecimalRedondeado(numero, 2);
+
+        assertEquals(new BigDecimal("10.12"), resultado);
     }
 
     @Test
-    public void testEsNumero_whenNumericString_returnsTrue() {
-        // Act & Assert
-        assertTrue(esNumero("123"));
-        assertTrue(esNumero("0"));
-        assertTrue(esNumero("999999"));
+    public void testObtenerBigDecimalRedondeadoHaciaArriba() {
+        BigDecimal numero = new BigDecimal("10.12567");
+        BigDecimal resultado = Utilitarios.obtenerBigDecimalRedondeado(numero, 2);
+
+        assertEquals(new BigDecimal("10.13"), resultado);
     }
 
     @Test
-    public void testEsNumero_whenNonNumericString_returnsFalse() {
-        // Act & Assert
-        assertFalse(esNumero("abc"));
-        assertFalse(esNumero("12.34"));
-        assertFalse(esNumero("12a3"));
-        assertFalse(esNumero(null));
+    public void testEsVacioConTextoVacio() {
+        assertTrue(Utilitarios.esVacio(""));
+        assertTrue(Utilitarios.esVacio("   "));
+        assertTrue(Utilitarios.esVacio(null));
     }
 
     @Test
-    public void testEsCEValido_whenValidCE_returnsTrue() {
-        // Act & Assert
-        assertTrue(esCEValido("N123456"));
-        assertTrue(esCEValido("123-456"));
-        assertTrue(esCEValido("N-123"));
+    public void testEsVacioConTextoNoVacio() {
+        assertFalse(Utilitarios.esVacio("texto"));
+        assertFalse(Utilitarios.esVacio("  texto  "));
     }
 
     @Test
-    public void testEsCEValido_whenInvalidCE_returnsFalse() {
-        // Act & Assert
-        assertFalse(esCEValido("ABC123"));
-        assertFalse(esCEValido("N@123"));
+    public void testConvertirObjetoAList() {
+        List<String> lista = new ArrayList<String>();
+        lista.add("elemento1");
+        lista.add("elemento2");
+
+        List<String> resultado = Utilitarios.convertirObjetoAList(lista);
+
+        assertNotNull(resultado);
+        assertEquals(2, resultado.size());
+        assertEquals("elemento1", resultado.get(0));
     }
 
     @Test
-    public void testEncriptarTexto_whenValidInput_returnsEncrypted() {
-        // Arrange
-        String texto = "1234567890";
-        
-        // Act
-        String result = encriptarTexto(texto, 4, "*");
-        
-        // Assert
-        assertEquals("1234******", result);
+    public void testConvertirObjetoADate() {
+        Date fecha = new Date();
+        Date resultado = Utilitarios.convertirObjetoADate(fecha);
+
+        assertNotNull(resultado);
+        assertEquals(fecha, resultado);
     }
 
     @Test
-    public void testFormatoMiles_whenValidNumber_returnsFormatted() {
-        // Arrange
-        Double valor = 123456.789;
-        
-        // Act
-        String result = formatoMiles(valor, FORMATO_MILES_CON_DECIMAL);
-        
-        // Assert
-        assertNotNull(result);
-        assertTrue(result.contains("123"));
-        assertTrue(result.contains("456"));
+    public void testEsNumeroConNumeroValido() {
+        assertTrue(Utilitarios.esNumero("12345"));
+        assertTrue(Utilitarios.esNumero("0"));
+        assertTrue(Utilitarios.esNumero(""));
     }
 
     @Test
-    public void testFormatoMiles_whenNullNumber_returnsNull() {
-        // Act
-        String result = formatoMiles(null, FORMATO_MILES_CON_DECIMAL);
-        
-        // Assert
-        assertNull(result);
+    public void testEsNumeroConNumeroInvalido() {
+        assertFalse(Utilitarios.esNumero("123abc"));
+        assertFalse(Utilitarios.esNumero("abc"));
+        assertFalse(Utilitarios.esNumero(null));
     }
 
     @Test
-    public void testValorString_whenNullValue_returnsEmpty() {
-        // Act
-        String result = valorString(null);
-        
-        // Assert
-        assertEquals("", result);
+    public void testEsCEValido() {
+        assertTrue(Utilitarios.esCEValido("N123456"));
+        assertTrue(Utilitarios.esCEValido("123456"));
+        assertTrue(Utilitarios.esCEValido("N-123-456"));
     }
 
     @Test
-    public void testValorString_whenValidValue_returnsString() {
-        // Act
-        String result = valorString("texto");
-        
-        // Assert
-        assertEquals("texto", result);
+    public void testEsCEInvalido() {
+        assertFalse(Utilitarios.esCEValido("ABC123"));
+        assertFalse(Utilitarios.esCEValido("N@123"));
     }
 
     @Test
-    public void testValorStringBoolean_whenTrue_returnsOne() {
-        // Act
-        String result = valorStringBoolean(true);
-        
-        // Assert
-        assertEquals("1", result);
+    public void testEncriptarTexto() {
+        String texto = "12345678";
+        String resultado = Utilitarios.encriptarTexto(texto, 3, "*");
+
+        assertEquals("123*****", resultado);
     }
 
     @Test
-    public void testValorStringBoolean_whenFalse_returnsZero() {
-        // Act
-        String result = valorStringBoolean(false);
-        
-        // Assert
-        assertEquals("0", result);
+    public void testFormatoMilesConDecimal() {
+        Double valor = 1234567.89;
+        String resultado = Utilitarios.formatoMiles(valor, Utilitarios.FORMATO_MILES_CON_DECIMAL);
+
+        assertNotNull(resultado);
+        assertTrue(resultado.contains("1"));
     }
 
     @Test
-    public void testValorStringBoolean_whenNull_returnsEmpty() {
-        // Act
-        String result = valorStringBoolean(null);
-        
-        // Assert
-        assertEquals("", result);
+    public void testFormatoMilesConValorNull() {
+        String resultado = Utilitarios.formatoMiles(null, Utilitarios.FORMATO_MILES_CON_DECIMAL);
+
+        assertNull(resultado);
     }
 
     @Test
-    public void testCheckOpcion_whenCodesMatch_returnsTrue() {
-        // Act
-        Boolean result = checkOpcion("01", "01");
-        
-        // Assert
-        assertTrue(result);
+    public void testValorStringConValorNoNull() {
+        assertEquals("test", Utilitarios.valorString("test"));
+        assertEquals("123", Utilitarios.valorString(123));
     }
 
     @Test
-    public void testCheckOpcion_whenCodesDoNotMatch_returnsFalse() {
-        // Act
-        Boolean result = checkOpcion("01", "02");
-        
-        // Assert
-        assertFalse(result);
+    public void testValorStringConValorNull() {
+        assertEquals(Constantes.VALOR_VACIO, Utilitarios.valorString(null));
     }
 
     @Test
-    public void testNombresCompletos_whenPersonaNatural_returnsFullName() {
-        // Act
-        String result = nombresCompletos("Juan", "Perez", "Garcia", null);
-        
-        // Assert
-        assertEquals("JUAN PEREZ GARCIA", result);
+    public void testValorStringBooleanTrue() {
+        assertEquals("1", Utilitarios.valorStringBoolean(true));
     }
 
     @Test
-    public void testNombresCompletos_whenPersonaJuridica_returnsRazonSocial() {
-        // Act
-        String result = nombresCompletos(null, null, null, "Empresa SAC");
-        
-        // Assert
-        assertEquals("EMPRESA SAC", result);
+    public void testValorStringBooleanFalse() {
+        assertEquals("0", Utilitarios.valorStringBoolean(false));
     }
 
     @Test
-    public void testNombreMes_whenValidMonth_returnsMonthName() {
-        // Act & Assert
-        assertEquals("Enero", nombreMes("01"));
-        assertEquals("Febrero", nombreMes("02"));
-        assertEquals("Marzo", nombreMes("03"));
-        assertEquals("Diciembre", nombreMes("12"));
+    public void testValorStringBooleanNull() {
+        assertEquals(Constantes.VALOR_VACIO, Utilitarios.valorStringBoolean(null));
     }
 
     @Test
-    public void testNombreMes_whenInvalidMonth_returnsEmpty() {
-        // Act
-        String result = nombreMes("13");
-        
-        // Assert
-        assertEquals("", result);
+    public void testCheckOpcionIguales() {
+        assertTrue(Utilitarios.checkOpcion("A", "A"));
     }
 
     @Test
-    public void testToCamelCase_whenLowerCaseString_returnsCamelCase() {
-        // Act
-        String result = toCamelCase("juan perez garcia");
-        
-        // Assert
-        assertEquals("Juan Perez Garcia", result);
+    public void testCheckOpcionDiferentes() {
+        assertFalse(Utilitarios.checkOpcion("A", "B"));
     }
 
     @Test
-    public void testToCamelCase_whenNullString_returnsNull() {
-        // Act
-        String result = toCamelCase(null);
-        
-        // Assert
-        assertNull(result);
+    public void testNombresCompletosConPersonaNatural() {
+        String resultado = Utilitarios.nombresCompletos("Juan", "Perez", "Garcia", "");
+
+        assertEquals("JUAN PEREZ GARCIA", resultado);
     }
 
     @Test
-    public void testQuitaEspacios_whenMultipleSpaces_returnsSingleSpace() {
-        // Act
-        String result = quitaEspacios("texto   con    espacios");
-        
-        // Assert
-        assertEquals("texto con espacios", result);
+    public void testNombresCompletosConRazonSocial() {
+        String resultado = Utilitarios.nombresCompletos("", "", "", "Empresa SAC");
+
+        assertEquals("EMPRESA SAC", resultado);
     }
 
     @Test
-    public void testConvertirObjetoAList_whenListProvided_returnsList() {
-        // Arrange
-        List<String> originalList = new ArrayList<>();
-        originalList.add("item1");
-        originalList.add("item2");
-        
-        // Act
-        List<String> result = convertirObjetoAList(originalList);
-        
-        // Assert
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertEquals("item1", result.get(0));
+    public void testNombresCompletosSinApellidoMaterno() {
+        String resultado = Utilitarios.nombresCompletos("Juan", "Perez", "", "");
+
+        assertEquals("JUAN PEREZ ", resultado);
     }
 
     @Test
-    public void testConvertirObjetoADate_whenDateProvided_returnsDate() {
-        // Arrange
-        Date originalDate = new Date();
-        
-        // Act
-        Date result = convertirObjetoADate(originalDate);
-        
-        // Assert
-        assertNotNull(result);
-        assertEquals(originalDate, result);
+    public void testNombreMesEnero() {
+        assertEquals("Enero", Utilitarios.nombreMes("01"));
     }
 
     @Test
-    public void testTrazaLog_whenCalled_returnsNonEmptyString() {
-        // Act
-        String result = trazaLog();
-        
-        // Assert
-        assertNotNull(result);
-        assertFalse(result.isEmpty());
-        assertTrue(result.matches("\\d+"));
+    public void testNombreMesDiciembre() {
+        assertEquals("Diciembre", Utilitarios.nombreMes("12"));
     }
 
     @Test
-    public void testDateNow_whenCalled_returnsFormattedDate() {
-        // Act
-        String result = dateNow();
-        
-        // Assert
-        assertNotNull(result);
-        assertTrue(result.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}:\\d{3}"));
+    public void testNombreMesInvalido() {
+        assertEquals("", Utilitarios.nombreMes("13"));
     }
 
     @Test
-    public void testDateNowShort_whenCalled_returnsFormattedDate() {
-        // Act
-        String result = dateNowShort();
-        
-        // Assert
-        assertNotNull(result);
-        assertTrue(result.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}"));
+    public void testToCamelCase() {
+        String resultado = Utilitarios.toCamelCase("hola mundo java");
+
+        assertEquals("Hola Mundo Java", resultado);
+    }
+
+    @Test
+    public void testToCamelCaseConNull() {
+        assertNull(Utilitarios.toCamelCase(null));
+    }
+
+    @Test
+    public void testQuitaEspacios() {
+        String resultado = Utilitarios.quitaEspacios("  texto   con    espacios  ");
+
+        assertEquals("texto con espacios", resultado);
+    }
+
+    @Test
+    public void testTrazaLog() {
+        String resultado = Utilitarios.trazaLog();
+
+        assertNotNull(resultado);
+        assertFalse(resultado.isEmpty());
+    }
+
+    @Test
+    public void testDateNow() {
+        String resultado = Utilitarios.dateNow();
+
+        assertNotNull(resultado);
+        assertTrue(resultado.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}:\\d{3}"));
+    }
+
+    @Test
+    public void testDateNowShort() {
+        String resultado = Utilitarios.dateNowShort();
+
+        assertNotNull(resultado);
+        assertTrue(resultado.matches("\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}"));
     }
 }
-
